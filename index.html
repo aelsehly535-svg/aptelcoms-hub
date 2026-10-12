@@ -366,17 +366,22 @@ return {L:L,all:all,ex:ex,u:u}}
 const GT=['esraa mohamed','aya hassan'];
 const GL=[[0,'مريم عمرو','mariam amr ali'],[0,'مريم فتحي','mariam fathy bakr'],[0,'منار لاشين','manar lashin mohamed'],[0,'اماني عبد اللطيف','amany abdelathf abdalla'],[0,'اسراء حسن','esraa hassan abdelsalam'],[0,'اسراء عيد','esraa eid isma3el'],[0,'ولاء هاني','walaa hany zakaria'],[0,'دينا عماد','dina emad elden ataya'],[0,'مروه عادل','marawa adel sayed'],[0,'هبه هشام','heba hesham mohamed'],[0,'امل طارق','aml tarik mohamed'],[0,'وفاء ايمن','waffa ayan megahed'],[0,'منه الله ابراهيم','menallah ibrahim ramdan'],[0,'سماح اسعد','samah as3d helmy'],[0,'روجينا','rogina wagdy sobhi'],
 [1,'حياه سمير','hayat samir ahmed'],[1,'ياسمين رمضان','yasmeen ramdan abelsamee3'],[1,'رغده','raghda essam hamdi'],[1,'زينب احمد','zeinb ahmed moustafa'],[1,'ندي محمود','nada mahmoud abderhman'],[1,'منه الله عادل','menalalla adel sayed'],[1,'اسراء اكرم','esraa akram mohamed'],[1,'رحمه عماد','raahma emad ghareeb']];
-function gmTT(){const nz=v=>N(String(v)).replace(/[^a-z0-9\u0600-\u06FF\s]/g,' ').replace(/\s+/g,' ').trim();
-const pf=(a,b)=>{const k=Math.min(a.length,b.length);if(!k)return false;for(let i=0;i<k;i++)if(a[i]!==b[i])return false;return true};
+function gmTT(){const nz=v=>N(String(v)).replace(/ـ/g,'').replace(/ؤ/g,'و').replace(/ئ/g,'ي').replace(/ء/g,'').replace(/ظ/g,'ض').replace(/ذ/g,'ز').replace(/[^a-z0-9\u0600-\u06FF\s]/g,' ').replace(/(.)\1+/g,'$1').replace(/\s+/g,' ').trim();
+const lv=(a,b)=>{const m=a.length,n=b.length,d=[];for(let i=0;i<=m;i++)d[i]=[i];for(let j=1;j<=n;j++)d[0][j]=j;for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));return d[m][n]};
+const lat=w=>/^[a-z0-9]+$/.test(w),sk=w=>w.replace(/^y/,'Y').replace(/[aeiouy]/g,'').replace(/Y/,'y');
+const wm=(a,b,x)=>a===b||(((a.length>=4&&b.length>=4)||(x&&a.length>=3&&b.length>=3))&&(lv(a,b)<=1||(a.length>=4&&b.length>=4&&lat(a)&&lat(b)&&sk(a)===sk(b))));
+const pf=(a,b,z)=>{const k=Math.min(a.length,b.length);if(!k)return false;for(let i=0;i<k;i++)if(z?!wm(a[i],b[i],k>=2):a[i]!==b[i])return false;return true};
+const pj=(a,b)=>{if(a.length<2)return false;const q=a.join('');for(let k=1;k<=b.length;k++)if(b.slice(0,k).join('')===q)return true;return false};
 const G=GL.map(g=>({tl:g[0],ar:g[1],en:g[2],aw:nz(g[1]).split(' '),ew:nz(g[2]).split(' ')}));
-const gs=G.map(()=>({A:new Set(),H:new Set(),R:new Set()})),ent=new Map(),rs=new Map();
-GMD.recs.forEach(x=>{if(x.st==='O')return;const k=nz(x.ts||'');if(!k||k==='scanned')return;
-let r=rs.get(k);if(!r){const w=k.split(' '),c=[];G.forEach((g,i)=>{if(pf(w,g.aw)||pf(w,g.ew))c.push(i)});
-r=c.length===1?{t:'g',i:c[0]}:(c.length>1?(new Set(c.map(i=>G[i].tl)).size===1?{t:'a',tl:G[c[0]].tl,c:c}:{t:'x',c:c}):{t:'n'});rs.set(k,r)}
-let q;if(r.t==='g')q=gs[r.i];else{q=ent.get(k);if(!q){q={name:x.ts,r:r,A:new Set(),H:new Set(),R:new Set()};ent.set(k,q)}}
+const gs=G.map(()=>({A:new Set(),H:new Set(),R:new Set()})),ent=new Map(),rs=new Map(),fm=new Map();
+GMD.recs.forEach(x=>{if(x.st==='O')return;const k=nz(x.ts||'');if(!k||N(String(x.ts)).replace(/\s+/g,' ').trim()==='scanned')return;
+let r=rs.get(k);if(!r){const w=k.split(' '),ex=[],fz=[];G.forEach((g,i)=>{if(pf(w,g.aw)||pf(w,g.ew)||pj(w,g.aw)||pj(w,g.ew))ex.push(i);else if(pf(w,g.aw,1)||pf(w,g.ew,1))fz.push(i)});
+const c=ex.length?ex:fz,f=!ex.length&&fz.length>0;
+r=c.length===1?{t:'g',i:c[0],f:f}:(c.length>1?(new Set(c.map(i=>G[i].tl)).size===1?{t:'a',tl:G[c[0]].tl,c:c,f:f}:{t:'x',c:c,f:f}):{t:'n'});rs.set(k,r)}
+let q;if(r.t==='g'){q=gs[r.i];if(r.f&&!fm.has(k))fm.set(k,{name:x.ts,g:r.i})}else{q=ent.get(k);if(!q){q={name:x.ts,r:r,A:new Set(),H:new Set(),R:new Set()};ent.set(k,q)}}
 if(x.nw)q[x.st].add(x.cu)});
 const E=[...ent.values()];
-return {G:G,gs:gs,amb:E.filter(e=>e.r.t==='a'),X:E.filter(e=>e.r.t==='x'),Nn:E.filter(e=>e.r.t==='n')}}
+return {G:G,gs:gs,amb:E.filter(e=>e.r.t==='a'),X:E.filter(e=>e.r.t==='x'),Nn:E.filter(e=>e.r.t==='n'),F:[...fm.values()]}}
 function gmTQd(i){const T=GMD.tt||(GMD.tt=gmTT()),rows=[];T.G.forEach((g,j)=>{if(g.tl===i)rows.push({n:g.ar,s:T.gs[j]})});
 T.amb.filter(e=>e.r.tl===i).forEach(e=>rows.push({n:e.name,amb:e.r.c.map(j=>T.G[j].ar).join(' / '),s:e}));
 const tt={};['A','H','R'].forEach(k=>{tt[k]=new Set(rows.flatMap(r=>[...r.s[k]]))});return {rows:rows,tt:tt,T:T}}
@@ -420,6 +425,7 @@ function gmTQ(){const T=GMD.tt=gmTT(),c3=e=>[gf(e.A.size),gf(e.H.size),gf(e.R.si
 let h='<div class="res" style="margin-top:10px">'+hh+'فريق التيلي سيلز</h4><select id="gtq" class="ni"><option value="">— اختار تيم ليدر التيلي سيلز —</option>'+GT.map((t,i)=>'<option value="'+i+'">'+t+' ('+T.G.filter(g=>g.tl===i).length+')</option>').join('')+'</select><div id="gtqr"></div></div>';
 if(T.X.length)h+='<div class="res" style="margin-top:10px">'+hh+'اسم مش واضح</h4>'+tb(['الاسم في الشيت','يحتمل','Active','On hold','Reject'],T.X.map(e=>[esc(e.name),esc(e.r.c.map(j=>T.G[j].ar).join(' / '))].concat(c3(e))),false)+'<p class="cm">الاسم ده ينطبق على أكتر من بنت تحت تيمات مختلفة، فمش اتحسب لأي بنت. الأفضل يتكتب ثنائي في الشيت.</p></div>';
 if(T.Nn.length)h+='<div class="res" style="margin-top:10px">'+hh+'مش في الخريطة</h4>'+tb(['الاسم في الشيت','Active','On hold','Reject'],T.Nn.map(e=>[esc(e.name)].concat(c3(e))),false)+'<p class="cm">الأسماء دي مش مطابقة لأي بنت في القايمة. ابعتلي الاسم وأضيفه كاسم بديل.</p></div>';
+if(T.F.length)h+='<div class="res" style="margin-top:10px">'+hh+'تطابق تقريبي (راجعه)</h4>'+tb(['الاسم في الشيت','اتحسب لـ','التيم ليدر'],T.F.map(e=>[esc(e.name),esc(T.G[e.g].ar),GT[T.G[e.g].tl]]),false)+'<p class="cm">الأسماء دي اتطابقت رغم اختلاف بسيط في الحروف (إملائي). لو فيه اسم اتحسب لبنت غلط، قولي.</p></div>';
 return h}
 function gmTQb(){const q=el('gtq');if(q)q.onchange=()=>{const v=q.value;el('gtqr').innerHTML=v===''?'':gmTLq(+v)}}
 function gmTLq(i){const d=gmTQd(i),u=(...z)=>new Set(z.flatMap(y=>[...y])).size;
