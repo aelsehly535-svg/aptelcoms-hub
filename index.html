@@ -364,18 +364,19 @@ if(x.nw){t[x.st].add(x.cu);all[x.st].add(x.cu)}});
 const u=(...s)=>new Set(s.flatMap(z=>[...z])).size,L=[...m.values()].sort((a,b)=>u(b.A,b.H,b.R)-u(a.A,a.H,a.R));
 return {L:L,all:all,ex:ex,u:u}}
 const GT=['esraa mohamed','aya hassan'];
-const GL=[[0,'مريم عمرو','mariam amr ali'],[0,'مريم فتحي','mariam fathy bakr'],[0,'منار لاشين','manar lashin mohamed'],[0,'اماني عبد اللطيف','amany abdelathf abdalla'],[0,'اسراء حسن','esraa hassan abdelsalam'],[0,'اسراء عيد','esraa eid isma3el'],[0,'ولاء هاني','walaa hany zakaria'],[0,'دينا عماد','dina emad elden ataya'],[0,'مروه عادل','marawa adel sayed'],[0,'هبه هشام','heba hesham mohamed'],[0,'امل طارق','aml tarik mohamed'],[0,'وفاء ايمن','waffa ayan megahed'],[0,'منه الله ابراهيم','menallah ibrahim ramdan'],[0,'سماح اسعد','samah as3d helmy'],[0,'روجينا','rogina wagdy sobhi'],
-[1,'حياه سمير','hayat samir ahmed'],[1,'ياسمين رمضان','yasmeen ramdan abelsamee3'],[1,'رغده','raghda essam hamdi'],[1,'زينب احمد','zeinb ahmed moustafa'],[1,'ندي محمود','nada mahmoud abderhman'],[1,'منه الله عادل','menalalla adel sayed'],[1,'اسراء اكرم','esraa akram mohamed'],[1,'رحمه عماد','raahma emad ghareeb']];
+const GL=[[0,'مريم عمرو','mariam amr ali'],[0,'مريم فتحي','mariam fathy bakr'],[0,'منار لاشين','manar lashin mohamed'],[0,'اماني عبد اللطيف','amany abdelathf abdalla'],[0,'اسراء حسن','esraa hassan abdelsalam'],[0,'اسراء عيد','esraa eid isma3el'],[0,'ولاء هاني','walaa hany zakaria'],[0,'دينا عماد','dina emad elden ataya'],[0,'مروه عادل','marawa adel sayed'],[0,'هبه هشام','heba hesham mohamed'],[0,'امل طارق','aml tarik mohamed'],[0,'وفاء ايمن','waffa ayan megahed'],[0,'منه الله ابراهيم','menallah ibrahim ramdan',['منه ابراهيم','mennah ibrahim','mennah ebrahim','mena ibrahim','mena ebrahim']],[0,'سماح اسعد','samah as3d helmy'],[0,'روجينا','rogina wagdy sobhi'],
+[1,'حياه سمير','hayat samir ahmed'],[1,'ياسمين رمضان','yasmeen ramdan abelsamee3'],[1,'رغده','raghda essam hamdi'],[1,'زينب احمد','zeinb ahmed moustafa'],[1,'ندي محمود','nada mahmoud abderhman'],[1,'منه الله عادل','menalalla adel sayed',['منه عادل','mennah adel','mena adel','mennallah adel','menallah adel']],[1,'اسراء اكرم','esraa akram mohamed'],[1,'رحمه عماد','raahma emad ghareeb']];
 function gmTT(){const nz=v=>N(String(v)).replace(/ـ/g,'').replace(/ؤ/g,'و').replace(/ئ/g,'ي').replace(/ء/g,'').replace(/ظ/g,'ض').replace(/ذ/g,'ز').replace(/[^a-z0-9\u0600-\u06FF\s]/g,' ').replace(/(.)\1+/g,'$1').replace(/\s+/g,' ').trim();
 const lv=(a,b)=>{const m=a.length,n=b.length,d=[];for(let i=0;i<=m;i++)d[i]=[i];for(let j=1;j<=n;j++)d[0][j]=j;for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));return d[m][n]};
 const lat=w=>/^[a-z0-9]+$/.test(w),sk=w=>w.replace(/^y/,'Y').replace(/[aeiouy]/g,'').replace(/Y/,'y');
 const wm=(a,b,x)=>a===b||(((a.length>=4&&b.length>=4)||(x&&a.length>=3&&b.length>=3))&&(lv(a,b)<=1||(a.length>=4&&b.length>=4&&lat(a)&&lat(b)&&sk(a)===sk(b))));
 const pf=(a,b,z)=>{const k=Math.min(a.length,b.length);if(!k)return false;for(let i=0;i<k;i++)if(z?!wm(a[i],b[i],k>=2):a[i]!==b[i])return false;return true};
 const pj=(a,b)=>{if(a.length<2)return false;const q=a.join('');for(let k=1;k<=b.length;k++)if(b.slice(0,k).join('')===q)return true;return false};
-const G=GL.map(g=>({tl:g[0],ar:g[1],en:g[2],aw:nz(g[1]).split(' '),ew:nz(g[2]).split(' ')}));
+const G=GL.map(g=>({tl:g[0],ar:g[1],en:g[2],aw:nz(g[1]).split(' '),ew:nz(g[2]).split(' '),al:(g[3]||[]).map(a=>nz(a).split(' '))}));
+const hx=(w,g)=>[g.aw,g.ew].concat(g.al).some(x=>pf(w,x)||pj(w,x)),hz=(w,g)=>[g.aw,g.ew].concat(g.al).some(x=>pf(w,x,1));
 const gs=G.map(()=>({A:new Set(),H:new Set(),R:new Set()})),ent=new Map(),rs=new Map(),fm=new Map();
 GMD.recs.forEach(x=>{if(x.st==='O')return;const k=nz(x.ts||'');if(!k||N(String(x.ts)).replace(/\s+/g,' ').trim()==='scanned')return;
-let r=rs.get(k);if(!r){const w=k.split(' '),ex=[],fz=[];G.forEach((g,i)=>{if(pf(w,g.aw)||pf(w,g.ew)||pj(w,g.aw)||pj(w,g.ew))ex.push(i);else if(pf(w,g.aw,1)||pf(w,g.ew,1))fz.push(i)});
+let r=rs.get(k);if(!r){const w=k.split(' '),ex=[],fz=[];G.forEach((g,i)=>{if(hx(w,g))ex.push(i);else if(hz(w,g))fz.push(i)});
 const c=ex.length?ex:fz,f=!ex.length&&fz.length>0;
 r=c.length===1?{t:'g',i:c[0],f:f}:(c.length>1?(new Set(c.map(i=>G[i].tl)).size===1?{t:'a',tl:G[c[0]].tl,c:c,f:f}:{t:'x',c:c,f:f}):{t:'n'});rs.set(k,r)}
 let q;if(r.t==='g'){q=gs[r.i];if(r.f&&!fm.has(k))fm.set(k,{name:x.ts,g:r.i})}else{q=ent.get(k);if(!q){q={name:x.ts,r:r,A:new Set(),H:new Set(),R:new Set()};ent.set(k,q)}}
