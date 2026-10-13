@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="manifest" href="manifest.json"><meta name="theme-color" content="#ff6600"><link rel="apple-touch-icon" href="icon-512.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Orange Business">
 <title>دليل Orange Business</title>
 <style>
 :root{--bg:#fff7f0;--card:#fff;--tx:#1f1f1f;--mut:#666;--or:#ff6600;--bd:#f2d9c6;--wb:#fff3cd;--wt:#7a5b00;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -496,6 +497,7 @@ el('nwg').onclick=async()=>{const t=el('nwtx').value.trim();if(!t){el('nwe').tex
 document.querySelectorAll('#nwv [data-id]').forEach(b=>{b.onclick=async()=>{await nwPost({action:'clear',id:b.dataset.id});nwRef()}});
 const ca=el('nwa');if(ca)ca.onclick=async()=>{await nwPost({action:'clear',id:'all'});nwRef()}}
 nwLoad();setInterval(nwLoad,60000);
+if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost'))addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{})});
 </script>
 </body>
 </html>
