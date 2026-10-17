@@ -77,11 +77,12 @@ body{padding-top:0!important;padding-bottom:var(--nwh,0px)!important}.chips{top:
 #intro .hl{min-height:100%;display:flex;flex-direction:column}#intro .hl>*{flex:none}#intro .hl>.ts{flex:1 1 auto;min-height:84px;max-height:200px;padding:10px 16px;gap:16px}#intro .ts .tc{width:clamp(46px,17vw,72px);height:clamp(46px,17vw,72px);font-size:clamp(24px,9vw,38px)}#intro .ts .tm small{font-size:13px}#intro .ts .tm b{font-size:clamp(20px,7vw,30px);line-height:1.25;white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}#intro .ts .tsb{font-size:clamp(18px,6vw,26px);padding:8px 16px;border-radius:18px}
 #ins{position:fixed;inset:0;z-index:30;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;padding:18px}#ins.on{display:flex}#ins .ib{position:relative;background:var(--card);color:var(--tx);border:1px solid var(--bd);border-radius:20px;padding:18px;width:100%;max-width:420px;max-height:90vh;overflow:auto}#ins .ih{font-size:20px;font-weight:800;color:var(--or);text-align:center;margin-bottom:10px}#ins .ix{position:absolute;top:10px;inset-inline-start:10px;background:transparent;border:0;color:var(--mut);font-size:20px}#ins .itb{display:flex;gap:8px;margin-bottom:10px}#ins .it{flex:1;padding:9px;border-radius:12px;border:1px solid var(--or);background:transparent;color:var(--or);font:inherit;font-weight:700}#ins .it.on{background:var(--or);color:#fff}#ins ol{margin:0 0 12px;padding-inline-start:22px;line-height:1.9;font-size:15px}
 #ins .ib{max-width:460px;padding:14px 12px}#ins .ip img{display:block;width:100%;height:auto;border-radius:14px;margin-bottom:10px}
+#nw{left:10px!important;right:10px!important;bottom:calc(8px + env(safe-area-inset-bottom,0px))!important;height:44px!important;padding:0 10px!important;gap:10px;align-items:center;background:var(--card)!important;color:var(--tx)!important;border:1px solid var(--or)!important;border-radius:14px;box-shadow:none!important;font-size:15px;overflow:hidden}#nw b{background:rgba(255,102,0,.16)!important;color:var(--or)!important;border-radius:999px;padding:4px 12px!important;font-size:13px!important;font-weight:700;height:auto;display:flex;align-items:center;gap:6px}#nw b::before{content:'';width:7px;height:7px;border-radius:50%;background:#ff3b30;animation:nwp 1.4s ease-in-out infinite}@keyframes nwp{50%{opacity:.3}}@media (prefers-reduced-motion:reduce){#nw b::before{animation:none}}#nwl{bottom:calc(60px + env(safe-area-inset-bottom,0px))!important}
 </style>
 </head>
 <body>
 <div id="nw"><b>عاجل</b><div class="nwk"><span id="nwt"></span></div></div><div id="nwl"></div>
-<section id="intro"><div class="hl"><div class="ht2"><div class="ic"><span id="gnw" title="Admin">⚙️</span><span id="hbl">🔔</span></div><div class="gr"><img id="introimg" alt="Aptelecom"><div class="g1" id="gtx">صباح الخير 👋</div><div class="g2">Aptelecom training team</div></div></div>
+<section id="intro"><div class="hl"><div class="ht2"><div class="ic"><span id="gnw" title="Admin">⚙️</span></div><div class="gr"><img id="introimg" alt="Aptelecom"><div class="g1" id="gtx">صباح الخير 👋</div><div class="g2">Aptelecom training team</div></div></div>
 <div class="sb">🔍<input id="hq" type="search" placeholder="ابحث في كل المحتوى..."></div>
 <div class="bn" id="bn"><div class="bs on" data-k="s"><div><small>⭐ نجم الشهر</small><b id="bn1"></b><i>🏆 Top Performance (Sales)</i></div><div class="bc">⭐</div></div><div class="bs" data-k="t"><div><small>⭐ نجم الشهر</small><b id="bn2"></b><i>👑 Top Performance (Telesales)</i></div><div class="bc">👑</div></div><div class="bs" data-k="w"><div><small>Aptelecom</small><b>أهلاً بيك في دليل Orange Business</b><i>Training team</i></div><div class="bc">🟧</div></div><div class="dt"><u class="on"></u><u></u><u></u></div></div>
 <div class="sh">Quick Access</div><div class="qg"><div class="qa" id="go"><span>🟧</span>Orange Business</div><div class="qa" id="gs"><span>🎯</span>Sales Skills</div><div class="qa" id="gc"><span>💰</span>Commission</div><div class="qa" id="gq"><span>📝</span>Quiz</div><div class="qa" id="gm"><span>📊</span>RPM</div><div class="qa" id="gi"><span>📲</span>Install App</div></div>
@@ -515,7 +516,7 @@ const a=ar?-T:W,b=ar?W:-T;
 nwAn=tr.animate([{transform:'translateX('+a+'px)'},{transform:'translateX('+b+'px)'}],{duration:Math.max(6000,(W+T)/70*1000),easing:'linear'});nwAn.onfinish=nwNext}
 function nwRender(){const b=el('nw');
 if(!NW.length){b.style.display='none';document.body.style.removeProperty('--nwh');el('nwl').style.display='none';nwOn=false;if(nwAn){nwAn.onfinish=null;nwAn.cancel();nwAn=null}clearTimeout(nwTo);return}
-b.style.display='flex';document.body.style.setProperty('--nwh','36px');
+b.style.display='flex';document.body.style.setProperty('--nwh','56px');
 if(!nwOn){nwOn=true;nwNext()}}
 el('nw').onclick=()=>{const p=el('nwl');if(p.style.display==='block'){p.style.display='none';return}p.innerHTML=NW.map(n=>'<div class="nwi"><small>'+nwTime(n.t)+'</small><div dir="auto">'+esc(n.text)+'</div></div>').join('');p.style.display='block'};
 el('nwl').onclick=()=>{el('nwl').style.display='none'};
@@ -549,13 +550,13 @@ const dm=new Date(D.getFullYear(),D.getMonth()+1,0).getDate(),en=o=>D.toLocaleDa
 el('pg').innerHTML=pt(D.getDate()/dm,'<text x="50" y="62" font-size="38">'+D.getDate()+'</text>',en({weekday:'short'})+', '+en({month:'short'})+' '+D.getDate())+pt(Math.min(1,v/100),'<text x="50" y="'+(String(v).length>3?60:62)+'" font-size="'+(String(v).length>3?26:38)+'">'+v+'</text>','Visitors')+pt(1,'<g transform="translate(27 27) scale(1.85)" fill="none" stroke="#ff6600" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z"/><path d="M8.6 7.5c-.3.3-.8.9-.5 2 .4 1.3 1.7 3 3.4 3.9 1.4.7 2.2.6 2.8.2.4-.3.6-.8.5-1.1l-1.6-.8-.7.8c-.7-.2-2-1.2-2.3-2l.7-.7-.8-1.7c-.4-.1-1.2-.2-1.5.4z"/></g>','Chat with us',' wch');
 document.querySelector('#pg .wch').onclick=()=>open('https://wa.me/201211535557','_blank');
 let m=0,tt=10,nm=[];if(ST&&ST.top){m=ST.top.s;tt=ST.top.t;nm=ST.top.names||[]}else{const a=qbGet();a.forEach(r=>{if(r.s>m){m=r.s;tt=r.t}});nm=[...new Set(a.filter(r=>r.s===m&&m>0).map(r=>r.n))]}
-el('ts').innerHTML='<div class="tc">🏆</div><div class="tm"><small>'+(nm.length>1?'Top scorers · '+nm.length:'Top scorer')+'</small><b id="tnm">'+(nm.length?'':'No scores yet — be the first!')+'</b></div>'+(nm.length?'<div class="tsb">'+m+'/'+tt+'</div>':'');
+el('ts').innerHTML='<div class="tc">🏆</div><div class="tm"><small>'+(nm.length>1?'Top scorers · '+nm.length:'Top scorer')+'</small><b id="tnm" dir="auto">'+(nm.length?'':'Be the first to score!')+'</b></div>'+(nm.length?'<div class="tsb">'+m+'/'+tt+'</div>':'');
 clearInterval(rnT);const r=el('tnm');if(r&&nm.length){let i=0;const f=()=>{r.style.opacity=0;setTimeout(()=>{r.textContent=nm[i%nm.length];r.style.opacity=1;i++},nm.length>1?300:0)};f();if(nm.length>1)rnT=setInterval(f,2500)}}
 hR();
 let bi=0;const bs=[...document.querySelectorAll('.bs')],du=[...document.querySelectorAll('.dt u')];
 setInterval(()=>{bi=(bi+1)%bs.length;bs.forEach((x,i)=>x.classList.toggle('on',i===bi));du.forEach((x,i)=>x.classList.toggle('on',i===bi))},4000);
 bs.forEach(x=>x.onclick=openSt);
-el('hbl').onclick=()=>el('nw').click();
+
 el('hq').onkeydown=e=>{if(e.key==='Enter'&&el('hq').value.trim()){const v=el('hq').value;openS('ob');el('q').value=v;draw();el('hq').value=''}};
 document.querySelectorAll('[data-r]').forEach(x=>x.onclick=()=>{const c=x.dataset.r;if(c==='ns')openS('ns');else{openS('ob');cat=c;chips();draw()}});
 
