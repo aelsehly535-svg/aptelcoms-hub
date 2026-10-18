@@ -264,6 +264,32 @@ body{padding-top:0!important;padding-bottom:var(--nwh,0px)!important}.chips{top:
 #intro>.wm1{left:-70px;bottom:6%;transform:rotate(-12deg)}#intro>.wm2{right:-70px;top:8%;transform:rotate(12deg)}
 }
 @media(prefers-reduced-motion:reduce){.sd-crn,#cdBox .nx{animation:none}}
+
+/* side panels fill the full side height */
+@media (min-width:1280px){
+#intro>.wm{display:none!important}
+#intro>.side{height:calc(100vh - 48px);min-height:520px;margin-top:24px;gap:16px}
+#intro>.side .sd-h{flex:none;font-size:18px}
+#intro>.side .sd-c{flex:1 1 0;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px 14px;border-radius:24px}
+#intro>.side .sd-ph{width:clamp(104px,19vh,170px);height:clamp(104px,19vh,170px);margin-bottom:12px}
+#intro>.side .sd-em{font-size:clamp(52px,10vh,84px)}
+#intro>.side .sd-n{font-size:clamp(20px,2.8vh,28px);margin:6px 0}
+#intro>.side .sd-m{font-size:clamp(13px,1.7vh,16px)}
+#intro>.side .sd-t{font-size:clamp(15px,2vh,19px);margin-bottom:10px}
+#intro>.side .sd-crn{font-size:clamp(48px,9vh,76px);margin-bottom:6px}
+#intro>.side .cdg{width:100%;gap:8px}
+#intro>.side .cdb{padding:clamp(8px,1.8vh,16px) 0}
+#intro>.side .cdb b{font-size:clamp(24px,3.6vh,36px)}
+#intro>.side .cdb span{font-size:12px}
+#intro>#sideL .sd-c.king{flex:1.1 1 0}
+}
+
+/* smaller My Progress on desktop */
+@media (min-width:900px){
+#intro .hl>.pg{grid-auto-rows:96px!important;gap:12px!important;margin-bottom:28px}
+#intro .hl>.pg .pt{font-size:12.5px!important}
+#intro .hl>.pg .pt svg{width:46px!important;height:46px!important}
+}
 </style>
 </head>
 <body>
