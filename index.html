@@ -109,7 +109,7 @@ body{padding-top:0!important;padding-bottom:var(--nwh,0px)!important}.chips{top:
 #intro .pt.challenge.fire::before{content:"";position:absolute;inset:-2px;border-radius:17px;z-index:-1;background:conic-gradient(from 0deg,#ff3d00,#ffb300,#ff5a00,#e91e63,#ff3d00);filter:blur(3px);opacity:.4;animation:challengeFire 4s linear infinite}
 #intro .pt.challenge.fire::after{content:"";position:absolute;inset:-1px;border-radius:16px;z-index:-1;background:var(--card)}
 @keyframes challengeGlow{0%,100%{box-shadow:0 0 3px rgba(255,75,0,.25)}50%{box-shadow:0 0 9px rgba(255,75,0,.5)}}
-@keyframes challengeFire{to{transform:rotate(360deg)}}
+@keyframes challengeFire{0%,100%{opacity:.22}50%{opacity:.5}}
 @media(prefers-reduced-motion:reduce){#intro .pt.challenge.fire,#intro .pt.challenge.fire::before{animation:none}}
 
 
@@ -134,6 +134,7 @@ body{padding-top:0!important;padding-bottom:var(--nwh,0px)!important}.chips{top:
 @media(max-height:830px){#intro .bn{height:122px!important}#intro .sh{margin:7px 4px 4px!important}}
 
 .recl{text-align:center;font-size:12.5px;font-weight:800;color:var(--or);margin:-2px 0 6px}
+
 /* v4 layout polish */
 #intro .ht2{display:flex!important;justify-content:center!important;align-items:center!important;padding:calc(16px + env(safe-area-inset-top,0px)) 16px 38px!important}
 #intro .gr{display:flex!important;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;width:100%;min-height:64px;transform:none!important;gap:2px}
@@ -168,6 +169,45 @@ body{padding-top:0!important;padding-bottom:var(--nwh,0px)!important}.chips{top:
 .shake{animation:shk .5s}@keyframes shk{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
 .fe{position:fixed;bottom:8%;z-index:40;font-size:30px;font-style:normal;pointer-events:none;animation:feUp 2.2s ease-out both}@keyframes feUp{from{transform:translateY(0) scale(.6);opacity:1}to{transform:translateY(-60vh) scale(1.3);opacity:0}}
 @media(prefers-reduced-motion:reduce){.qdrop,.challenge-card .op,.shake,.fe{animation:none}}
+/* desktop / laptop layout */
+@media (min-width:900px){
+#intro .hl{max-width:1160px;display:grid;grid-template-columns:1fr 1fr;column-gap:28px;align-content:start;padding:24px 32px 48px;min-height:0}
+#intro .hl>*{grid-column:1/-1}
+#intro .ht2{grid-row:1;margin:0!important;border-radius:26px!important;padding:28px 48px 56px!important;min-height:170px}
+#intro .gr{min-height:96px}
+#intro .gr img{height:68px;max-width:170px}
+#intro .g1{font-size:36px}
+#intro .g2{font-size:17px}
+#intro .dchip{font-size:15px;padding:5px 20px;margin-top:10px}
+#intro .sb{grid-row:2;width:100%;max-width:720px;justify-self:center;margin:-28px 0 18px;padding:6px 20px;font-size:16px}
+#intro .bn{grid-row:3;height:160px!important;border-radius:26px}
+#intro .bn .bs{padding:20px 96px 40px 48px!important;gap:24px!important}
+#intro .bn .bs small{font-size:15px!important}
+#intro .bn .bs b{font-size:28px!important;margin:6px 0 10px!important}
+#intro .bn .bs i{font-size:15px!important;padding:4px 14px}
+#intro .bn .bc{width:92px!important;height:92px!important;font-size:46px!important}
+#intro .bn button.bnnav{right:22px!important;width:48px!important;min-width:48px!important;max-width:48px!important;height:52px!important;cursor:pointer}
+#intro .bn .dt{bottom:12px!important}
+#intro .sh{font-size:16px!important;margin:22px 4px 10px!important}
+#intro .hl>.sh:nth-child(4){grid-row:4}
+#intro .qg{grid-row:5;grid-template-columns:repeat(6,1fr)!important;grid-auto-rows:104px!important;gap:16px!important}
+#intro .qa{font-size:15px!important;border-radius:20px!important;transition:transform .18s,box-shadow .18s}
+#intro .qa:hover{transform:translateY(-4px);box-shadow:0 10px 24px rgba(255,102,0,.2)}
+.qa span{width:50px!important;height:50px!important;font-size:26px!important;margin-bottom:8px!important}
+#intro .hl>.sh:nth-child(6){grid-column:1;grid-row:6}
+#intro .hl>.ts{grid-column:1;grid-row:7;min-height:136px!important;max-height:none!important;margin:0;padding:14px 28px!important;gap:22px!important;cursor:pointer}
+#intro .hl>.sh:nth-child(8){grid-column:2;grid-row:6}
+#intro .hl>.pg{grid-column:2;grid-row:7;grid-auto-rows:136px!important;gap:14px!important}
+#intro .ts .tc{width:84px!important;height:84px!important;font-size:42px!important}
+#intro .ts .tm small{font-size:15px}
+#intro .ts .tm b{font-size:30px!important}
+#intro .ts .tsb{font-size:28px!important;padding:10px 22px}
+.pt{font-size:15px!important;transition:transform .18s,box-shadow .18s}
+.pt:hover{transform:translateY(-4px);box-shadow:0 10px 24px rgba(255,102,0,.18)}
+.pt svg{width:64px!important;height:64px!important}
+#stv,#nwv,#quizv,#cmv,#gmv{max-width:860px}
+}
+@media (min-width:900px) and (max-height:760px){#intro .ht2{min-height:170px;padding:26px 48px 52px!important}#intro .qg{grid-auto-rows:108px!important}}
 </style>
 </head>
 <body>
@@ -175,7 +215,7 @@ body{padding-top:0!important;padding-bottom:var(--nwh,0px)!important}.chips{top:
 <section id="intro"><div class="hl"><div class="ht2"><div class="gr"><img id="introimg" alt="Aptelecom"><div class="g1" id="gtx">صباح الخير 👋</div><div class="g2">Aptelecom training team</div><div class="dchip" id="gdt"></div></div></div>
 <div class="sb">🔍<input id="hq" type="search" placeholder="ابحث في كل المحتوى..."></div>
 <div class="bn" id="bn"><div class="bs on" data-k="top"><div><small>⭐ نجم الشهر</small><b>Top Performance</b><i>🏆 أحسن Sales وأحسن Telesales</i></div><div class="bc">🏆</div></div><div class="bs" data-k="week" id="bsWeek"><div><small>⭐ نجم الأسبوع</small><b>The King of Info</b><i>👑 اضغط وشوف مين الملك</i></div><div class="bc">🌟</div></div><div class="bs" data-k="w"><div><small>Aptelecom</small><b>أهلاً بيك في دليل Orange Business</b><i>Training team</i></div><div class="bc">🟧</div></div><button class="bnnav bnnext" id="bnnext" aria-label="التالي">‹</button><div class="dt"><u class="on"></u><u></u><u></u></div></div>
-<div class="qg"><div class="qa" id="go"><span>🟧</span>Orange Business</div><div class="qa" id="gs"><span>🎯</span>Sales Skills</div><div class="qa" id="gc"><span>💰</span>Commission</div><div class="qa" id="gq"><span>📝</span>Quiz</div><div class="qa" id="gm"><span>📊</span>RPM</div><div class="qa" id="gi"><span>📲</span>Install App</div></div>
+<div class="sh">Quick Access</div><div class="qg"><div class="qa" id="go"><span>🟧</span>Orange Business</div><div class="qa" id="gs"><span>🎯</span>Sales Skills</div><div class="qa" id="gc"><span>💰</span>Commission</div><div class="qa" id="gq"><span>📝</span>Quiz</div><div class="qa" id="gm"><span>📊</span>RPM</div><div class="qa" id="gi"><span>📲</span>Install App</div></div>
 <div class="sh">Weekly high score</div><div class="ts" id="ts"></div>
 <div class="sh">My Progress</div><div class="pg" id="pg"></div></div>
 <button id="gst" style="display:none"></button>
