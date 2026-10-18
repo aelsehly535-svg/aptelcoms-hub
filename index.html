@@ -230,11 +230,45 @@ body{padding-top:0!important;padding-bottom:var(--nwh,0px)!important}.chips{top:
 #intro .pt.challenge.fire svg text.flame{transform-box:fill-box;transform-origin:50% 90%;animation:flame .9s ease-in-out infinite;filter:drop-shadow(0 0 4px #ff8a00)}
 @keyframes flame{0%,100%{transform:scale(1,1) rotate(-3deg)}25%{transform:scale(1.12,1.22) rotate(3deg)}50%{transform:scale(.94,1.05) rotate(-2deg)}75%{transform:scale(1.1,1.16) rotate(2deg)}}
 @media(prefers-reduced-motion:reduce){#intro .pt.challenge.fire,#intro .pt.challenge.fire::before,#intro .pt.challenge.fire svg text.flame{animation:none}}
+
+/* wide screens: side panels + soft background */
+.side,.wm{display:none}
+.sd-c{background:var(--card);border:1px solid var(--bd);border-radius:20px;padding:16px 14px;text-align:center;color:var(--tx);box-shadow:0 6px 18px rgba(255,102,0,.08)}
+.sd-h{text-align:center;font-weight:800;font-size:16px;color:var(--or)}
+.sd-ph{width:104px;height:104px;border-radius:50%;object-fit:cover;border:3px solid var(--or);margin:0 auto 8px;display:block;background:#fff4ea}
+.sd-em{display:flex;align-items:center;justify-content:center;font-size:48px}
+.sd-n{font-size:19px;font-weight:800;line-height:1.4;margin:4px 0}
+.sd-m{font-size:12.5px;color:var(--mut);font-weight:600;margin-top:4px}
+.sd-t{font-size:14px;font-weight:800;color:var(--or);margin-bottom:6px}
+.sd-crn{font-size:40px;line-height:1;animation:flame 2.2s ease-in-out infinite}
+.king{cursor:pointer;background:linear-gradient(160deg,#fff8e1,var(--card))}
+#sdS,#sdT{cursor:pointer;transition:transform .18s}#sdS:hover,#sdT:hover{transform:translateY(-3px)}
+.cdg{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;direction:ltr}
+.cdb{background:#fff4ea;border:1px solid var(--bd);border-radius:12px;padding:8px 0}
+.cdb b{display:block;font-size:22px;color:var(--or);line-height:1.1}
+.cdb span{font-size:10.5px;color:var(--mut);font-weight:700}
+#cdBox .nx{margin:8px 0 2px;animation:challengeGlow2 1.6s ease-in-out infinite}
+@media (min-width:1280px){
+#intro:not(.hide){display:grid!important;grid-template-columns:minmax(180px,1fr) minmax(0,800px) minmax(180px,1fr)!important;column-gap:22px;align-content:start!important;justify-content:stretch!important;align-items:start!important;padding-inline:22px!important;background-image:radial-gradient(520px 380px at 0% 18%,rgba(255,102,0,.16),transparent 70%),radial-gradient(520px 380px at 100% 82%,rgba(255,102,0,.16),transparent 70%)}
+#intro>.hl{grid-column:2;grid-row:1;width:100%;max-width:none;margin:0;position:relative;z-index:1}
+#intro>.side{display:flex;flex-direction:column;gap:14px;position:sticky;top:24px;align-self:start;margin-top:24px;z-index:1}
+#intro>#sideR{grid-column:1;grid-row:1}#intro>#sideL{grid-column:3;grid-row:1}
+#intro .hl>.sh:nth-child(6){grid-column:1/-1;grid-row:6}
+#intro .hl>.ts{grid-column:1/-1;grid-row:7;min-height:120px!important}
+#intro .hl>.sh:nth-child(8){grid-column:1/-1;grid-row:8}
+#intro .hl>.pg{grid-column:1/-1;grid-row:9;grid-auto-rows:124px!important}
+#intro .qa{font-size:13.5px!important}
+.pt{font-size:13.5px!important}
+#cdBox .nx{width:100%;min-width:0;box-sizing:border-box;padding-inline:10px}
+#intro>.wm{display:block;position:fixed;width:340px;opacity:.05;filter:brightness(0);pointer-events:none;z-index:0}
+#intro>.wm1{left:-70px;bottom:6%;transform:rotate(-12deg)}#intro>.wm2{right:-70px;top:8%;transform:rotate(12deg)}
+}
+@media(prefers-reduced-motion:reduce){.sd-crn,#cdBox .nx{animation:none}}
 </style>
 </head>
 <body>
 <div id="nw"><b>عاجل</b><div class="nwk"><span id="nwt"></span></div></div><div id="nwl"></div>
-<section id="intro"><div class="hl"><div class="ht2"><div class="gr"><img id="introimg" alt="Aptelecom"><div class="g1" id="gtx">صباح الخير 👋</div><div class="g2">Aptelecom training team</div><div class="dchip" id="gdt"></div></div></div>
+<section id="intro"><aside class="side" id="sideR" aria-label="Top Performance"><div class="sd-h">🏆 Top Performance</div><div class="sd-c" id="sdS"></div><div class="sd-c t" id="sdT"></div></aside><aside class="side" id="sideL" aria-label="Weekly"><div class="sd-c king" id="sdK"></div><div class="sd-c" id="cdBox"></div></aside><img class="wm wm1" alt=""><img class="wm wm2" alt=""><div class="hl"><div class="ht2"><div class="gr"><img id="introimg" alt="Aptelecom"><div class="g1" id="gtx">صباح الخير 👋</div><div class="g2">Aptelecom training team</div><div class="dchip" id="gdt"></div></div></div>
 <div class="sb">🔍<input id="hq" type="search" placeholder="ابحث في كل المحتوى..."></div>
 <div class="bn" id="bn"><div class="bs on" data-k="top"><div><small>⭐ نجم الشهر</small><b>Top Performance</b><i>🏆 أحسن Sales وأحسن Telesales</i></div><div class="bc">🏆</div></div><div class="bs" data-k="week" id="bsWeek"><div><small>⭐ نجم الأسبوع</small><b>The King of Info</b><i>👑 اضغط وشوف مين الملك</i></div><div class="bc">🌟</div></div><div class="bs" data-k="w"><div><small>Aptelecom</small><b>أهلاً بيك في دليل Orange Business</b><i>Training team</i></div><div class="bc">🟧</div></div><button class="bnnav bnnext" id="bnnext" aria-label="التالي">‹</button><div class="dt"><u class="on"></u><u></u><u></u></div></div>
 <div class="sh">Quick Access</div><div class="qg"><div class="qa" id="go"><span>🟧</span>Orange Business</div><div class="qa" id="gs"><span>🎯</span>Sales Skills</div><div class="qa" id="gc"><span>💰</span>Commission</div><div class="qa" id="gq"><span>📝</span>Quiz</div><div class="qa" id="gm"><span>📊</span>RPM</div><div class="qa" id="gi"><span>📲</span>Install App</div></div>
@@ -560,6 +594,12 @@ function weeklyOpen(){const p=new Intl.DateTimeFormat('en-US',{timeZone:'Africa/
 let recBase=0;function bestW(){try{return JSON.parse(localStorage.getItem('aptelecom_weekly_best')||'null')}catch(e){return null}}
 function recLine(){return sc>recBase?'<p style="text-align:center;color:#2e9e4a;font-weight:800">🏅 رقم قياسي جديد! كسرت رقمك السابق ('+recBase+')</p>':'<p style="text-align:center;font-weight:700">🏅 رقمك القياسي: '+recBase+' / 200 · ارجع الأحد الجاي واكسره</p>'}
 function retryW(){if(!weeklyOpen()){alert('🔥 Weekly Challenge متاح يوم الأحد فقط من 10:00 صباحًا لحد 5:00 مساءً بتوقيت مصر.');return}quiz()}
+function weekStarName(){const w=NWALL.filter(isWS).sort((a,b)=>new Date(b.t||0)-new Date(a.t||0))[0];return w?(w.text.replace(/^⭐\s*نجم الأسبوع\s*:\s*/i,'').trim()||''):''}
+function cairoNow(){const p=new Intl.DateTimeFormat('en-US',{timeZone:'Africa/Cairo',weekday:'short',hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23'}).formatToParts(new Date()),g=t=>p.find(x=>x.type===t).value;return{d:['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].indexOf(g('weekday')),s:(+g('hour'))*3600+(+g('minute'))*60+(+g('second'))}}
+function cdLeft(){const n=cairoNow();let r=((7-n.d)%7)*86400+36000-n.s;if(r<=0)r+=604800;return r}
+function sdStar(o,t){const ph=o.photo?'<img class="sd-ph" src="'+o.photo+'" alt="">':'<div class="sd-ph sd-em">'+(t?'👸':'⭐')+'</div>';return ph+'<div class="sd-n" dir="auto">'+esc(o.name||(t?'الشهرة مستنياكي يا ملكة':'الشهرة في انتظارك يا نجم'))+'</div><div class="sd-m">'+(t?'👑 Telesales':'🏆 Sales')+(o.month?' · '+esc(o.month):'')+'</div>'}
+function cdTick(){const b=el('cdBox');if(!b||innerWidth<1280)return;const bs=bestW();const rec=bs&&bs.score!=null?'<div class="sd-m">🏅 رقمك القياسي: '+bs.score+' / 200</div>':'';if(weeklyOpen()){b.innerHTML='<div class="sd-t">🔥 Weekly Challenge</div><div class="sd-n">التحدي مفتوح دلوقتي!</div><button class="nx" id="cdGo">ابدأ التحدي</button>'+rec;return}const r=cdLeft(),d=Math.floor(r/86400),h=Math.floor(r%86400/3600),m=Math.floor(r%3600/60),x=r%60,c=(v,l)=>'<div class="cdb"><b>'+String(v).padStart(2,'0')+'</b><span>'+l+'</span></div>';b.innerHTML='<div class="sd-t">⏳ التحدي القادم</div><div class="cdg">'+c(d,'يوم')+c(h,'ساعة')+c(m,'دقيقة')+c(x,'ثانية')+'</div><div class="sd-m">الأحد 10 ص - 5 م (توقيت مصر)</div>'+rec}
+function sideRender(){const S=el('sdS');if(!S)return;S.innerHTML=sdStar(STAR,false);el('sdT').innerHTML=sdStar(TSTAR,true);const n=weekStarName();el('sdK').innerHTML='<div class="sd-crn">👑</div><div class="sd-t">The King of Info</div><div class="sd-n" dir="auto">'+(n?esc(n):'استنوا بطل الأسبوع')+'</div><div class="sd-m">⭐ نجم الأسبوع</div>';el('sideR').onclick=()=>openTop();el('sideL').onclick=e=>{if(e.target.closest('#cdGo')){const c=document.querySelector('#pg .challenge');if(c)c.click();return}if(e.target.closest('.king'))openWeekStar()};const im=document.querySelectorAll('.wm'),lg=el('introimg');if(lg&&lg.src)im.forEach(i=>{if(!i.src)i.src=lg.src});cdTick()}
 function weeklyAttempts(){try{return JSON.parse(localStorage.getItem(weeklyDateKey())||'{}')}catch(e){return {}}}
 function weeklyNameKey(name){return String(name||'').toLowerCase().replace(/[^a-z]/g,'')}
 function weeklyNameSimilarity(a,b){a=weeklyNameKey(a);b=weeklyNameKey(b);if(!a||!b)return 0;const prev=Array.from({length:b.length+1},(_,i)=>i);for(let i=1;i<=a.length;i++){let cur=[i];for(let j=1;j<=b.length;j++)cur[j]=Math.min(cur[j-1]+1,prev[j]+1,prev[j-1]+(a[i-1]===b[j-1]?0:1));for(let j=0;j<=b.length;j++)prev[j]=cur[j]}return 1-prev[b.length]/Math.max(a.length,b.length)}
@@ -781,7 +821,7 @@ el('pg').innerHTML=pt(1,'<text class="flame" x="50" y="62" font-size="31">🔥</
 document.querySelector('#pg .wch').onclick=()=>open('https://wa.me/201211535557','_blank');const mg=document.querySelector('#pg .mgmt');if(mg){mg.setAttribute('role','button');mg.setAttribute('tabindex','0');mg.style.cursor='pointer';mg.onclick=openNw;mg.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openNw()}}}const wc=document.querySelector('#pg .challenge');if(wc){wc.setAttribute('role','button');wc.setAttribute('tabindex','0');wc.setAttribute('aria-label','Start Weekly challenge');const startWeekly=()=>{if(!weeklyOpen()){alert('🔥 Weekly Challenge متاح يوم الأحد فقط من 10:00 صباحًا لحد 5:00 مساءً بتوقيت مصر.\nارجع في المعاد وورّينا هتقدر توصل لـ 200/200 ولا لأ!');return}try{if(localStorage.getItem('lock_'+weeklyDateKey())){alert('⛔ خدت محاولتك في التحدي الأسبوع ده. ارجع الأحد الجاي من 10 صباحًا لحد 5 مساءً.');return}}catch(e){}weeklyMode=true;el('intro').classList.add('hide');askName();scrollTo(0,0)};wc.onclick=startWeekly;wc.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();startWeekly()}}}
 let br=null;try{br=JSON.parse(localStorage.getItem('aptelecom_weekly_best')||localStorage.getItem('aptelecom_last_weekly_result')||'null')}catch(e){}
 const hv=br&&br.name&&br.total;clearInterval(rnT);
-el('ts').innerHTML='<div class="tc">🏆</div><div class="tm"><small>'+(hv?'رقمك القياسي · اتحدّى نفسك':'لسه مفيش رقم قياسي')+'</small><b dir="auto">'+(hv?esc(br.name):'اتحدّى نفسك')+'</b></div>'+(hv?'<div class="tsb">'+br.score+'/200</div>':'');el('ts').style.cursor='pointer';el('ts').onclick=()=>{const c=document.querySelector('#pg .challenge');if(c)c.click()};}
+el('ts').innerHTML='<div class="tc">🏆</div><div class="tm"><small>'+(hv?'رقمك القياسي · اتحدّى نفسك':'لسه مفيش رقم قياسي')+'</small><b dir="auto">'+(hv?esc(br.name):'اتحدّى نفسك')+'</b></div>'+(hv?'<div class="tsb">'+br.score+'/200</div>':'');el('ts').style.cursor='pointer';el('ts').onclick=()=>{const c=document.querySelector('#pg .challenge');if(c)c.click()};sideRender();}
 hR();
 let bi=0;const bs=[...document.querySelectorAll('.bs')],du=[...document.querySelectorAll('.dt u')];function showBanner(i){bi=(i+bs.length)%bs.length;bs.forEach((x,j)=>x.classList.toggle('on',j===bi));du.forEach((x,j)=>x.classList.toggle('on',j===bi))}const bnPrev=el('bnprev'),bnNext=el('bnnext');if(bnPrev)bnPrev.onclick=e=>{e.stopPropagation();showBanner(bi-1)};if(bnNext)bnNext.onclick=e=>{e.stopPropagation();showBanner(bi+1)};setInterval(()=>showBanner(bi+1),6000);bs.forEach(x=>x.onclick=()=>{const k=x.dataset.k;if(k==='week')openWeekStar();else if(k==='top')openTop();});
 
@@ -794,7 +834,7 @@ el('gi').onclick=()=>{el('ins').classList.add('on');insT(/iPhone|iPad|iPod/i.tes
 el('inx').onclick=()=>el('ins').classList.remove('on');el('ins').onclick=e=>{if(e.target.id==='ins')el('ins').classList.remove('on')};
 document.querySelectorAll('#ins .it').forEach(x=>x.onclick=()=>insT(x.dataset.k));
 el('inb').onclick=()=>{if(dp){dp.prompt();dp=null}el('ins').classList.remove('on')};
-sLoad();setInterval(sLoad,60000);setInterval(()=>{const c=document.querySelector('#pg .challenge');if(c)c.classList.toggle('fire',weeklyOpen())},30000);
+sLoad();setInterval(sLoad,60000);setInterval(()=>{const c=document.querySelector('#pg .challenge');if(c)c.classList.toggle('fire',weeklyOpen())},30000);setInterval(cdTick,1000);
 if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost'))addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{})});
 try{if(screen.orientation&&screen.orientation.unlock)screen.orientation.unlock()}catch(e){}
 </script>
