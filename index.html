@@ -221,6 +221,15 @@ body{padding-top:0!important;padding-bottom:var(--nwh,0px)!important}.chips{top:
 #quizv,#stv,#nwv,#cmv,#gmv,main,header .top{max-width:900px;margin-inline:auto}
 }
 .kc b.kn{font-size:22px;margin-top:4px}.kc small{font-size:13px;font-weight:700}.kc .kt,.kt{font-size:15px}.kt b{font-size:19px}
+
+/* challenge: stronger glow + moving flame (live time only) */
+#intro .pt.challenge.fire{border-color:#ff6a00;animation:challengeGlow2 1.6s ease-in-out infinite}
+#intro .pt.challenge.fire::before{inset:-4px;border-radius:19px;filter:blur(7px);opacity:.85;animation:challengeFire2 1.6s ease-in-out infinite}
+@keyframes challengeGlow2{0%,100%{box-shadow:0 0 10px rgba(255,80,0,.55),0 0 22px rgba(255,140,0,.3)}50%{box-shadow:0 0 18px rgba(255,80,0,.85),0 0 38px rgba(255,140,0,.55)}}
+@keyframes challengeFire2{0%,100%{opacity:.6;transform:scale(1)}50%{opacity:1;transform:scale(1.03)}}
+#intro .pt.challenge.fire svg text.flame{transform-box:fill-box;transform-origin:50% 90%;animation:flame .9s ease-in-out infinite;filter:drop-shadow(0 0 4px #ff8a00)}
+@keyframes flame{0%,100%{transform:scale(1,1) rotate(-3deg)}25%{transform:scale(1.12,1.22) rotate(3deg)}50%{transform:scale(.94,1.05) rotate(-2deg)}75%{transform:scale(1.1,1.16) rotate(2deg)}}
+@media(prefers-reduced-motion:reduce){#intro .pt.challenge.fire,#intro .pt.challenge.fire::before,#intro .pt.challenge.fire svg text.flame{animation:none}}
 </style>
 </head>
 <body>
@@ -768,7 +777,7 @@ async function sLoad(){let a='stats';try{if(!sessionStorage.getItem('apvr')){a='
 function vis(){try{let n=+localStorage.getItem('apv')||0;if(!sessionStorage.getItem('apvs')){n++;localStorage.setItem('apv',n);sessionStorage.setItem('apvs',1)}return n||1}catch(e){return 1}}
 function hR(){const h=new Date().getHours(),D=new Date();el('gtx').textContent=(h<12?'صباح الخير':'مساء الخير')+' 👋';el('gdt').textContent=D.toLocaleDateString('ar-EG-u-nu-latn',{weekday:'long',day:'numeric',month:'long'});
 const dm=new Date(D.getFullYear(),D.getMonth()+1,0).getDate(),en=o=>D.toLocaleDateString('en-US',o),v=ST?ST.v:vis();
-el('pg').innerHTML=pt(1,'<text x="50" y="62" font-size="31">🔥</text>','Weekly Challenge',' challenge'+(weeklyOpen()?' fire':''))+pt(1,'<g transform="translate(27 27) scale(1.85)" fill="none" stroke="#ff6600" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z"/><path d="M8.6 7.5c-.3.3-.8.9-.5 2 .4 1.3 1.7 3 3.4 3.9 1.4.7 2.2.6 2.8.2.4-.3.6-.8.5-1.1l-1.6-.8-.7.8c-.7-.2-2-1.2-2.3-2l.7-.7-.8-1.7c-.4-.1-1.2-.2-1.5.4z"/></g>','Chat with us',' wch')+pt(1,'<text x="50" y="62" font-size="31">🔐</text>','Top management',' mgmt') ;
+el('pg').innerHTML=pt(1,'<text class="flame" x="50" y="62" font-size="31">🔥</text>','Weekly Challenge',' challenge'+(weeklyOpen()?' fire':''))+pt(1,'<g transform="translate(27 27) scale(1.85)" fill="none" stroke="#ff6600" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z"/><path d="M8.6 7.5c-.3.3-.8.9-.5 2 .4 1.3 1.7 3 3.4 3.9 1.4.7 2.2.6 2.8.2.4-.3.6-.8.5-1.1l-1.6-.8-.7.8c-.7-.2-2-1.2-2.3-2l.7-.7-.8-1.7c-.4-.1-1.2-.2-1.5.4z"/></g>','Chat with us',' wch')+pt(1,'<text x="50" y="62" font-size="31">🔐</text>','Top management',' mgmt') ;
 document.querySelector('#pg .wch').onclick=()=>open('https://wa.me/201211535557','_blank');const mg=document.querySelector('#pg .mgmt');if(mg){mg.setAttribute('role','button');mg.setAttribute('tabindex','0');mg.style.cursor='pointer';mg.onclick=openNw;mg.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openNw()}}}const wc=document.querySelector('#pg .challenge');if(wc){wc.setAttribute('role','button');wc.setAttribute('tabindex','0');wc.setAttribute('aria-label','Start Weekly challenge');const startWeekly=()=>{if(!weeklyOpen()){alert('🔥 Weekly Challenge متاح يوم الأحد فقط من 10:00 صباحًا لحد 5:00 مساءً بتوقيت مصر.\nارجع في المعاد وورّينا هتقدر توصل لـ 200/200 ولا لأ!');return}try{if(localStorage.getItem('lock_'+weeklyDateKey())){alert('⛔ خدت محاولتك في التحدي الأسبوع ده. ارجع الأحد الجاي من 10 صباحًا لحد 5 مساءً.');return}}catch(e){}weeklyMode=true;el('intro').classList.add('hide');askName();scrollTo(0,0)};wc.onclick=startWeekly;wc.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();startWeekly()}}}
 let br=null;try{br=JSON.parse(localStorage.getItem('aptelecom_weekly_best')||localStorage.getItem('aptelecom_last_weekly_result')||'null')}catch(e){}
 const hv=br&&br.name&&br.total;clearInterval(rnT);
