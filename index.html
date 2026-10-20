@@ -348,6 +348,48 @@ body{padding-top:0!important;padding-bottom:var(--nwh,0px)!important}.chips{top:
 .rl-p{font-size:13px;color:var(--mut);margin:6px 2px;line-height:1.7}
 .rl-go{display:block;width:calc(100% - 24px);margin:6px 12px 14px;font-size:17px;animation:challengeGlow2 1.6s ease-in-out infinite}
 @media(prefers-reduced-motion:reduce){.rl-i,.rl-go,.rl-h1,.rl-h2{animation:none}}
+
+/* scary foe */
+.ar-f{filter:drop-shadow(0 0 7px rgba(255,0,0,.85)) drop-shadow(0 5px 3px rgba(0,0,0,.55));animation:arCreep 1.1s steps(1) infinite!important}
+@keyframes arCreep{0%{transform:translate(0,0) scale(1)}15%{transform:translate(-3px,-4px) scale(1.06) rotate(-3deg)}30%{transform:translate(3px,1px) scale(.97) rotate(2deg)}45%{transform:translate(-2px,-6px) scale(1.1) rotate(-2deg);opacity:.85}55%{opacity:1}70%{transform:translate(4px,-2px) scale(1.04) rotate(3deg)}85%{transform:translate(-3px,0) scale(1) rotate(-1deg)}}
+.arena{transition:background .6s}
+.arena::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 80% 70%,transparent 35%,rgba(120,0,0,.35));opacity:0;transition:opacity .6s}
+.arena[data-d="1"]{background:linear-gradient(#ffd9c7,#e69a7a)}
+.arena[data-d="2"],.arena[data-d="3"]{background:linear-gradient(#5a1a1a,#220707)}
+.arena[data-d="2"]::after,.arena[data-d="3"]::after{opacity:1;animation:arPulse 1s ease-in-out infinite}
+@keyframes arPulse{50%{background:radial-gradient(circle at 80% 70%,transparent 20%,rgba(200,0,0,.55))}}
+.arena[data-d="2"] .ar-c,.arena[data-d="3"] .ar-c{filter:grayscale(1) brightness(.5)}
+.arena[data-d="2"] .ar-lbl,.arena[data-d="3"] .ar-lbl{background:rgba(0,0,0,.6);color:#ff8a80}
+.pname{text-align:center;font-weight:900;font-size:18px;margin:6px 0 2px;color:var(--or);direction:ltr}
+@media(prefers-reduced-motion:reduce){.ar-f,.arena::after{animation:none!important}}
+
+/* fierce game-like arena */
+body.nohome #nw{display:none!important}
+.arena{background:linear-gradient(#150b30,#35184a 60%,#55202e)!important;height:118px;border-color:#000}
+.arena[data-b="1"]{background:linear-gradient(#2a0505,#6a0f0f 60%,#8c1b0a)!important}
+.arena[data-d="1"]{background:linear-gradient(#2a0f2a,#5a1d33 60%,#7a2a1a)!important}
+.arena[data-d="2"],.arena[data-d="3"]{background:linear-gradient(#1a0000,#4a0707 60%,#7a0d0d)!important}
+.ar-moon{position:absolute;top:6px;left:14px;font-size:26px;font-style:normal;filter:drop-shadow(0 0 8px #ffe9a8);opacity:.9}
+.ar-tomb{position:absolute;bottom:20px;left:0;white-space:nowrap;font-size:26px;opacity:.55;filter:brightness(.35);animation:arTomb 9s linear infinite;pointer-events:none}
+@keyframes arTomb{to{transform:translateX(-50%)}}
+.ar-fog{position:absolute;left:-20%;right:-20%;bottom:16px;height:34px;background:linear-gradient(transparent,rgba(210,190,255,.28));filter:blur(4px);animation:arFog 6s ease-in-out infinite alternate;pointer-events:none}
+@keyframes arFog{to{transform:translateX(40px)}}
+.arena .ar-gr{background:repeating-linear-gradient(90deg,#2d211b 0 24px,#3e2d23 24px 48px)!important}
+.ar-c{filter:brightness(.6)}.ar-c.c3{opacity:.35}
+.ar-h{filter:drop-shadow(0 0 8px #ffd54f);z-index:3}
+.ar-f{z-index:2;font-size:56px}
+.ar-f::before{content:"";position:absolute;inset:-22px;z-index:-1;border-radius:50%;background:radial-gradient(circle,rgba(255,30,0,.6),transparent 65%);animation:arAura .7s ease-in-out infinite alternate}
+@keyframes arAura{to{transform:scale(1.25);opacity:.7}}
+.arena[data-d="2"] .ar-f::after,.arena[data-d="3"] .ar-f::after{content:"🔥";position:absolute;left:-34px;top:28%;font-size:28px;animation:arBreath .45s ease-in-out infinite alternate}
+@keyframes arBreath{from{transform:scale(.7) translateX(6px);opacity:.6}to{transform:scale(1.3) translateX(-8px);opacity:1}}
+.arena.lit::before{content:"";position:absolute;inset:0;z-index:6;background:#fff;pointer-events:none;animation:arLit .45s ease-out both}
+@keyframes arLit{0%{opacity:.9}30%{opacity:0}50%{opacity:.6}100%{opacity:0}}
+.arena.slash .ar-h::after{content:"";position:absolute;left:-14px;top:-8px;width:70px;height:60px;pointer-events:none;background:repeating-linear-gradient(115deg,transparent 0 10px,rgba(255,40,40,.95) 10px 14px);clip-path:polygon(0 0,100% 40%,100% 100%,0 60%);animation:arSlash .5s ease-out both}
+@keyframes arSlash{from{opacity:1;transform:scale(.6)}to{opacity:0;transform:scale(1.25)}}
+.arena.shk{animation:sk .45s}
+.ar-lbl{background:rgba(0,0,0,.55)!important;color:#ffb74d!important}
+@media(prefers-reduced-motion:reduce){.ar-tomb,.ar-fog,.ar-f::before,.arena[data-d] .ar-f::after,.arena.lit::before,.arena.slash .ar-h::after,.arena.shk{animation:none!important}}
+.sc{direction:ltr;unicode-bidi:isolate}
 </style>
 </head>
 <body>
@@ -664,7 +706,7 @@ if(recBase>0&&before<=recBase&&pts>recBase){challengeToast('🏅 كسرت رقم
 else if(streak%5===0)givePU();
 else if(recBase>0&&!nearTold&&recBase>pts&&recBase-pts<=40){nearTold=true;challengeToast('👀 فاضل '+(recBase-pts)+' نقطة بس على رقمك القياسي… اتحمّس!')}
 else if(streak===3||streak===8)challengeToast('⚡ ضاعفت النقاط ×'+mult+'!')}}
-else{streak=0;b.classList.add('no');wr.push({q:qs[qi].q,m:b.textContent,c:qs[qi].c});if(weeklyMode){sfx('bad');buzz();arenaSet();arenaFx('bad');reaction(false);challengeToast(wr.length===1?'⚠️ أول غلطة! مسموح بغلطتين بس.':wr.length===2?'🚨 دي الغلطة التانية… الغلطة الجاية تنهي التحدي!':'💥 انتهى التحدي! وصلت لـ 3 إجابات غلط.')}}
+else{streak=0;b.classList.add('no');wr.push({q:qs[qi].q,m:b.textContent,c:qs[qi].c});if(weeklyMode){sfx('bad');setTimeout(()=>sfx('growl'),350);buzz();arenaSet();arenaFx('bad');reaction(false);challengeToast(wr.length===1?'⚠️ أول غلطة! مسموح بغلطتين بس.':wr.length===2?'🚨 دي الغلطة التانية… الغلطة الجاية تنهي التحدي!':'💥 انتهى التحدي! وصلت لـ 3 إجابات غلط.')}}
 if(weeklyMode){headUp();puRender()}
 el('qsc').textContent=weeklyMode?scTxt():'الدرجة: '+sc+' / '+(qi+1);
 if(weeklyMode&&wr.length>=3){el('fb').innerHTML='<p class="game-danger">💥 3 أخطاء! التحدي على وشك الانتهاء…</p>';setTimeout(failWeekly,950);return}
@@ -707,7 +749,7 @@ const P=[
 R('🎯','200 سؤال','بينزلوا عليك لحد ما تغلط 3 مرات ❤️❤️❤️')+R('⏱️','40 ثانية للسؤال','20 ثانية بس في سؤال الزعيم. لو الوقت خلص تتحسب إجابة غلط')+R('📅','الأحد بس','من 10 صباحاً لـ 5 مساءً بتوقيت مصر')+R('🔁','محاولة واحدة في الأسبوع','ومينفعش تدخل تاني لو الاسم اتكرر أو فيه غلط إملائي. الخروج في النص بيحسب المحاولة')+R('✍️','اسمك ثلاثي بالإنجليزي','ورقم الواتس ثابت ومينفعش يتغير')+R('📸','في الآخر','ابعت النتيجة + صورة النتيجة + سكرين شوت الصفحة الرئيسية على واتساب'),
 R('✅','10 نقاط','لكل إجابة صح')+R('⚡','بونص السرعة','لحد +10 نقاط: كل ما تجاوب أسرع البونص يكبر')+R('🔥','مضاعف الستريك','3 إجابات صح ورا بعض = ×2 · 8 ورا بعض = ×3')+R('👹','سؤال الزعيم','كل 25 سؤال: النقاط ×5 بس الوقت 20 ثانية')+R('🧮','مثال','إجابة بعد ثانيتين وإنت على ستريك 8 = (10 + 9) × 3 = <b>57 نقطة</b>')+R('💥','الغلطة','بتصفّر الستريك ومبتخصمش نقاط. وبتاخد قلب')+R('🏅','رقمك القياسي','بيتحسب بالنقاط، وبيظهر في الصفحة الرئيسية'),
 '<p class="rl-p">كل <b>5 إجابات صح ورا بعض</b> بتكسب أداة، وبنفس الترتيب لكل اللاعبين:</p>'+R('1️⃣','✂️ 50/50','بيشيل اختيارين غلط')+R('2️⃣','⏱️ +10 ثواني','وقت زيادة على السؤال الحالي')+R('3️⃣','⏭️ تخطي','بتعدّي السؤال من غير ما تخسر قلب')+R('4️⃣','💖 قلب','بيرجّعلك قلب اتخصم منك')+'<p class="rl-p">وبعد كده الترتيب بيتكرر. الشنطة بتشيل <b>3 أدوات</b> بس، والغلطة بتصفّر عدّاد الـ 5.</p>'];
-el('quizv').innerHTML='<div class="qbar"><span class="challenge-head">🔥 WEEKLY CHALLENGE</span><button class="qx" id="rlh">✕</button></div><div class="qz challenge-card rules"><div class="rl-hero"><span class="rl-h1">🏃</span><span class="rl-h2">👻</span><h2>🎮 جاهز للتحدي؟</h2><p>اقرا القواعد الأول وبعدين ابدأ</p></div><div class="rl-tabs"><button class="rl-t on" data-i="0">📜 الشروط</button><button class="rl-t" data-i="1">💎 النقاط</button><button class="rl-t" data-i="2">🎁 الأدوات</button></div><div class="rl-body" id="rlb"></div><button class="nx rl-go" id="rlg">🎮 يلا نبدأ</button></div>';
+el('quizv').innerHTML='<div class="qbar"><span class="challenge-head">🔥 WEEKLY CHALLENGE</span><button class="qx" id="rlh">✕</button></div><div class="qz challenge-card rules"><div class="rl-hero"><span class="rl-h1">🏃</span><span class="rl-h2">👹</span><h2>🎮 جاهز للتحدي؟</h2><p>اقرا القواعد الأول وبعدين ابدأ</p></div><div class="rl-tabs"><button class="rl-t on" data-i="0">📜 الشروط</button><button class="rl-t" data-i="1">💎 النقاط</button><button class="rl-t" data-i="2">🎁 الأدوات</button></div><div class="rl-body" id="rlb"></div><button class="nx rl-go" id="rlg">🎮 يلا نبدأ</button></div>';
 const show=i=>{el('rlb').innerHTML=P[i];document.querySelectorAll('.rl-t').forEach(b=>b.classList.toggle('on',+b.dataset.i===i))};show(0);
 document.querySelectorAll('.rl-t').forEach(b=>b.onclick=()=>{show(+b.dataset.i);sfx('tick2')});
 el('rlg').onclick=()=>{sfx('stage');askName()};el('rlh').onclick=home;scrollTo(0,0)}
@@ -724,7 +766,7 @@ function dlgm(m,ex){el('dm').textContent=m;el('dx').style.display=ex?'':'none';e
 function startT(){t10=t5=false;lastTick=0;tEnd=Date.now()+dur*1000;tm=setInterval(()=>{const r=Math.ceil((tEnd-Date.now())/1000),t=el('tt');if(!t)return;if(weeklyMode){const f=el('tbf');if(f)f.style.width=Math.min(100,Math.max(0,(tEnd-Date.now())/(dur*10)))+'%';if(r<=10&&r>0&&r!==lastTick){lastTick=r;sfx(r<=5?'tick2':'tick');if(r<=3)buzz([40])}if(r<=10&&!t10){t10=true;tension(['⏳ 10 ثواني بس!! 😰','😱 الوقت بيجري… 10 ثواني!']);const c=document.querySelector('#quizv .qz');if(c)c.classList.add('hot')}if(r<=5&&!t5){t5=true;challengeToast('🚨 5 ثواني!! اختار أي حاجة! 🙈');floatEmo(['⏰','😱','🚨'])}}if(r<=0){clearInterval(tm);timeUp();return}t.textContent='⏱ '+r;t.style.color=r<=10?'#d93025':''},250)}
 function nb(){el('fb').innerHTML='<button class="nx" id="nx">'+(qi===qs.length-1?'شوف النتيجة':'التالي')+'</button>';el('nx').onclick=()=>{qi++;qv()}}
 function timeUp(){const bs=[...document.querySelectorAll('.op')];if(!live||!bs.length||bs[0].disabled)return;bs.forEach(x=>{x.disabled=true;if(x.textContent===qs[qi].c)x.classList.add('ok')});streak=0;wr.push({q:qs[qi].q,m:'(انتهى الوقت)',c:qs[qi].c});el('tt').textContent='⌛ انتهى الوقت';el('qsc').textContent=weeklyMode?scTxt():'الدرجة: '+sc+' / '+(qi+1);if(weeklyMode){sfx('bad');buzz();arenaSet();arenaFx('bad');reaction(false);headUp();puRender();challengeToast(wr.length>=3?'💥 الوقت خلص والإجابة اتحسبت غلط… خسرت التحدي!':'⏱️ الوقت خلص! اتحسبت إجابة غلط.');if(wr.length>=3){setTimeout(failWeekly,950);return}}nb()}
-function weeklyVictory(){live=false;clearInterval(tm);sfx('win');challengeToast('👑 مستحيل! 200 من 200!');party(true);const bx=el('quizv');bx.innerHTML='<div class="qbar"><span class="challenge-head">🔥 WEEKLY CHALLENGE <small>PERFECT SCORE</small></span><button class="qx" id="qq">✕</button></div><div class="qz challenge-card" style="text-align:center;border:2px solid #ffc107;background:linear-gradient(145deg,rgba(255,193,7,.18),var(--card))"><div style="font-size:64px;animation:bob 1s infinite">🏆🎉👑</div><h2 style="color:#ff9800;margin:4px 0">LEGENDARY WIN!</h2><p style="font-size:19px;font-weight:900">'+pn+'</p><div class="sc" style="font-size:30px;color:#ff9800">200 / 200</div><p>🔥 200 إجابة صح من غير أي غلطة! إنت بطل الـ Weekly Challenge الحقيقي.</p><p>🎊 تستاهل حفلة كاملة — Aptelecom فخورة بيك!</p>'+snd()+'<div id="acts" style="display:none;text-align:center"><button class="qx" id="rh">الرئيسية</button></div></div>';el('rh').onclick=home;el('qq').onclick=home;lk()}
+function weeklyVictory(){live=false;clearInterval(tm);sfx('win');challengeToast('👑 مستحيل! 200 من 200!');party(true);const bx=el('quizv');bx.innerHTML='<div class="qbar"><span class="challenge-head">🔥 WEEKLY CHALLENGE <small>PERFECT SCORE</small></span><button class="qx" id="qq">✕</button></div><div class="qz challenge-card" style="text-align:center;border:2px solid #ffc107;background:linear-gradient(145deg,rgba(255,193,7,.18),var(--card))"><div style="font-size:64px;animation:bob 1s infinite">🏆🎉👑</div><h2 style="color:#ff9800;margin:4px 0">LEGENDARY WIN!</h2><p style="font-size:19px;font-weight:900">'+pn+'</p><div class="sc" style="font-size:30px;color:#ff9800">200 / 200</div><p>🔥 200 إجابة صح من غير أي غلطة! إنت بطل الـ Weekly Challenge الحقيقي.</p><p>🎊 تستاهل حفلة كاملة — Aptelecom فخورة بيك!</p>'+statsHtml()+snd()+'<div id="acts" style="display:none;text-align:center"><button class="qx" id="rh">الرئيسية</button></div></div>';el('rh').onclick=home;el('qq').onclick=home;lk()}
 let streak=0,lastBeat=-9,t10=false,t5=false;
 const TP={a:['😎 لسه بدري… بس السؤال الجاي بيبصلك بنظرة غريبة','☕ اشرب مية… المدير بيراقب من بعيد 👀','🎮 ده لسه تسخين… متقولش إني مقلتلكش!'],b:['😰 إيدك بتعرق؟ ده طبيعي… كمّل!','👀 حد وراك بيبص على الشاشة… ركّز!','🥶 الجو سخن؟ لا ده قلبك بيدق!','🕵️ الأسئلة بتتهامس عليك…','💀 أي غلطة دلوقتي هتتكتب في التاريخ!'],c:['🧠 مخك سخن؟ ده طبيعي بعد كل ده!','🏃 لسه فاضل كتير… بس إنت قدها!','🤡 لو المدير شافك دلوقتي هيطلب منك تدرّب الفريق 😂','😱 إنت وصلت لحتة محدش وصلها! متبوظهاش…','🫠 أعصابك تمام؟ لا؟ خد نفس عميق ⏳','🔥 الشركة كلها هتعرف لو كملت… ولو غلطت برضو 😂','🧨 الصبر… السؤال الجاي ملغّم!'],d:['💔 فاضل قلب واحد بس!! امشي على أطراف صوابعك 🦶','☠️ الغلطة الجاية هي النهاية… لا ضغط طبعاً 😅','🙏 قول يا رب… قلب واحد بس فاضل!']};
 function gameBeat(){if(qi===0){challengeToast('🚀 يلا! أول سؤال نازل… متتهورش 😎');return}if(qi%25===0){challengeToast('🎉 عدّيت '+qi+' سؤال من 200! كمّل يا وحش');party(false);return}if(wr.length>=2){if(qi-lastBeat>=2){lastBeat=qi;tension(TP.d)}return}if(qi%2===0||qi-lastBeat>=3){lastBeat=qi;tension(qi<10?TP.a:qi<40?TP.b:TP.c)}}
@@ -732,7 +774,7 @@ function tension(p){const m=p[Math.floor(Math.random()*p.length)];challengeToast
 function floatEmo(a){if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;for(let i=0;i<6;i++){const e=document.createElement('i');e.className='fe';e.textContent=a[i%a.length];e.style.cssText='left:'+(8+Math.random()*84)+'%;animation-delay:'+(i*.12)+'s';document.body.appendChild(e);setTimeout(()=>e.remove(),2800)}}
 
 let pts=0,bag=[],maxStr=0,fastN=0,badges=new Set(),boss=false,dur=40,qStart=0,lastTick=0,nearTold=false,puN=0,muted=false,AC=null,okI=0,badI=0;try{muted=localStorage.getItem('apw_mute')==='1'}catch(e){}
-const STC=['#2e9e4a','#e6a100','#ff6a00','#d93025','#8e24aa','#00838f','#c2185b','#303f9f'],STN=['🟢 تسخين','🟡 سخنت','🟠 النار بدأت','🔴 جحيم','☠️ مستحيل','👹 أسطورة','👑 ملك المعرفة','🚀 خارج الكوكب'],HERO=['🏃','🚴','🛵','🏎️','🚀','🛸','🦸','🧞'],FOE=['👻','🧟','🦖','👾','🐉','👽','🤖','☄️'];
+const STC=['#2e9e4a','#e6a100','#ff6a00','#d93025','#8e24aa','#00838f','#c2185b','#303f9f'],STN=['🟢 تسخين','🟡 سخنت','🟠 النار بدأت','🔴 جحيم','☠️ مستحيل','👹 أسطورة','👑 ملك المعرفة','🚀 خارج الكوكب'],HERO=['🏃','🚴','🛵','🏎️','🚀','🛸','🦸','🧞'],FOE=['👹','🧟','💀','👺','🐉','🕷️','🤖','☠️'];
 const TTL=[[0,'🥚 مبتدئ'],[10,'🐣 متحمس'],[30,'🎯 محترف'],[60,'🧠 خبير'],[100,'🔥 أسطورة'],[150,'👑 ملك المعرفة']];
 const BDG={fast:['⚡','سريع البرق'],boss:['👹','قاتل الزعيم'],s20:['🔥','20 ورا بعض']};
 const PUL={fifty:['✂️','50/50'],time:['⏱️','+10 ثواني'],skip:['⏭️','تخطي'],heart:['💖','قلب']};
@@ -751,12 +793,12 @@ boss:()=>{tn(80,0,.5,'sawtooth',.3,50);tn(110,.5,.5,'sawtooth',.3,60);tn(400,.2,
 stage:()=>[523,659,784,1047,1319].forEach((f,i)=>tn(f,i*.1,.25,'triangle',.2)),
 badge:()=>{tn(1319,0,.12,'sine',.2);tn(1760,.12,.35,'sine',.2)},
 win:()=>[523,659,784,1047,784,1047,1319].forEach((f,i)=>tn(f,i*.12,.3,'triangle',.22)),
-lose:()=>[330,294,262,196].forEach((f,i)=>tn(f,i*.25,.4,'sawtooth',.16,f*.9))};
+lose:()=>[330,294,262,196].forEach((f,i)=>tn(f,i*.25,.4,'sawtooth',.16,f*.9)),growl:()=>{tn(70,0,.6,'sawtooth',.28,40);tn(95,.05,.6,'square',.1,55);tn(180,.1,.4,'sawtooth',.08,90)}};
 function sfx(k){if(muted)return;try{const v=SFX[k];if(Array.isArray(v)){if(k==='ok'){okI=(okI+1+Math.floor(Math.random()*(v.length-1)))%v.length;v[okI]()}else{badI=(badI+1+Math.floor(Math.random()*(v.length-1)))%v.length;v[badI]()}}else v()}catch(e){}}
 function buzz(p){if(muted)return;try{navigator.vibrate&&navigator.vibrate(p||[120,60,120])}catch(e){}}
-function arenaHtml(){const i=Math.min(7,Math.floor(qi/25));return '<div class="arena" id="arena" data-b="'+(boss?1:0)+'" style="--spd:'+Math.max(.5,2.4-streak*.12).toFixed(2)+'s"><i class="ar-c c1">☁️</i><i class="ar-c c2">✨</i><i class="ar-c c3">☁️</i><div class="ar-gr"></div><span class="ar-fire" id="arFi">🔥</span><span class="ar-h" id="arH">'+HERO[i]+'</span><span class="ar-f" id="arF">'+(boss?'👹':FOE[i])+'</span><span class="ar-lbl" id="arL"></span></div>'}
-function arenaSet(){const f=el('arF'),h=el('arH');if(!f||!h)return;f.style.left=[76,60,44,30][Math.min(3,wr.length)]+'%';h.style.left='12%';const fi=el('arFi');if(fi)fi.style.opacity=streak>=3?1:0;const l=el('arL');if(l)l.textContent=titleFor(sc)}
-function arenaFx(k){const h=el('arH');if(!h)return;h.classList.remove('jump','hit');void h.offsetWidth;h.classList.add(k==='ok'?'jump':'hit')}
+function arenaHtml(){const i=Math.min(7,Math.floor(qi/25));return '<div class="arena" id="arena" data-b="'+(boss?1:0)+'" style="--spd:'+Math.max(.5,2.4-streak*.12).toFixed(2)+'s"><i class="ar-moon">🌕</i><i class="ar-c c1">🦇</i><i class="ar-c c2">🦇</i><i class="ar-c c3">☁️</i><div class="ar-tomb">🪦🌲🪦🦴🌲🪦🌳🪦🌲🪦🦴🪦🌲🌳🪦🪦🌲🪦🦴🌲🪦🌳🪦</div><div class="ar-fog"></div><div class="ar-gr"></div><span class="ar-fire" id="arFi">🔥</span><span class="ar-h" id="arH">'+HERO[i]+'</span><span class="ar-f" id="arF">'+(boss?'😈':FOE[i])+'</span><span class="ar-lbl" id="arL"></span></div>'}
+function arenaSet(){const f=el('arF'),h=el('arH');if(!f||!h)return;const ar=el('arena');if(ar)ar.dataset.d=Math.min(3,wr.length);f.style.fontSize=(48+Math.min(3,wr.length)*12+(boss?10:0))+'px';f.style.left=[76,60,44,30][Math.min(3,wr.length)]+'%';h.style.left='12%';const fi=el('arFi');if(fi)fi.style.opacity=streak>=3?1:0;const l=el('arL');if(l)l.textContent=titleFor(sc)}
+function arenaFx(k){const h=el('arH');if(!h)return;h.classList.remove('jump','hit');void h.offsetWidth;h.classList.add(k==='ok'?'jump':'hit');if(k!=='ok'){const a=el('arena');if(a){a.classList.remove('slash','lit','shk');void a.offsetWidth;a.classList.add('slash','lit','shk');setTimeout(()=>a.classList.remove('slash','lit','shk'),650)}}}
 function reaction(ok){const c=document.querySelector('#quizv .qz');if(!c)return;const a=(ok?RO:RB)[Math.floor(Math.random()*6)],e=document.createElement('div');e.className='react';e.innerHTML='<b>'+a[0]+'</b><span>'+a[1]+'</span>';c.appendChild(e);setTimeout(()=>e.remove(),1300)}
 function showGain(g,m){const c=document.querySelector('#quizv .qz');if(!c)return;const e=document.createElement('i');e.className='gain';e.textContent='+'+g+(m>1?' ×'+m:'')+(boss?' 👹×5':'');c.appendChild(e);setTimeout(()=>e.remove(),1300)}
 function flash(t,col){const e=document.createElement('div');e.className='flash';e.style.background='radial-gradient(circle,rgba(0,0,0,0),'+col+')';e.innerHTML='<span>'+t+'</span>';document.body.appendChild(e);setTimeout(()=>e.remove(),1600)}
@@ -771,10 +813,10 @@ else if(k==='time'){tEnd+=10000;t10=t5=false;const c=document.querySelector('#qu
 else if(k==='heart'){if(!wr.length){challengeToast('💖 معندكش غلطات لسه… احتفظ بيه!');return}wr.pop();headUp();arenaSet();challengeToast('💖 رجعنالك قلب!')}
 else if(k==='skip'){bag.splice(i,1);sfx('powerup');qi++;qv();return}
 bag.splice(i,1);sfx('powerup');puRender()}
-function statsHtml(){const bd=[...badges].map(k=>BDG[k][0]+' '+BDG[k][1]).join(' · ');return '<div class="gstats"><div class="gs"><b>'+pts+'</b><small>نقطة</small></div><div class="gs"><b>'+sc+'</b><small>إجابة صح</small></div><div class="gs"><b>'+maxStr+'</b><small>أطول ستريك</small></div></div><p class="ttl">لقبك: '+titleFor(sc)+'</p>'+(bd?'<p class="ttl">'+bd+'</p>':'')}
+function statsHtml(){const nm='<div class="pname">👤 '+esc(pn||'')+'</div>',bd=[...badges].map(k=>BDG[k][0]+' '+BDG[k][1]).join(' · ');return nm+'<div class="gstats"><div class="gs"><b>'+pts+'</b><small>نقطة</small></div><div class="gs"><b>'+sc+'</b><small>إجابة صح</small></div><div class="gs"><b>'+maxStr+'</b><small>أطول ستريك</small></div></div><p class="ttl">لقبك: '+titleFor(sc)+'</p>'+(bd?'<p class="ttl">'+bd+'</p>':'')}
 function shareCard(){const W=1080,H=1350,c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d'),g=x.createLinearGradient(0,0,W,H);g.addColorStop(0,'#ff6a00');g.addColorStop(1,'#ff2d55');x.fillStyle=g;x.fillRect(0,0,W,H);x.fillStyle='rgba(255,255,255,.13)';x.beginPath();x.arc(900,200,320,0,7);x.fill();x.beginPath();x.arc(120,1200,260,0,7);x.fill();x.textAlign='center';x.fillStyle='#fff';const F='"Segoe UI",Tahoma,Arial,sans-serif';
 const T=(t,y,sz)=>{x.font='bold '+sz+'px '+F;x.fillText(t,W/2,y)};
-T('🔥 WEEKLY CHALLENGE',150,72);T(pn,280,60);T(String(pts),560,230);T('نقطة',650,64);T(sc+' / 200 إجابة صح',770,56);T('🏷️ '+titleFor(sc),860,56);T('🔥 أطول ستريك: '+maxStr,950,52);
+T('🔥 WEEKLY CHALLENGE',150,72);x.fillStyle='rgba(0,0,0,.25)';x.fillRect(140,215,800,100);x.fillStyle='#fff';T('👤 '+pn,290,64);T(String(pts),560,230);T('نقطة',650,64);T(sc+' / 200 إجابة صح',770,56);T('🏷️ '+titleFor(sc),860,56);T('🔥 أطول ستريك: '+maxStr,950,52);
 const bd=[...badges].map(k=>BDG[k][0]+' '+BDG[k][1]).join('  ');if(bd)T(bd,1040,44);
 T('🏅 رقمك القياسي: '+Math.max(pts,recBase)+' نقطة',1130,46);T(new Date().toLocaleDateString('en-GB'),1210,40);T('Aptelecom training team',1290,44);
 c.toBlob(async b=>{const f=new File([b],'Aptelecom-challenge.png',{type:'image/png'});try{if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:'Weekly Challenge'});return}}catch(e){}const u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download='Aptelecom-challenge.png';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),30000)})}
@@ -1002,7 +1044,7 @@ el('gi').onclick=()=>{el('ins').classList.add('on');insT(/iPhone|iPad|iPod/i.tes
 el('inx').onclick=()=>el('ins').classList.remove('on');el('ins').onclick=e=>{if(e.target.id==='ins')el('ins').classList.remove('on')};
 document.querySelectorAll('#ins .it').forEach(x=>x.onclick=()=>insT(x.dataset.k));
 el('inb').onclick=()=>{if(dp){dp.prompt();dp=null}el('ins').classList.remove('on')};
-sLoad();setInterval(sLoad,60000);setInterval(()=>{const c=document.querySelector('#pg .challenge');if(c)c.classList.toggle('fire',weeklyOpen())},30000);setInterval(cdTick,1000);(function(){let n=0,t=0;const i=el('introimg');if(i)i.addEventListener('click',()=>{const w=Date.now();if(w-t>4000)n=0;t=w;n++;if(n>=7){n=0;let on=false;try{on=sessionStorage.getItem('apw_test')==='1';if(on)sessionStorage.removeItem('apw_test');else sessionStorage.setItem('apw_test','1')}catch(e){}alert(on?'تم إيقاف وضع التجربة':'🧪 وضع تجربة التحدي شغال: من غير وقت ولا حد محاولات ولا حفظ نتيجة، لحد ما تقفل التطبيق');hR()}})})();
+sLoad();setInterval(sLoad,60000);setInterval(()=>{const c=document.querySelector('#pg .challenge');if(c)c.classList.toggle('fire',weeklyOpen())},30000);setInterval(cdTick,1000);(function(){const i=el('intro');if(!i)return;const f=()=>document.body.classList.toggle('nohome',i.classList.contains('hide'));new MutationObserver(f).observe(i,{attributes:true,attributeFilter:['class']});f()})();(function(){let n=0,t=0;const i=el('introimg');if(i)i.addEventListener('click',()=>{const w=Date.now();if(w-t>4000)n=0;t=w;n++;if(n>=7){n=0;let on=false;try{on=sessionStorage.getItem('apw_test')==='1';if(on)sessionStorage.removeItem('apw_test');else sessionStorage.setItem('apw_test','1')}catch(e){}alert(on?'تم إيقاف وضع التجربة':'🧪 وضع تجربة التحدي شغال: من غير وقت ولا حد محاولات ولا حفظ نتيجة، لحد ما تقفل التطبيق');hR()}})})();
 if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost'))addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{})});
 try{if(screen.orientation&&screen.orientation.unlock)screen.orientation.unlock()}catch(e){}
 </script>
