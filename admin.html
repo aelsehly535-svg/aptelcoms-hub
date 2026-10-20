@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ff6600">
+  <title>Aptelecom - الإدارة</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      background: #151515;
+      color: #fff;
+    }
+    .panel {
+      width: 100%;
+      max-width: 390px;
+      padding: 28px 24px;
+      background: #222;
+      border: 1px solid #444;
+      border-radius: 18px;
+    }
+    h1 { color: #ff6600; margin-bottom: 8px; }
+    p { color: #bbb; line-height: 1.7; }
+    label { display: block; margin: 22px 0 8px; }
+    input {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #555;
+      border-radius: 9px;
+      background: #151515;
+      color: white;
+      font-size: 16px;
+    }
+    button {
+      width: 100%;
+      margin-top: 18px;
+      padding: 14px;
+      border: 0;
+      border-radius: 9px;
+      background: #ff6600;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:disabled { opacity: .6; }
+    #message { min-height: 24px; margin-top: 16px; }
+  </style>
+</head>
+<body>
+  <main class="panel">
+    <h1>Aptelecom</h1>
+    <p>تسجيل دخول الإدارة</p>
+
+    <form id="loginForm">
+      <label for="password">كلمة مرور الإدارة</label>
+      <input id="password" type="password"
+        autocomplete="current-password" required maxlength="200">
+      <button id="submitButton" type="submit">تسجيل الدخول</button>
+      <p id="message" role="status"></p>
+    </form>
+  </main>
+
+  <script>
+    // ضع رابط مشروعك الحقيقي من Supabase هنا
+    const SUPABASE_URL = "https://oqkctzpokrrdudizilit.supabase.co";
+
+    // ضع Publishable key أو anon العام هنا فقط
+    const SUPABASE_ANON_KEY = "sb_publishable_NWZeEleQFl5o-nie0fIOPw_IHlatHB-";
+
+    const form = document.getElementById("loginForm");
+    const button = document.getElementById("submitButton");
+    const message = document.getElementById("message");
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      button.disabled = true;
+      message.textContent = "جارٍ التحقق...";
+      message.style.color = "#bbb";
+
+      try {
+        if (
+          SUPABASE_URL === "PASTE_PROJECT_URL_HERE" ||
+          SUPABASE_ANON_KEY === "PASTE_PUBLIC_KEY_HERE"
+        ) {
+          throw new Error("بيانات Supabase لم تُضف بعد.");
+        }
+
+        const response = await fetch(
+          `${SUPABASE_URL}/functions/v1/aptelecom-auth`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "apikey": SUPABASE_ANON_KEY
+            },
+            body: JSON.stringify({
+              action: "login",
+              password: document.getElementById("password").value
+            })
+          }
+        );
+
+        const result = await response.json();
+
+        if (!response.ok || result.ok !== true) {
+          throw new Error(result.error || "فشل تسجيل الدخول.");
+        }
+
+        message.textContent = "تم التحقق من كلمة المرور بنجاح.";
+        message.style.color = "#62d991";
+      } catch (error) {
+        message.textContent = error.message || "حدث خطأ في الاتصال.";
+        message.style.color = "#ff8585";
+      } finally {
+        button.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>
