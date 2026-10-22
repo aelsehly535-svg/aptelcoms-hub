@@ -988,7 +988,7 @@ el('vsp').innerHTML='<div class="qz"><h3 style="margin-top:0">1) المكان</h
 '<div class="qz"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px"><h3 style="margin:0">🗺️ Google Maps</h3><button class="qx" id="vsbig">⛶ تكبير</button></div><div id="vsmw" style="width:100%;height:55vh;min-height:320px;border-radius:14px;overflow:hidden;background:var(--bg)"></div><p class="cm" style="margin:8px 0 0">دوس على أي شركة في الخريطة وهتظهر بياناتها. انسخ الاسم أو الرقم وسجّلهم من الأسفل.</p></div>'+
 '<div class="qz"><h3 style="margin-top:0">💾 حفظ الشركة في Daily Report <span class="cm">(النهارده: <b id="qsn">0</b>)</span></h3>'+
 '<label>Sales Name</label><input class="ni" id="qss" autocomplete="name" placeholder="اسمك">'+
-'<label>Company Name *</label><div class="vrow"><input class="ni" id="qsc" placeholder="اسم الشركة"><button class="qx" id="qscp" type="button">📋 لصق</button></div>'+
+'<label>Company Name *</label><div class="vrow"><input class="ni" id="qsc" placeholder="اسم الشركة"><button class="qx" id="qscp" type="button">📋 لصق</button></div><button class="nx" id="qsph" type="button" style="width:100%;margin-top:8px;background:transparent;color:var(--tx);border:1px solid var(--bd)">📞 هات الرقم (تبويب جديد)</button>'+
 '<div class="grid2"><div><label>Mobile</label><div class="vrow"><input class="ni" id="qsm" type="tel" inputmode="tel" dir="ltr" placeholder="01xxxxxxxxx"><button class="qx" id="qsmp" type="button">📋</button></div></div><div><label>Area</label><input class="ni" id="qsa" placeholder="المنطقة"></div></div>'+
 '<div id="qse" class="pe" style="margin-top:8px"></div><div class="vrow"><button class="nx" id="qsv" style="flex:1">💾 حفظ في Daily Report</button></div></div>';
 try{el('qss').value=localStorage.getItem(DR_N)||''}catch(e){}
@@ -999,7 +999,7 @@ document.querySelectorAll('#vsz button').forEach(b=>b.onclick=()=>{VS_R=+b.datas
 el('vsc').innerHTML=VS_C.map(c=>'<button data-c="'+c[2]+'"'+(c[2]===VS_CAT?' class="on"':'')+'>'+c[0]+' '+c[1]+'</button>').join('');
 document.querySelectorAll('#vsc button').forEach(b=>b.onclick=()=>{VS_CAT=b.dataset.c;document.querySelectorAll('#vsc button').forEach(x=>x.classList.toggle('on',x===b));vsMap()});
 el('vsbig').onclick=()=>{const w=el('vsmw'),big=w.dataset.big!=='1';w.dataset.big=big?'1':'';w.style.height=big?'80vh':'55vh';el('vsbig').textContent=big?'⛶ تصغير':'⛶ تكبير';if(big)w.scrollIntoView({behavior:'smooth',block:'start'})};
-el('qscp').onclick=()=>vsPaste('qsc');el('qsmp').onclick=()=>vsPaste('qsm');el('qsv').onclick=vsQuick;
+el('qscp').onclick=()=>vsPaste('qsc');el('qsph').onclick=()=>{const c=el('qsc').value.trim();if(!c){vsQs('اكتب أو الصق اسم الشركة الأول.',1);return}vsQs('');window.open('https://www.google.com/maps/search/'+encodeURIComponent(c+' '+(el('qsa').value.trim()||VS_PL||''))+'?hl=ar','_blank','noopener')};el('qsmp').onclick=()=>vsPaste('qsm');el('qsv').onclick=vsQuick;
 vsSt(VS_ST);vsCnt();vsMap()}
 const DR_K='dr_v1',DR_N='dr_sales',DR_H=['Account','Company Name','CP Name','Mobile','Area','Date','Way','Feedback','Sales Name'];
 let DR_P='today',DR_ED=null,DR_AC='New',DR_WY='Visit';
