@@ -942,24 +942,64 @@ else{const bk=[[],[],[],[]];a.forEach(q=>bk[gi.get(q)].push(q));let k=0,g=0;whil
 if(out.length<n)a.forEach(q=>{if(out.length<n&&!out.includes(q))out.push(q)});
 const r=sh(out);seenAdd(key,r);return r}
 let cmT='c',cmLast=null;const autoD=()=>{const n=new Date(),dm=new Date(n.getFullYear(),n.getMonth()+1,0).getDate();return Math.max(1,Math.round(n.getDate()/dm*22))};const CV={t:'',l:'',p:'',d:String(autoD())};
-let VS_LL=null,VS_Z=17;
+let VS_LL=null,VS_Z=17,VS_CAT='companies',VS_ADD=null,VS_BUSY=false;
 let VS_T='f';
-function openVs(t){VS_LL=null;VS_Z=17;VS_T=t==='r'?'r':'f';document.body.classList.add('vsx');el('intro').classList.add('hide');vsShell();scrollTo(0,0)}
+function openVs(t){VS_LL=null;VS_Z=17;VS_CAT='companies';VS_ADD=null;VS_T=t==='r'?'r':'f';document.body.classList.add('vsx');el('intro').classList.add('hide');vsShell();scrollTo(0,0)}
 function vsShell(){el('vsv').innerHTML='<div class="qbar"><span>📍 Visit</span><button class="qx" id="vsh">🏠 الرئيسية</button></div><div class="vtabs"><button data-t="f">📍 Nearby</button><button data-t="r">📋 Daily Report</button></div><div id="vsp"></div>';el('vsh').onclick=home;document.querySelectorAll('#vsv .vtabs button').forEach(b=>b.onclick=()=>vsTab(b.dataset.t));vsTab(VS_T)}
-function vsTab(t){VS_T=t;document.querySelectorAll('#vsv .vtabs button').forEach(b=>b.classList.toggle('on',b.dataset.t===t));if(t==='r'){DR_ED=null;DR_AC='New';DR_WY='Visit';drUI()}else vsUI()}
-function vsOpen(q){q=(q||'').trim();if(!q)return;const u='https://www.google.com/maps/search/'+encodeURIComponent(q)+(VS_LL?'/@'+VS_LL[0].toFixed(6)+','+VS_LL[1].toFixed(6)+','+VS_Z+'z':'');if(!VS_LL)el('vss').textContent='فتحت الخريطة من غير تحديد موقعك. اضغط "حدد موقعي" الأول لنتايج أدق.';window.open(u,'_blank','noopener')}
-function vsUI(){const C=['🏢 شركات','🏭 مصانع','💼 مكاتب إدارية','🏥 عيادات ومراكز طبية','🍽️ مطاعم وكافيهات','🛍️ محلات تجارية','🏫 مدارس وحضانات','🏨 فنادق','🔧 ورش ومخازن','💊 صيدليات'],Z=[['قريب جدًا',18],['قريب',17],['أوسع',16]];
-el('vsp').innerHTML=''+
-'<div class="qz"><h3 style="margin-top:0">1) حدّد مكانك</h3><button class="nx" id="vsl" style="width:100%;margin-top:0">📍 حدد موقعي</button><div id="vss" class="cm" style="margin-top:8px;min-height:20px"></div></div>'+
-'<div class="qz"><h3 style="margin-top:0">2) النطاق</h3><div class="vch" id="vsz"></div></div>'+
-'<div class="qz"><h3 style="margin-top:0">3) نوع النشاط</h3><div class="vch" id="vsc"></div><div class="vrow"><input class="ni" id="vsq" placeholder="أو اكتب نشاط (مثلاً: مصنع ملابس)"><button class="nx" id="vsg">ابحث</button></div></div>'+
-'<p class="cm">هتفتح خريطة جوجل بالشركات اللي حواليك، وتضغط على أي شركة وتتصل بيها. موقعك بيتستخدم على جهازك بس ومش بيتخزن.</p>';
-el('vsc').innerHTML=C.map((c,i)=>'<button data-i="'+i+'">'+c+'</button>').join('');
-document.querySelectorAll('#vsc button').forEach(b=>{b.onclick=()=>vsOpen(C[+b.dataset.i].replace(/^\S+\s/,''))});
-el('vsz').innerHTML=Z.map(z=>'<button data-z="'+z[1]+'"'+(z[1]===VS_Z?' class="on"':'')+'>'+z[0]+'</button>').join('');
-document.querySelectorAll('#vsz button').forEach(b=>{b.onclick=()=>{VS_Z=+b.dataset.z;document.querySelectorAll('#vsz button').forEach(x=>x.classList.toggle('on',x===b))}});
-el('vsg').onclick=()=>vsOpen(el('vsq').value);el('vsq').onkeydown=e=>{if(e.key==='Enter')vsOpen(el('vsq').value)};
-el('vsl').onclick=()=>{const s=el('vss');if(!navigator.geolocation){s.textContent='المتصفح ده مش بيدعم تحديد الموقع.';return}if(window.isSecureContext===false){s.textContent='تحديد الموقع محتاج رابط https.';return}s.textContent='جاري تحديد موقعك...';navigator.geolocation.getCurrentPosition(p=>{VS_LL=[p.coords.latitude,p.coords.longitude];s.textContent='✅ تم تحديد موقعك (دقة حوالي '+Math.round(p.coords.accuracy)+' متر)'},e=>{s.textContent=e.code===1?'الموقع مرفوض. فعّل إذن الموقع للموقع ده من إعدادات المتصفح وجرّب تاني.':e.code===3?'استغرق وقت طويل. اتأكد إن الـ GPS شغال وجرّب تاني.':'مش قادر أحدد موقعك. اتأكد إن الـ GPS شغال.'},{enableHighAccuracy:true,timeout:15000,maximumAge:30000})}}
+function vsTab(t){VS_T=t;document.querySelectorAll('#vsv .vtabs button').forEach(b=>b.classList.toggle('on',b.dataset.t===t));if(t==='r'){DR_ED=null;DR_AC='New';DR_WY='Visit';drUI();if(VS_ADD){el('drc').value=VS_ADD.name||'';el('drm').value=VS_ADD.phone||'';el('dra').value=VS_ADD.area||'';el('drfb').value='تمت الإضافة من نتائج البحث في Visit';el('drer').style.color='';el('drer').textContent='تم تجهيز بيانات الشركة؛ اضغط Save لحفظها على هذا الجهاز فقط.';VS_ADD=null;}}else vsUI()}
+const VS_TYPES={
+ companies:{label:'شركات عامة',query:'nwr(around:{r})["office"="company"];nwr(around:{r})["office"="business"];nwr(around:{r})["office"="consulting"];'},
+ construction:{label:'شركات مقاولات وإنشاءات',query:'nwr(around:{r})["office"="company"];nwr(around:{r})["craft"="builder"];nwr(around:{r})["construction"="yes"];'},
+ factories:{label:'مصانع',query:'nwr(around:{r})["landuse"="industrial"];nwr(around:{r})["man_made"="works"];nwr(around:{r})["industrial"];'},
+ offices:{label:'مكاتب إدارية',query:'nwr(around:{r})["office"];'},
+ clinics:{label:'عيادات ومراكز طبية',query:'nwr(around:{r})["amenity"="clinic"];nwr(around:{r})["amenity"="doctors"];nwr(around:{r})["amenity"="hospital"];'},
+ restaurants:{label:'مطاعم وكافيهات',query:'nwr(around:{r})["amenity"="restaurant"];nwr(around:{r})["amenity"="cafe"];'},
+ shops:{label:'محلات تجارية',query:'nwr(around:{r})["shop"];'},
+ schools:{label:'مدارس وحضانات',query:'nwr(around:{r})["amenity"="school"];nwr(around:{r})["amenity"="kindergarten"];'},
+ hotels:{label:'فنادق',query:'nwr(around:{r})["tourism"="hotel"];'},
+ workshops:{label:'ورش ومخازن',query:'nwr(around:{r})["craft"];nwr(around:{r})["building"="warehouse"];nwr(around:{r})["industrial"="warehouse"];'},
+ pharmacies:{label:'صيدليات',query:'nwr(around:{r})["amenity"="pharmacy"];'}
+};
+function vsEsc(v){return String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function vsSetCat(k){VS_CAT=k;document.querySelectorAll('#vsc button').forEach(b=>b.classList.toggle('on',b.dataset.k===k))}
+function vsUI(){const C=[['companies','🏢 شركات'],['construction','🏗️ مقاولات وإنشاءات'],['factories','🏭 مصانع'],['offices','💼 مكاتب إدارية'],['clinics','🏥 عيادات ومراكز طبية'],['restaurants','🍽️ مطاعم وكافيهات'],['shops','🛍️ محلات تجارية'],['schools','🏫 مدارس وحضانات'],['hotels','🏨 فنادق'],['workshops','🔧 ورش ومخازن'],['pharmacies','💊 صيدليات']];
+el('vsp').innerHTML='<div class="qz"><h3 style="margin-top:0">1) اختار طريقة تحديد المكان</h3><button class="nx" id="vsl" style="width:100%;margin-top:0">📍 حدد موقعي الحالي</button><div id="vss" class="cm" style="margin-top:8px;min-height:20px"></div><div class="vrow" style="margin-top:10px"><input class="ni" id="vsplace" placeholder="أو اكتب اسم منطقة أو مدينة (مثال: طنطا أو زفتى)" style="flex:1"></div><div class="cm">لو كتبت مدينة، البحث هيتم حول مركز المنطقة المكتوبة. لو استخدمت GPS، البحث هيكون حول موقعك.</div></div>'+ 
+'<div class="qz"><h3 style="margin-top:0">2) نطاق البحث</h3><div class="vch" id="vsz"><button data-z="1000">1 كم</button><button data-z="5000" class="on">5 كم</button><button data-z="10000">10 كم</button><button data-z="20000">20 كم</button></div></div>'+ 
+'<div class="qz"><h3 style="margin-top:0">3) نوع النشاط</h3><div class="vch" id="vsc">'+C.map(c=>'<button data-k="'+c[0]+'"'+(c[0]===VS_CAT?' class="on"':'')+'>'+c[1]+'</button>').join('')+'</div><div class="vrow"><input class="ni" id="vsq" placeholder="أو اكتب نشاطًا آخر (مثلاً: مصنع ملابس)" style="flex:1"><button class="nx" id="vsg">ابحث</button></div></div>'+ 
+'<div class="qz"><h3 style="margin-top:0">نتائج الشركات والأنشطة</h3><div id="vsresults" class="cm">حدد موقعك أو اكتب مدينة ثم اضغط ابحث.</div></div><p class="cm">تظهر هنا الشركات التي يتوفر لها رقم تليفون فقط، والبحث يقتصر على موقعك أو المنطقة والنطاق المحددين. سجل Daily Report محفوظ على هذا المتصفح/الجهاز فقط ولا يظهر لباقي الموظفين.</p><p class="cm" style="font-size:10px;opacity:.65;margin-top:4px">© OpenStreetMap contributors</p>';
+VS_Z=5000;document.querySelectorAll('#vsc button').forEach(b=>b.onclick=()=>vsSetCat(b.dataset.k));document.querySelectorAll('#vsz button').forEach(b=>b.onclick=()=>{VS_Z=+b.dataset.z;document.querySelectorAll('#vsz button').forEach(x=>x.classList.toggle('on',x===b))});
+el('vsg').onclick=vsSearch;el('vsq').onkeydown=e=>{if(e.key==='Enter')vsSearch()};el('vsplace').onkeydown=e=>{if(e.key==='Enter')vsSearch()};
+el('vsl').onclick=()=>{const s=el('vss');if(!navigator.geolocation){s.textContent='المتصفح ده مش بيدعم تحديد الموقع.';return}if(window.isSecureContext===false){s.textContent='تحديد الموقع محتاج رابط https.';return}s.textContent='جاري تحديد موقعك...';navigator.geolocation.getCurrentPosition(p=>{VS_LL=[p.coords.latitude,p.coords.longitude];el('vsplace').value='';s.textContent='✅ تم تحديد موقعك (دقة حوالي '+Math.round(p.coords.accuracy)+' متر). اضغط ابحث لعرض النتائج.'},e=>{s.textContent=e.code===1?'الموقع مرفوض. فعّل إذن الموقع من إعدادات المتصفح.':e.code===3?'استغرق تحديد الموقع وقتًا طويلًا. اتأكد إن GPS شغال.':'مش قادر أحدد موقعك. اتأكد إن GPS شغال.'},{enableHighAccuracy:true,timeout:15000,maximumAge:30000})};
+}
+async function vsSearch(){
+if(VS_BUSY)return;
+const status=el('vsresults'),place=(el('vsplace').value||'').trim(),custom=(el('vsq').value||'').trim(),cat=VS_TYPES[VS_CAT]||VS_TYPES.companies;let center=VS_LL;
+if(place){status.textContent='جاري تحديد المنطقة...';try{const u='https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&countrycodes=eg&q='+encodeURIComponent(place+', Egypt');const g=await fetch(u,{headers:{'Accept':'application/json'}});if(!g.ok)throw Error('geo');const a=await g.json();if(!a.length){status.textContent='مش لاقي المنطقة دي. جرّب كتابة اسم المدينة أو المنطقة بشكل أوضح.';return}center=[+a[0].lat,+a[0].lon];VS_LL=center;el('vss').textContent='📍 البحث حول: '+(a[0].display_name||place)}catch(e){status.textContent='تعذر تحديد المنطقة الآن. اتأكد من اتصال الإنترنت أو جرّب اسمًا أقصر.';return}}
+if(!center){status.textContent='حدد موقعك الحالي أو اكتب اسم منطقة/مدينة الأول.';return}
+VS_BUSY=true;status.textContent='جاري البحث عن الشركات القريبة التي لها رقم هاتف...';
+const radius=VS_Z||5000;let selectors=custom?'nwr(around:{r})["name"~"'+custom.replace(/[.*+?^${}()|[\]\\]/g,'\\$&').replace(/"/g,'')+'",i];':cat.query;selectors=selectors.replaceAll('{r}',String(radius)+','+center[0]+','+center[1]);
+const query='[out:json][timeout:25];('+selectors+');out center tags;';
+const normalizePhone=p=>String(p||'').replace(/[^0-9]/g,'').replace(/^002/,'').replace(/^0/,'');
+const seen=new Set(),items=[];
+function addItem(x){const phone=String(x.phone||'').trim();if(!phone)return;const normName=String(x.name||'').toLowerCase().replace(/[^\p{L}\p{N}]/gu,'');const key=(normName||'unknown')+'|'+(normalizePhone(phone)||phone.toLowerCase());if(!normName||!normalizePhone(phone)||seen.has(key))return;seen.add(key);items.push({...x,phone})}
+try{
+// OpenStreetMap / Overpass: try more than one public endpoint.
+try{let response;for(const endpoint of ['https://overpass-api.de/api/interpreter','https://overpass.kumi.systems/api/interpreter']){try{response=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'text/plain;charset=UTF-8'},body:query});if(response.ok)break}catch(e){}}if(response&&response.ok){const data=await response.json();(data.elements||[]).forEach(o=>{const t=o.tags||{},name=t.name||t['name:en']||t['name:ar'],phone=t.phone||t['contact:phone']||t['contact:mobile']||t.mobile||'';if(!name||!phone)return;const lat=o.lat??o.center?.lat,lon=o.lon??o.center?.lon;addItem({name,phone,address:[t['addr:street'],t['addr:suburb'],t['addr:city']].filter(Boolean).join('، ')||place||'الموقع المحدد',lat,lon,web:t.website||t['contact:website']||'',distance:lat!=null&&lon!=null?Math.hypot((lat-center[0])*111000,(lon-center[1])*111000*Math.cos(center[0]*Math.PI/180)):0})})}}catch(e){}
+// Wikidata: free public SPARQL query for nearby entries with a phone number.
+try{
+const km=Math.max(1,Math.round(radius/1000));
+const terms={companies:'company|business|corporation|enterprise|شركة|أعمال',construction:'construction|contractor|builder|مقاولات|إنشاءات',factories:'factory|manufacturing|industrial|مصنع|صناعة',offices:'office|business|company|مكتب|شركة',clinics:'clinic|hospital|medical|health|عيادة|مستشفى',restaurants:'restaurant|cafe|مطعم|مقهى',shops:'shop|store|retail|متجر|محل',schools:'school|kindergarten|education|مدرسة|حضانة',hotels:'hotel|hostel|resort|فندق',workshops:'workshop|garage|repair|ورشة',pharmacies:'pharmacy|drugstore|صيدلية'};
+const typeRx=custom?custom.replace(/[.*+?^${}()|[\]\\]/g,' '): (terms[VS_CAT]||'company|business');
+const sparql='SELECT DISTINCT ?item ?name ?phone ?coord ?address ?website ?typeLabel WHERE { ?item wdt:P1329 ?phone; wdt:P625 ?coord; rdfs:label ?name. FILTER(LANG(?name)="ar" || LANG(?name)="en"). SERVICE wikibase:around { ?item wdt:P625 ?coord. bd:serviceParam wikibase:center "Point('+center[1]+' '+center[0]+')"^^geo:wktLiteral; wikibase:radius "'+km+'"; wikibase:distance ?distance. } OPTIONAL { ?item wdt:P6375 ?address. } OPTIONAL { ?item wdt:P856 ?website. } OPTIONAL { ?item wdt:P31/wdt:P279* ?type. ?type rdfs:label ?typeLabel. FILTER(LANG(?typeLabel)="en" || LANG(?typeLabel)="ar") } FILTER(CONTAINS(LCASE(STR(?phone))," ") || STRLEN(STR(?phone))>5) '+(custom?'FILTER(CONTAINS(LCASE(STR(?name)),LCASE("'+custom.replace(/"/g,'')+'"))':'FILTER(!BOUND(?typeLabel) || REGEX(LCASE(STR(?typeLabel)),"'+typeRx.toLowerCase().replace(/"/g,'')+'"))')+' } LIMIT 250';
+const u='https://query.wikidata.org/sparql?format=json&query='+encodeURIComponent(sparql);const r=await fetch(u,{headers:{'Accept':'application/sparql-results+json'}});if(r.ok){const j=await r.json();(j.results?.bindings||[]).forEach(b=>{const name=b.name?.value||'',phone=b.phone?.value||'',coord=b.coord?.value||'',m=/Point\(([-\d.]+)\s+([-\d.]+)\)/.exec(coord),lon=m?+m[1]:null,lat=m?+m[2]:null;if(!name||!phone)return;addItem({name,phone,address:b.address?.value||place||'الموقع المحدد',lat,lon,web:b.website?.value||'',distance:lat!=null&&lon!=null?Math.hypot((lat-center[0])*111000,(lon-center[1])*111000*Math.cos(center[0]*Math.PI/180)):0})})}
+}catch(e){}
+// Enforce requested radius and require a usable phone number for every result.
+const filtered=items.filter(x=>x.phone&&Number.isFinite(x.distance)&&x.distance<=radius+100).sort((a,b)=>a.distance-b.distance);
+if(!filtered.length){status.innerHTML='ملقتش شركات/أنشطة داخل النطاق المحدد عندها رقم تليفون مسجل في قواعد البيانات المتاحة. جرّب توسّع النطاق أو اختار منطقة تانية.';return}
+status.innerHTML='<div style="margin-bottom:10px">تم العثور على <b>'+filtered.length+'</b> شركة/نشاط برقم تليفون داخل النطاق المحدد.</div>'+filtered.map((x,i)=>'<div class="dri" style="margin-bottom:9px"><div class="drt"><b>'+vsEsc(x.name)+'</b><span class="bd">📞 رقم متاح</span></div><div class="mt">📍 '+vsEsc(x.address)+'</div><div style="margin-top:6px">📞 <a href="tel:'+vsEsc(x.phone.replace(/[^+\d]/g,''))+'" dir="ltr">'+vsEsc(x.phone)+'</a></div>'+(x.web?'<div style="margin-top:5px">🌐 '+vsEsc(x.web)+'</div>':'')+'<div class="dra2"><button data-add="'+i+'">➕ أضف إلى Daily Report</button></div></div>').join('');
+status.querySelectorAll('[data-add]').forEach(b=>b.onclick=()=>{const x=filtered[+b.dataset.add];VS_ADD={name:x.name,phone:x.phone,area:x.address};vsTab('r')});
+}catch(e){status.textContent='حصلت مشكلة في تحميل النتائج. جرّب تاني بعد قليل أو غيّر المنطقة/النطاق.'}finally{VS_BUSY=false}}
+
 const DR_K='dr_v1',DR_N='dr_sales',DR_H=['Account','Company Name','CP Name','Mobile','Area','Date','Way','Feedback','Sales Name'];
 let DR_P='today',DR_ED=null,DR_AC='New',DR_WY='Visit';
 function drLoad(){try{const a=JSON.parse(localStorage.getItem(DR_K)||'[]');return Array.isArray(a)?a:[]}catch(e){return[]}}
@@ -987,14 +1027,13 @@ el('vsp').innerHTML='<div id="drv">'+
 '<div class="cm" id="drdt" style="margin-top:10px"></div><div id="drer" class="pe"></div>'+
 '<div class="vrow"><button class="nx" id="drsv" style="flex:1">💾 Save</button><button class="qx" id="drcx" style="display:none">Cancel</button></div></div>'+
 '<div class="qz"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><h3 style="margin:0">Entries <span id="drcnt"></span></h3><select class="ni" id="drper"><option value="today">Today</option><option value="week">Last 7 days</option><option value="month">This month</option><option value="all">All entries</option></select></div><div id="drl" style="margin-top:8px"></div>'+
-'<div class="vrow"><button class="nx" id="drxl" style="flex:1">⬇️ Download Excel</button><button class="nx" id="drsh" style="flex:1;display:none">📤 Share</button></div><div class="cm" id="drxm" style="margin-top:8px"></div></div></div>';
+'<div class="vrow"><button class="nx" id="drxl" style="flex:1">⬇️ Download Excel</button></div><div class="cm" id="drxm" style="margin-top:8px"></div></div></div>';
 try{el('drs').value=localStorage.getItem(DR_N)||''}catch(e){}
 document.querySelectorAll('#drac button').forEach(b=>b.onclick=()=>{DR_AC=b.dataset.v;drSeg('drac',DR_AC)});
 document.querySelectorAll('#drw button').forEach(b=>b.onclick=()=>{DR_WY=b.dataset.v;drSeg('drw',DR_WY)});
 el('drper').value=DR_P;el('drper').onchange=()=>{DR_P=el('drper').value;drList()};
 el('drsv').onclick=drSubmit;el('drcx').onclick=()=>{DR_ED=null;drForm()};
-el('drxl').onclick=()=>drExport(false);
-if(navigator.share&&window.File)el('drsh').style.display='';el('drsh').onclick=()=>drExport(true);
+el('drxl').onclick=()=>drExport();
 drForm();drList()}
 function drForm(r){const ed=!!r;DR_ED=ed?r.id:null;DR_AC=ed?r.ac:'New';DR_WY=ed?r.wy:'Visit';
 el('drft').textContent=ed?'✏️ Edit entry':'➕ New entry';el('drc').value=ed?r.co:'';el('drp').value=ed?r.cp:'';el('drm').value=ed?r.mb:'';el('dra').value=ed?r.ar:'';el('drfb').value=ed?r.fb:'';
@@ -1061,12 +1100,11 @@ return drZip([
 {n:'xl/worksheets/sheet1.xml',d:sheet},
 {n:'xl/worksheets/_rels/sheet1.xml.rels',d:H+'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="'+R+'/table" Target="../tables/table1.xml"/></Relationships>'},
 {n:'xl/tables/table1.xml',d:table},{n:'xl/styles.xml',d:styles},{n:'xl/sharedStrings.xml',d:sst}])}
-async function drExport(share){const m=el('drxm'),rows=drRows().slice().sort((a,b)=>(a.ts||0)-(b.ts||0));
+async function drExport(){const m=el('drxm'),rows=drRows().slice().sort((a,b)=>(a.ts||0)-(b.ts||0));
 if(!rows.length){m.textContent='مفيش تسجيلات في الفترة دي عشان تتصدّر.';return}
 let sales='';try{sales=(el('drs').value||localStorage.getItem(DR_N)||'').trim()}catch(e){}if(!sales)sales=rows[rows.length-1].sn||'';
 const blob=drBuild(rows,sales,DR_PL[DR_P]),name='Daily_Report_'+((sales.replace(/[^A-Za-z0-9]+/g,'_').replace(/^_+|_+$/g,''))?sales.replace(/[^A-Za-z0-9]+/g,'_').replace(/^_+|_+$/g,'')+'_':'')+drToday()+'.xlsx';
-if(share&&navigator.canShare){try{const f=new File([blob],name,{type:blob.type});if(navigator.canShare({files:[f]})){await navigator.share({files:[f],title:'Daily Report'});m.textContent='✅ اتشارك.';return}}catch(e){if(e&&e.name==='AbortError')return}}
-const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},5000);m.textContent='✅ اتحمّل: '+name+' ('+rows.length+' تسجيل). ابعته لأي حد من تطبيق الواتساب أو الإيميل.'}
+const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},5000);m.textContent='✅ اتحمّل: '+name+' ('+rows.length+' تسجيل).'}
 function openCm(){document.body.classList.add('cmx');el('intro').classList.add('hide');cmT='c';cmLast=null;cmUI();scrollTo(0,0)}
 function cmUI(){el('cmv').innerHTML='<div class="qbar"><span>💰 حاسبة الكومشن</span><button class="qx" id="cmh">🏠 الرئيسية</button></div><div class="qz"><div class="grid2"><div><label>تارجت الخطوط</label><input class="ni" id="ct" inputmode="numeric" placeholder="0"></div><div><label>الخطوط المباعة</label><input class="ni" id="cl" inputmode="numeric" placeholder="0"></div><div><label>عدد البوينت المباعة</label><input class="ni" id="cp" inputmode="numeric" placeholder="0"></div><div><label>الأيام اللي اشتغلها (تلقائي)</label><input class="ni" id="cd" inputmode="numeric" placeholder="0"></div></div><div id="cdn" class="cm" style="margin-top:8px"></div></div><div class="tb"><button data-t="c">الكومشن</button><button data-t="r">المتبقي</button><button data-t="p">Projection</button></div><div id="cr"></div>';
 ['t','l','p','d'].forEach(k=>{const i=el('c'+k);i.value=CV[k];i.oninput=()=>{CV[k]=i.value;cmR()}});
