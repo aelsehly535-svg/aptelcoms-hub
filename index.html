@@ -47,7 +47,7 @@ body.vsx header,body.vsx .chips,body.vsx footer,body.vsx #list{display:none}#vsv
 #drv .vch{display:flex;flex-wrap:wrap;gap:8px}#drv .vch button{background:var(--bg);color:var(--tx);border:1px solid var(--bd);border-radius:18px;padding:9px 18px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer}#drv .vch button.on{background:var(--or);color:#fff;border-color:var(--or)}
 #drv .vrow{display:flex;gap:8px;margin-top:12px;align-items:center}#drv .vrow .nx{margin:0;white-space:nowrap}
 #drv .dri{display:flex;align-items:center;gap:8px;border-top:1px solid var(--bd);padding:6px 0;font-size:14px;line-height:1.35}#drv .dri:first-child{border-top:0}
-#drv .drb{flex:1;min-width:0;cursor:pointer;padding:0}#drv .drb .l1{display:flex;align-items:center;gap:6px;min-width:0}#drv .drb b{font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+#drv .drb{flex:1;min-width:0;cursor:pointer;padding:0}#drv .drb .l1{display:flex;align-items:center;gap:6px;min-width:0}#drv .drb b{display:block;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
 #drv .drb .l2{color:var(--mut);font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px}
 #drv .tg{font-size:11px;font-weight:800;border-radius:8px;padding:1px 7px;color:#fff;background:#2e9e4a;flex:none}#drv .tg.e{background:#3b6fd4}
 #drv .ic{flex:none;width:34px;height:34px;display:flex;align-items:center;justify-content:center;border:1px solid var(--bd);border-radius:12px;background:transparent;color:var(--tx);font-size:15px;text-decoration:none;cursor:pointer;padding:0;font-family:inherit}
@@ -1076,9 +1076,8 @@ try{localStorage.setItem(DR_N,sn)}catch(x){}
 const was=!!DR_ED;drForm();drList();el('drer').style.color='#2e9e4a';el('drer').textContent=was?'✅ اتعدّل.':'✅ اتحفظ.'}
 function drList(){const r=drRows(),L=el('drl');el('drcnt').textContent='('+r.length+')';el('drxm').textContent='';
 if(!r.length){L.innerHTML='<p class="cm" style="padding:14px 0">مفيش تسجيلات في الفترة دي.</p>';return}
-L.innerHTML='<p class="cm" style="margin:0 0 2px;font-size:12px">اضغط على اسم الشركة للتعديل</p>'+r.map(x=>{const tel=String(x.mb||'').replace(/[^\d+]/g,''),id=drE(x.id),
-meta=[x.cp?'👤 '+x.cp:'',x.mb?'📞 '+x.mb:'',x.ar?'📍 '+x.ar:'',DR_P!=='today'?'📅 '+drFmt(x.d):'',x.fb?'💬 '+String(x.fb).replace(/\s+/g,' '):''].filter(Boolean).join(' · ');
-return '<div class="dri"><div class="drb" data-e="'+id+'"><div class="l1"><b>'+drE(x.co)+'</b><span class="tg'+(x.ac==='Existing'?' e':'')+'">'+(x.ac==='Existing'?'Existing':'New')+'</span><span title="'+(x.wy==='Call'?'Call':'Visit')+'">'+(x.wy==='Call'?'☎️':'🚶')+'</span></div>'+(meta?'<div class="l2" dir="auto">'+drE(meta)+'</div>':'')+'</div>'+
+L.innerHTML='<p class="cm" style="margin:0 0 2px;font-size:12px">اضغط على اسم الشركة للتعديل</p>'+r.map(x=>{const tel=String(x.mb||'').replace(/[^\d+]/g,''),id=drE(x.id);
+return '<div class="dri"><div class="drb" data-e="'+id+'"><b>'+drE(x.co)+'</b><div class="l2">'+(x.mb?'<span dir="ltr" style="unicode-bidi:isolate">'+drE(x.mb)+'</span>':'—')+'</div></div>'+
 (tel?'<a class="ic" href="tel:'+drE(tel)+'" title="Call">📞</a>':'')+'<button class="ic" data-x="'+id+'" title="Delete">🗑️</button></div>'}).join('');
 L.querySelectorAll('[data-e]').forEach(b=>b.onclick=()=>{const x=drLoad().find(q=>q.id===b.dataset.e);if(x){drForm(x);scrollTo(0,0)}});
 L.querySelectorAll('[data-x]').forEach(b=>b.onclick=()=>{if(!confirm('تمسح التسجيل ده؟'))return;const a=drLoad().filter(q=>q.id!==b.dataset.x);drSave(a);if(DR_ED===b.dataset.x)drForm();drList()})}
