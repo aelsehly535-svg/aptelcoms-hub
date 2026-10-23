@@ -471,9 +471,31 @@ html.unlocked #lock{display:none}
 .lk-sh{animation:lkSh .45s!important}@keyframes lkSh{20%,60%{transform:translateX(-9px)}40%,80%{transform:translateX(9px)}}
 @media(prefers-reduced-motion:reduce){.lk-bg,.lk-card,.lk-sh{animation:none!important}}
 #ins .ish{margin:18px 0 10px;padding:10px;text-align:center;font-weight:800;font-size:16px;color:#fff;background:linear-gradient(135deg,#ff6a00,#ff2d55);border-radius:14px}
-@media (min-width:900px){#intro .qg{grid-template-columns:repeat(7,1fr)!important}}
+@media (min-width:900px){#intro .qg{grid-template-columns:repeat(6,1fr)!important}}
 @media (orientation:landscape) and (max-height:520px){#intro .qg{grid-template-columns:repeat(7,1fr)!important}}
 @media (max-width:899px) and (orientation:portrait){#intro .qg #gi{grid-column:1/-1;flex-direction:row!important;gap:12px;grid-row-end:auto}#intro .qg #gi span{margin:0!important}}
+/* ---- To Do / alarm ---- */
+#gt{position:relative}#gt i.tdbg{position:absolute;top:6px;inset-inline-end:8px;background:#e5484d;color:#fff;font-style:normal;font-size:11px;font-weight:800;line-height:1;min-width:18px;height:18px;border-radius:9px;display:flex;align-items:center;justify-content:center;padding:0 5px}
+#vsv .vch button.on{background:var(--or);color:#fff;border-color:var(--or)}
+.tdc{display:flex;flex-wrap:wrap;align-items:center;gap:8px;border:1px solid var(--bd);border-radius:14px;padding:10px;margin:8px 0;background:var(--card);color:var(--tx)}
+.tdc.od{border-color:#e5484d;background:rgba(229,72,77,.08)}.tdc.dn{opacity:.6}.tdc.dn .tdn{text-decoration:line-through}
+.tdk{flex:none;width:32px;height:32px;border-radius:50%;border:2px solid var(--or);background:transparent;color:#fff;font-size:17px;font-weight:900;line-height:1;cursor:pointer;padding:0}
+.tdc.dn .tdk{background:#2e9e4a;border-color:#2e9e4a}
+.tdb{flex:1;min-width:0;cursor:pointer}.tdn{display:block;font-size:15px}.tds{color:var(--mut);font-size:12.5px;line-height:1.4}.tds em{color:#e5484d;font-style:normal;font-weight:800}
+.tdf{font-size:12.5px;margin-top:2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.tdc .ic{flex:none;width:34px;height:34px;display:flex;align-items:center;justify-content:center;border:1px solid var(--bd);border-radius:12px;background:transparent;color:var(--tx);font-size:15px;text-decoration:none;cursor:pointer;padding:0;font-family:inherit}
+.tdc .ic.tdcall{width:40px;height:40px;background:#2e9e4a;border-color:#2e9e4a;color:#fff;font-size:18px;border-radius:50%;box-shadow:0 2px 8px rgba(46,158,74,.4)}
+.tdp{flex-basis:100%;border-top:1px dashed var(--bd);padding-top:10px}.tdch{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.tdch button{background:var(--bg);color:var(--tx);border:1px solid var(--bd);border-radius:16px;padding:7px 12px;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer}
+.tdg{display:grid;grid-template-columns:1fr 1fr;gap:8px}.tdr{display:flex;gap:8px;margin-top:10px}.tdr .nx{margin:0;flex:1}.tde{color:#e5484d;font-size:13px;min-height:0;margin-top:6px}
+#tdal{position:fixed;inset:0;z-index:2147483100;background:rgba(0,0,0,.65);display:flex;align-items:center;justify-content:center;padding:16px}
+#tdal .tdbox{background:var(--bg);color:var(--tx);border-radius:20px;max-width:460px;width:100%;max-height:85vh;overflow:auto;padding:16px;box-shadow:0 10px 40px rgba(0,0,0,.5)}
+#tdal .tdh{font-size:20px;font-weight:800;text-align:center;margin-bottom:6px}.tdbell{display:inline-block;animation:tdRing .6s ease-in-out infinite}
+@keyframes tdRing{0%,100%{transform:rotate(0)}25%{transform:rotate(-18deg)}75%{transform:rotate(18deg)}}
+@media(prefers-reduced-motion:reduce){.tdbell{animation:none}}
+@media (min-width:900px){#intro .qg{grid-template-columns:repeat(6,1fr)!important}}
+@media (orientation:landscape) and (max-height:520px){#intro .qg{grid-template-columns:repeat(7,1fr)!important}}
+#pg .pt.challenge{grid-column:span 2;flex-direction:row;gap:16px;font-size:17px!important}#intro #pg .pt.challenge svg{width:72px!important;height:72px!important;flex:none}#intro #pg .pt.challenge span{font-size:18px!important}#pg .pt.challenge .flame{font-size:34px}
 </style>
 </head>
 <body><div id="lock" dir="rtl" role="dialog" aria-modal="true" aria-labelledby="lkT"><div class="lk-bg"></div><div class="lk-card"><img id="lockimg" class="lk-logo" alt="Aptelecom"><h1 id="lkT">Aptelecom</h1><p class="lk-sub">TRAINING &amp; SALES EXCELLENCE PORTAL</p><div class="lk-line"></div><p class="lk-hint">🔒 منطقة محمية · أدخل كلمة السر للمتابعة</p><div class="lk-f"><input id="lkp" type="password" autocomplete="current-password" placeholder="كلمة السر" dir="ltr" autocapitalize="off" spellcheck="false"><button type="button" id="lkeye" aria-label="إظهار كلمة السر">👁</button></div><div id="lke" class="lk-e" role="alert"></div><button id="lkb" class="lk-b" type="button">دخول</button></div><div class="lk-ft">© 2026 Aptelecom · Authorized access only</div></div>
@@ -494,7 +516,7 @@ d.addEventListener('DOMContentLoaded',function(){fresh();$('lkb').onclick=go;$('
 <section id="intro"><aside class="side" id="sideR" aria-label="Top Performance"><div class="sd-h">🏆 Top Performance</div><div class="sd-c" id="sdS"></div><div class="sd-c t" id="sdT"></div></aside><aside class="side" id="sideL" aria-label="Weekly"><div class="sd-c king" id="sdK"></div><div class="sd-c" id="cdBox"></div></aside><img class="wm wm1" alt=""><img class="wm wm2" alt=""><div class="hl"><div class="ht2"><div class="gr"><img id="introimg" alt="Aptelecom"><div class="g1" id="gtx">صباح الخير 👋</div><div class="g2">Aptelecom training team</div><div class="dchip" id="gdt"></div></div></div>
 <div class="sb">🔍<input id="hq" type="search" placeholder="ابحث في كل المحتوى..."></div>
 <div class="bn" id="bn"><div class="bs on" data-k="top"><div><small>⭐ نجم الشهر</small><b>Top Performance</b><i>🏆 أحسن Sales وأحسن Telesales</i></div><div class="bc">🏆</div></div><div class="bs" data-k="week" id="bsWeek"><div><small>⭐ نجم الأسبوع</small><b>The King of Info</b><i>👑 اضغط وشوف مين الملك</i></div><div class="bc">🌟</div></div><div class="bs" data-k="w"><div><small>Aptelecom</small><b>أهلاً بيك في دليل Orange Business</b><i>Training team</i></div><div class="bc">🟧</div></div><button class="bnnav bnnext" id="bnnext" aria-label="التالي">‹</button><div class="dt"><u class="on"></u><u></u><u></u></div></div>
-<div class="sh">Quick Access</div><div class="qg"><div class="qa" id="go"><span>🟧</span>Orange Business</div><div class="qa" id="gs"><span>🎯</span>Sales Skills</div><div class="qa" id="gc"><span>💰</span>Commission</div><div class="qa" id="gq"><span>📝</span>Quiz</div><div class="qa" id="gm"><span>📊</span>RPM</div><div class="qa" id="gv"><span>📍</span>Visit</div><div class="qa" id="gi"><span>📲</span>Install App</div></div>
+<div class="sh">Quick Access</div><div class="qg"><div class="qa" id="go"><span>🟧</span>Orange Business</div><div class="qa" id="gs"><span>🎯</span>Sales Skills</div><div class="qa" id="gc"><span>💰</span>Commission</div><div class="qa" id="gq"><span>📝</span>Quiz</div><div class="qa" id="gv"><span>📍</span>Visit</div><div class="qa" id="gt"><span>⏰</span>To Do List</div></div>
 <div class="sh">Weekly high score</div><div class="ts" id="ts"></div>
 <div class="sh">My Progress</div><div class="pg" id="pg"></div></div>
 <button id="gst" style="display:none"></button>
@@ -813,13 +835,13 @@ function draw(){const q=N(el('q').value.trim());const r=D.filter(d=>(d.g||'ob')=
 el('list').innerHTML=r.length?r.map(d=>'<div class="card'+(q&&r.length<3?' open':'')+'"><div class="hd"><div><b>'+d.t+'</b><small>'+d.s+'</small></div><span class="ar">◀</span></div><div class="bd">'+d.b+'</div></div>').join(''):'<div class="none">مفيش نتائج مطابقة. جرّب كلمة تانية.</div>'}
 el('chips').onclick=e=>{if(e.target.dataset.c){cat=e.target.dataset.c;chips();draw()}};
 el('list').onclick=e=>{const h=e.target.closest('.hd');if(h)h.parentNode.classList.toggle('open')};
-el('q').oninput=draw;chips();draw();el('introimg').src=document.querySelector('.lg').src;el('go').onclick=()=>openS('ob');el('gs').onclick=()=>openS('ss');el('gc').onclick=openCm;el('gm').onclick=openGm;el('gv').onclick=()=>openVs();el('gst').onclick=openSt;
+el('q').oninput=draw;chips();draw();el('introimg').src=document.querySelector('.lg').src;el('go').onclick=()=>openS('ob');el('gs').onclick=()=>openS('ss');el('gc').onclick=openCm;el('gv').onclick=()=>openVs();el('gt').onclick=()=>openVs('t');el('gst').onclick=openSt;
 el('gq').onclick=()=>{weeklyMode=false;el('intro').classList.add('hide');askName()};
 el('hm').onclick=home;
 el('dk').onclick=()=>el('dlg').classList.remove('on');
 el('dx').onclick=stop;
 addEventListener('beforeunload',e=>{if(live||needSend){e.preventDefault();e.returnValue=''}});
-function home(){live=false;clearInterval(tm);document.body.classList.remove('qm','cmx','gmx','stx','nwx','vsx','drx');gmOK=false;GMD=null;el('gmv').innerHTML='';el('stv').innerHTML='';el('vsv').innerHTML='';NWP='';el('nwv').innerHTML='';el('dlg').classList.remove('on');el('intro').classList.remove('hide');if(window.hR)hR();scrollTo(0,0)}
+function home(){live=false;clearInterval(tm);document.body.classList.remove('qm','cmx','gmx','stx','nwx','vsx','drx');gmOK=false;GMD=null;el('gmv').innerHTML='';el('stv').innerHTML='';el('vsv').innerHTML='';NWP='';el('nwv').innerHTML='';el('dlg').classList.remove('on');el('intro').classList.remove('hide');if(window.hR)hR();tdBadge();scrollTo(0,0)}
 function askExit(){if(!live){home();return}dlgm('لو خرجت دلوقتي هيتم إلغاء الـ Quiz وتاخد 0 في الدرجة.',true)}
 function stop(){live=false;clearInterval(tm);sc=0;cx=true;el('dlg').classList.remove('on');el('quizv').innerHTML='<div class="qz"><div class="sc">0 / '+qs.length+'</div><p>تم إلغاء الـ Quiz لأنك خرجت منه، ودرجتك 0.</p>'+snd()+'<div id="acts" style="display:none;text-align:center"><button class="nx" id="re">ابدأ Quiz جديد</button> <button class="qx" id="rh">الرئيسية</button></div></div>';el('re').onclick=quiz;el('rh').onclick=home;lk()}
 let pn='', participantPhone='';
@@ -950,9 +972,9 @@ const r=sh(out);seenAdd(key,r);return r}
 let cmT='c',cmLast=null;const autoD=()=>{const n=new Date(),dm=new Date(n.getFullYear(),n.getMonth()+1,0).getDate();return Math.max(1,Math.round(n.getDate()/dm*22))};const CV={t:'',l:'',p:'',d:String(autoD())};
 let VS_LL=null,VS_Z=17;
 let VS_T='f';
-function openVs(t){VS_PL='';VS_ST='';VS_PRE=null;VS_T=t==='r'?'r':'f';document.body.classList.add('vsx');el('intro').classList.add('hide');vsShell();scrollTo(0,0)}
-function vsShell(){el('vsv').innerHTML='<div class="qbar"><span>📍 Visit</span><button class="qx" id="vsh">🏠 الرئيسية</button></div><div class="vtabs"><button data-t="f">📍 Nearby</button><button data-t="r">📋 Daily Report</button></div><div id="vsp"></div>';el('vsh').onclick=home;document.querySelectorAll('#vsv .vtabs button').forEach(b=>b.onclick=()=>vsTab(b.dataset.t));vsTab(VS_T)}
-function vsTab(t){VS_T=t;document.querySelectorAll('#vsv .vtabs button').forEach(b=>b.classList.toggle('on',b.dataset.t===t));if(t==='r'){DR_ED=null;DR_AC='New';DR_WY='Visit';drUI()}else vsUI()}
+function openVs(t){VS_PL='';VS_ST='';VS_PRE=null;VS_T=t==='r'?'r':t==='t'?'t':'f';document.body.classList.add('vsx');el('intro').classList.add('hide');vsShell();scrollTo(0,0)}
+function vsShell(){el('vsv').innerHTML='<div class="qbar"><span>📍 Visit</span><button class="qx" id="vsh">🏠 الرئيسية</button></div><div class="vtabs"><button data-t="f">📍 Nearby</button><button data-t="r">📋 Daily Report</button><button data-t="t">⏰ To Do</button></div><div id="vsp"></div>';el('vsh').onclick=home;document.querySelectorAll('#vsv .vtabs button').forEach(b=>b.onclick=()=>vsTab(b.dataset.t));vsTab(VS_T)}
+function vsTab(t){VS_T=t;document.querySelectorAll('#vsv .vtabs button').forEach(b=>b.classList.toggle('on',b.dataset.t===t));if(t==='r'){DR_ED=null;DR_AC='New';DR_WY='Visit';drUI()}else if(t==='t')tdUI();else vsUI()}
 let VS_R=600,VS_PL='',VS_PRE=null,VS_CAT='all',VS_ST='';
 const VS_C=[['🔎','الكل','all'],['🏢','شركات ومكاتب','office'],['🏭','مصانع','factory'],['🏥','عيادات ومراكز طبية','health'],['🍽️','مطاعم وكافيهات','food'],['🛍️','محلات تجارية','shop'],['🏫','مدارس وحضانات','school'],['🏨','فنادق','hotel'],['🔧','ورش ومخازن','workshop'],['💊','صيدليات','pharmacy']];
 const VS_ZR={300:18,600:17,1000:16,2000:15,5000:13,10000:12,20000:11};
@@ -1001,7 +1023,7 @@ document.querySelectorAll('#vsc button').forEach(b=>b.onclick=()=>{VS_CAT=b.data
 el('vsbig').onclick=()=>{const w=el('vsmw'),big=w.dataset.big!=='1';w.dataset.big=big?'1':'';w.style.height=big?'80vh':'55vh';el('vsbig').textContent=big?'⛶ تصغير':'⛶ تكبير';if(big)w.scrollIntoView({behavior:'smooth',block:'start'})};
 el('qscp').onclick=()=>vsPaste('qsc');el('qsph').onclick=()=>{const c=el('qsc').value.trim();if(!c){vsQs('اكتب أو الصق اسم الشركة الأول.',1);return}vsQs('');window.open('https://www.google.com/maps/search/'+encodeURIComponent(c+' '+(el('qsa').value.trim()||VS_PL||''))+'?hl=ar','_blank','noopener')};el('qsmp').onclick=()=>vsPaste('qsm');el('qsv').onclick=vsQuick;
 vsSt(VS_ST);vsCnt();vsMap()}
-const DR_K='dr_v1',DR_N='dr_sales',DR_H=['Account','Company Name','CP Name','Mobile','Area','Date','Way','Feedback','Sales Name'];
+const DR_K='dr_v1',DR_N='dr_sales',DR_H=['Account','Company Name','CP Name','Mobile','Area','Date','Way','Feedback','Sales Name','Follow-up Date','Follow-up Time'];
 let DR_P='today',DR_ED=null,DR_AC='New',DR_WY='Visit';
 function drLoad(){try{const a=JSON.parse(localStorage.getItem(DR_K)||'[]');return Array.isArray(a)?a:[]}catch(e){return[]}}
 function drSave(a){try{localStorage.setItem(DR_K,JSON.stringify(a));return true}catch(e){return false}}
@@ -1025,20 +1047,21 @@ el('vsp').innerHTML='<div id="drv">'+
 '<label>Area</label><input class="ni" id="dra" placeholder="المنطقة">'+
 '<label>Way</label><div class="vch" id="drw"><button data-v="Visit">Visit</button><button data-v="Call">Call</button></div>'+
 '<label>Feedback</label><textarea class="ni" id="drfb" rows="3" placeholder="رد العميل / نتيجة الزيارة أو المكالمة"></textarea>'+
+'<label>⏰ Follow-up — موعد المتابعة (اختياري، هيجيلك منبه)</label><div class="grid2"><div><label>Date</label><input class="ni" id="drfd" type="date" dir="ltr"></div><div><label>Time</label><input class="ni" id="drfu" type="time" dir="ltr"></div></div><button class="qx" id="drfc" type="button" style="margin-top:6px">✕ مسح المتابعة</button>'+
 '<div class="cm" id="drdt" style="margin-top:10px"></div><div id="drer" class="pe"></div>'+
 '<div class="vrow"><button class="nx" id="drsv" style="flex:1">💾 Save</button><button class="qx" id="drcx" style="display:none">Cancel</button></div></div>'+
-'<div class="qz"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><h3 style="margin:0">Entries <span id="drcnt"></span></h3><select class="ni" id="drper"><option value="today">Today</option><option value="week">Last 7 days</option><option value="month">This month</option><option value="all">All entries</option></select></div><div id="drl" style="margin-top:8px"></div>'+
+'<div class="qz"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><h3 style="margin:0">Entries <span id="drcnt"></span></h3><select class="ni" id="drper"><option value="today">Today</option><option value="week">Last 7 days</option><option value="month">This month</option><option value="all">All entries</option></select></div><input class="ni" id="drq" type="search" placeholder="🔍 ابحث باسم الشركة أو الرقم أو المنطقة..." autocomplete="off" style="margin-top:10px"><div id="drl" style="margin-top:8px"></div>'+
 '<div class="vrow"><button class="nx" id="drxl" style="flex:1">⬇️ Download Excel</button></div><div class="cm" id="drxm" style="margin-top:8px"></div></div></div>';
 try{el('drs').value=localStorage.getItem(DR_N)||''}catch(e){}
 document.querySelectorAll('#drac button').forEach(b=>b.onclick=()=>{DR_AC=b.dataset.v;drSeg('drac',DR_AC)});
 document.querySelectorAll('#drw button').forEach(b=>b.onclick=()=>{DR_WY=b.dataset.v;drSeg('drw',DR_WY)});
-el('drper').value=DR_P;el('drper').onchange=()=>{DR_P=el('drper').value;drList()};
-el('drsv').onclick=drSubmit;el('drcx').onclick=()=>{DR_ED=null;drForm()};
+el('drq').value=DR_Q;el('drq').oninput=()=>{DR_Q=el('drq').value;drList()};el('drper').value=DR_P;el('drper').onchange=()=>{DR_P=el('drper').value;drList()};
+el('drsv').onclick=drSubmit;el('drfc').onclick=()=>{el('drfd').value='';el('drfu').value=''};el('drcx').onclick=()=>{DR_ED=null;drForm()};
 el('drxl').onclick=()=>drExport();
 drForm();drPre();drList()}
 function drPre(){if(!VS_PRE)return;const p=VS_PRE;VS_PRE=null;el('drc').value=p.co;el('drm').value=p.mb;el('dra').value=p.ar;el('drfb').value=p.fb||'';const e=el('drer');e.style.color='var(--mut)';e.textContent='📥 اتجابت بيانات الشركة من Nearby. أضف CP Name وFeedback واضغط Save.'}
 function drForm(r){const ed=!!r;DR_ED=ed?r.id:null;DR_AC=ed?r.ac:'New';DR_WY=ed?r.wy:'Visit';
-el('drft').textContent=ed?'✏️ Edit entry':'➕ New entry';el('drc').value=ed?r.co:'';el('drp').value=ed?r.cp:'';el('drm').value=ed?r.mb:'';el('dra').value=ed?r.ar:'';el('drfb').value=ed?r.fb:'';
+el('drft').textContent=ed?'✏️ Edit entry':'➕ New entry';el('drc').value=ed?r.co:'';el('drp').value=ed?r.cp:'';el('drm').value=ed?r.mb:'';el('dra').value=ed?r.ar:'';el('drfb').value=ed?r.fb:'';el('drfd').value=ed?(r.fd||''):'';el('drfu').value=ed?(r.ft||''):'';
 if(ed)el('drs').value=r.sn;
 drSeg('drac',DR_AC);drSeg('drw',DR_WY);el('drsv').textContent=ed?'💾 Update':'💾 Save';el('drcx').style.display=ed?'':'none';
 el('drdt').textContent='📅 Date: '+drFmt(ed?r.d:drToday())+' (تلقائي)';el('drer').textContent='';el('drer').style.color=''}
@@ -1047,19 +1070,23 @@ const sn=g('drs'),co=g('drc'),mb=drDig(g('drm')).replace(/\s+/g,' ').trim();
 if(!sn){e.textContent='اكتب اسمك في Sales Name.';return}
 if(!co){e.textContent='اكتب اسم الشركة (Company Name).';return}
 if(mb&&!/^\+?[0-9 ()\-]{6,20}$/.test(mb)){e.textContent='رقم الموبايل مش مظبوط.';return}
-const a=drLoad(),rec={ac:DR_AC,co:co,cp:g('drp'),mb:mb,ar:g('dra'),wy:DR_WY,fb:g('drfb'),sn:sn};
-if(DR_ED){const i=a.findIndex(x=>x.id===DR_ED);if(i>=0)a[i]=Object.assign(a[i],rec);else{rec.id=DR_ED;rec.ts=Date.now();rec.d=drToday();a.push(rec)}}
-else{rec.id=Date.now().toString(36)+Math.random().toString(36).slice(2,6);rec.ts=Date.now();rec.d=drToday();a.push(rec)}
+let fd=el('drfd').value,ft=el('drfu').value;if(ft&&!fd)fd=drToday();if(fd&&!ft)ft='09:00';
+const a=drLoad(),rec={ac:DR_AC,co:co,cp:g('drp'),mb:mb,ar:g('dra'),wy:DR_WY,fb:g('drfb'),sn:sn,fd:fd,ft:ft};
+if(DR_ED){const i=a.findIndex(x=>x.id===DR_ED);if(i>=0){if(a[i].fd!==fd||a[i].ft!==ft){rec.fx=0;rec.fl=''}a[i]=Object.assign(a[i],rec)}else{rec.id=DR_ED;rec.ts=Date.now();rec.d=drToday();a.push(rec)}}
+else{rec.id=Date.now().toString(36)+Math.random().toString(36).slice(2,6);rec.ts=Date.now();rec.d=drToday();rec.fx=0;a.push(rec)}
 if(!drSave(a)){e.textContent='مش قادر أحفظ على الجهاز (المساحة ممتلئة أو التصفح الخاص).';return}
 try{localStorage.setItem(DR_N,sn)}catch(x){}
-const was=!!DR_ED;drForm();drList();el('drer').style.color='#2e9e4a';el('drer').textContent=was?'✅ اتعدّل.':'✅ اتحفظ.'}
-function drList(){const r=drRows(),L=el('drl');el('drcnt').textContent='('+r.length+')';el('drxm').textContent='';
-if(!r.length){L.innerHTML='<p class="cm" style="padding:14px 0">مفيش تسجيلات في الفترة دي.</p>';return}
+const was=!!DR_ED;drForm();drList();tdBadge();if(fd)tdAskPerm();el('drer').style.color='#2e9e4a';el('drer').textContent=(was?'✅ اتعدّل.':'✅ اتحفظ.')+(fd?' ⏰ المتابعة: '+drFmt(fd)+' '+tdT12(ft):'')}
+function drList(){const r=drView(),L=el('drl'),q=DR_Q.trim();el('drcnt').textContent='('+r.length+')';el('drxm').textContent=q?'🔍 البحث على كل التسجيلات (مش بس الفترة المختارة). التصدير بيتبع الفترة المختارة.':'';
+if(!r.length){L.innerHTML='<p class="cm" style="padding:14px 0">'+(q?'مفيش نتيجة للبحث ده.':'مفيش تسجيلات في الفترة دي.')+'</p>';return}
+const n=tdNow();
 L.innerHTML='<p class="cm" style="margin:0 0 2px;font-size:12px">اضغط على اسم الشركة للتعديل</p>'+r.map(x=>{const tel=String(x.mb||'').replace(/[^\d+]/g,''),id=drE(x.id);
-return '<div class="dri"><div class="drb" data-e="'+id+'"><b>'+drE(x.co)+'</b><div class="l2">'+(x.mb?'<span dir="ltr" style="unicode-bidi:isolate">'+drE(x.mb)+'</span>':'—')+'</div></div>'+
+const l2=[x.mb?'<span dir="ltr" style="unicode-bidi:isolate">'+drE(x.mb)+'</span>':'—'];if(q||DR_P!=='today')l2.push(drFmt(x.d));
+let l3='';if(x.fd){const od=!x.fx&&tdKey(x)<n;l3='<div class="l2" style="color:'+(x.fx?'#2e9e4a':od?'#e5484d':'var(--or)')+'">'+(x.fx?'✅ ':'⏰ ')+drFmt(x.fd)+' '+tdT12(x.ft)+'</div>'}
+return '<div class="dri"><div class="drb" data-e="'+id+'"><b>'+drE(x.co)+'</b><div class="l2">'+l2.join(' · ')+'</div>'+l3+'</div>'+
 (tel?'<a class="ic" href="tel:'+drE(tel)+'" title="Call">📞</a>':'')+'<button class="ic" data-x="'+id+'" title="Delete">🗑️</button></div>'}).join('');
 L.querySelectorAll('[data-e]').forEach(b=>b.onclick=()=>{const x=drLoad().find(q=>q.id===b.dataset.e);if(x){drForm(x);scrollTo(0,0)}});
-L.querySelectorAll('[data-x]').forEach(b=>b.onclick=()=>{if(!confirm('تمسح التسجيل ده؟'))return;const a=drLoad().filter(q=>q.id!==b.dataset.x);drSave(a);if(DR_ED===b.dataset.x)drForm();drList()})}
+L.querySelectorAll('[data-x]').forEach(b=>b.onclick=()=>{if(!confirm('تمسح التسجيل ده؟'))return;const a=drLoad().filter(q=>q.id!==b.dataset.x);drSave(a);if(DR_ED===b.dataset.x)drForm();drList();tdBadge()})}
 /* ---- minimal XLSX writer (real Excel table, styled, offline) ---- */
 const DR_CT=(()=>{const t=new Uint32Array(256);for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;t[n]=c>>>0}return t})();
 function drCrc(b){let c=0xFFFFFFFF;for(let i=0;i<b.length;i++)c=DR_CT[(c^b[i])&255]^(c>>>8);return(c^0xFFFFFFFF)>>>0}
@@ -1075,14 +1102,14 @@ const drX=s=>String(s==null?'':s).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u00
 function drSerial(s){const m=/^(\d{4})-(\d\d)-(\d\d)$/.exec(s||'');return m?Math.round(Date.UTC(+m[1],+m[2]-1,+m[3])/86400000)+25569:null}
 function drBuild(rows,sales,label){const SS=[],SI={},si=t=>{t=String(t==null?'':t);if(!(t in SI)){SI[t]=SS.length;SS.push(t)}return SI[t]};let cnt=0;
 const cs=(ref,t,st)=>{if(t==null||t==='')return '<c r="'+ref+'" s="'+st+'"/>';cnt++;return '<c r="'+ref+'" s="'+st+'" t="s"><v>'+si(t)+'</v></c>'};
-const n=rows.length,last=4+n,C='ABCDEFGHI',ds=rows.map(r=>r.d).sort(),rng=ds.length?drFmt(ds[0])+' – '+drFmt(ds[ds.length-1]):'';
+const n=rows.length,last=4+n,C='ABCDEFGHIJK',ds=rows.map(r=>r.d).sort(),rng=ds.length?drFmt(ds[0])+' – '+drFmt(ds[ds.length-1]):'';
 let sd='<row r="1" ht="28" customHeight="1">'+cs('A1','Daily Report',1)+'</row>'+
 '<row r="2">'+cs('A2','Sales: '+sales+'   |   Period: '+label+(rng?' ('+rng+')':'')+'   |   Entries: '+n,2)+'</row><row r="3"/>'+
 '<row r="4" ht="24" customHeight="1">'+DR_H.map((h,i)=>cs(C[i]+'4',h,3)).join('')+'</row>';
-rows.forEach((r,i)=>{const R=5+i,b=i%2?1:0,v=[r.ac,r.co,r.cp,r.mb,r.ar,null,r.wy,r.fb,r.sn];
-const st=[[4,5],[6,7],[6,7],[10,11],[6,7],[8,9],[4,5],[6,7],[6,7]];
-sd+='<row r="'+R+'">'+v.map((x,k)=>{const ref=C[k]+R,s2=st[k][b];if(k===5){const q=drSerial(r.d);return q==null?'<c r="'+ref+'" s="'+s2+'"/>':'<c r="'+ref+'" s="'+s2+'"><v>'+q+'</v></c>'}return cs(ref,x,s2)}).join('')+'</row>'});
-const sheet='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheetPr><pageSetUpPr fitToPage="1"/></sheetPr><dimension ref="A1:I'+last+'"/><sheetViews><sheetView workbookViewId="0" showGridLines="0"><pane ySplit="4" topLeftCell="A5" activePane="bottomLeft" state="frozen"/><selection pane="bottomLeft" activeCell="A5" sqref="A5"/></sheetView></sheetViews><sheetFormatPr defaultRowHeight="15"/><cols><col min="1" max="1" width="13" customWidth="1"/><col min="2" max="2" width="30" customWidth="1"/><col min="3" max="3" width="22" customWidth="1"/><col min="4" max="4" width="16" customWidth="1"/><col min="5" max="5" width="20" customWidth="1"/><col min="6" max="6" width="13" customWidth="1"/><col min="7" max="7" width="9" customWidth="1"/><col min="8" max="8" width="52" customWidth="1"/><col min="9" max="9" width="20" customWidth="1"/></cols><sheetData>'+sd+'</sheetData><mergeCells count="2"><mergeCell ref="A1:I1"/><mergeCell ref="A2:I2"/></mergeCells><pageMargins left="0.5" right="0.5" top="0.6" bottom="0.6" header="0.3" footer="0.3"/><pageSetup orientation="landscape" fitToWidth="1" fitToHeight="0"/><tableParts count="1"><tablePart r:id="rId1"/></tableParts></worksheet>';
+rows.forEach((r,i)=>{const R=5+i,b=i%2?1:0,v=[r.ac,r.co,r.cp,r.mb,r.ar,null,r.wy,r.fb,r.sn,null,r.ft];
+const st=[[4,5],[6,7],[6,7],[10,11],[6,7],[8,9],[4,5],[6,7],[6,7],[8,9],[4,5]];
+sd+='<row r="'+R+'">'+v.map((x,k)=>{const ref=C[k]+R,s2=st[k][b];if(k===5||k===9){const q=drSerial(k===5?r.d:r.fd);return q==null?'<c r="'+ref+'" s="'+s2+'"/>':'<c r="'+ref+'" s="'+s2+'"><v>'+q+'</v></c>'}return cs(ref,x,s2)}).join('')+'</row>'});
+const sheet='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheetPr><pageSetUpPr fitToPage="1"/></sheetPr><dimension ref="A1:K'+last+'"/><sheetViews><sheetView workbookViewId="0" showGridLines="0"><pane ySplit="4" topLeftCell="A5" activePane="bottomLeft" state="frozen"/><selection pane="bottomLeft" activeCell="A5" sqref="A5"/></sheetView></sheetViews><sheetFormatPr defaultRowHeight="15"/><cols><col min="1" max="1" width="13" customWidth="1"/><col min="2" max="2" width="30" customWidth="1"/><col min="3" max="3" width="22" customWidth="1"/><col min="4" max="4" width="16" customWidth="1"/><col min="5" max="5" width="20" customWidth="1"/><col min="6" max="6" width="13" customWidth="1"/><col min="7" max="7" width="9" customWidth="1"/><col min="8" max="8" width="52" customWidth="1"/><col min="9" max="9" width="20" customWidth="1"/><col min="10" max="10" width="16" customWidth="1"/><col min="11" max="11" width="14" customWidth="1"/></cols><sheetData>'+sd+'</sheetData><mergeCells count="2"><mergeCell ref="A1:K1"/><mergeCell ref="A2:K2"/></mergeCells><pageMargins left="0.5" right="0.5" top="0.6" bottom="0.6" header="0.3" footer="0.3"/><pageSetup orientation="landscape" fitToWidth="1" fitToHeight="0"/><tableParts count="1"><tablePart r:id="rId1"/></tableParts></worksheet>';
 const fn='<font><sz val="10"/><name val="Arial"/></font>',bd='<border><left style="thin"><color rgb="FFD9D9D9"/></left><right style="thin"><color rgb="FFD9D9D9"/></right><top style="thin"><color rgb="FFD9D9D9"/></top><bottom style="thin"><color rgb="FFD9D9D9"/></bottom><diagonal/></border>';
 const xf=(nf,f,fi,b,al)=>'<xf numFmtId="'+nf+'" fontId="'+f+'" fillId="'+fi+'" borderId="'+b+'" xfId="0" applyFont="1" applyFill="1" applyBorder="1" applyNumberFormat="1"'+(al?' applyAlignment="1"><alignment '+al+'/></xf>':'/>');
 const T='vertical="top" wrapText="1"',TC='horizontal="center" vertical="top" wrapText="1"';
@@ -1091,7 +1118,7 @@ xf(0,0,0,0)+xf(0,1,0,0,'vertical="center"')+xf(0,2,0,0,'vertical="center"')+xf(0
 xf(0,0,0,1,TC)+xf(0,0,3,1,TC)+xf(0,0,0,1,T)+xf(0,0,3,1,T)+xf(164,0,0,1,TC)+xf(164,0,3,1,TC)+xf(49,0,0,1,'horizontal="left" vertical="top"')+xf(49,0,3,1,'horizontal="left" vertical="top"')+
 '</cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>';
 const sst='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><sst xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" count="'+(cnt)+'" uniqueCount="'+SS.length+'">'+SS.map(t=>'<si><t xml:space="preserve">'+drX(t)+'</t></si>').join('')+'</sst>';
-const table='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><table xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" id="1" name="DailyReport" displayName="DailyReport" ref="A4:I'+last+'" totalsRowShown="0"><autoFilter ref="A4:I'+last+'"/><tableColumns count="9">'+DR_H.map((h,i)=>'<tableColumn id="'+(i+1)+'" name="'+drX(h)+'"/>').join('')+'</tableColumns><tableStyleInfo name="TableStyleLight1" showFirstColumn="0" showLastColumn="0" showRowStripes="0" showColumnStripes="0"/></table>';
+const table='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><table xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" id="1" name="DailyReport" displayName="DailyReport" ref="A4:K'+last+'" totalsRowShown="0"><autoFilter ref="A4:K'+last+'"/><tableColumns count="11">'+DR_H.map((h,i)=>'<tableColumn id="'+(i+1)+'" name="'+drX(h)+'"/>').join('')+'</tableColumns><tableStyleInfo name="TableStyleLight1" showFirstColumn="0" showLastColumn="0" showRowStripes="0" showColumnStripes="0"/></table>';
 const R='http://schemas.openxmlformats.org/officeDocument/2006/relationships',H='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>';
 return drZip([
 {n:'[Content_Types].xml',d:H+'<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/><Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/><Override PartName="/xl/sharedStrings.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sharedStrings+xml"/><Override PartName="/xl/tables/table1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.table+xml"/></Types>'},
@@ -1106,6 +1133,85 @@ if(!rows.length){m.textContent='مفيش تسجيلات في الفترة دي �
 let sales='';try{sales=(el('drs').value||localStorage.getItem(DR_N)||'').trim()}catch(e){}if(!sales)sales=rows[rows.length-1].sn||'';
 const blob=drBuild(rows,sales,DR_PL[DR_P]),name='Daily_Report_'+((sales.replace(/[^A-Za-z0-9]+/g,'_').replace(/^_+|_+$/g,''))?sales.replace(/[^A-Za-z0-9]+/g,'_').replace(/^_+|_+$/g,'')+'_':'')+drToday()+'.xlsx';
 const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},5000);m.textContent='✅ اتحمّل: '+name+' ('+rows.length+' تسجيل). ابعته لأي حد من تطبيق الواتساب أو الإيميل.'}
+/* ---- Follow-up / To Do list / Alarm / Search ---- */
+let TD_P='today',TD_PP=null,TD_MSG='',TD_AL=null,TD_AC=null,TD_SI=null,DR_Q='';
+const tdNow=()=>{const n=new Date();return drIso(n)+' '+String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0')};
+const tdKey=r=>(r.fd||'')+' '+(r.ft||'09:00');
+const tdT12=t=>{t=t||'09:00';const h=+t.slice(0,2),m=t.slice(3,5);return (h%12||12)+':'+m+' '+(h<12?'AM':'PM')};
+const tdGet=id=>drLoad().find(r=>r.id===id);
+const drNorm=s=>drDig(s).toLowerCase().replace(/[ً-ٟـ]/g,'').replace(/[أإآ]/g,'ا').replace(/ة/g,'ه').replace(/ى/g,'ي');
+function drMatch(r,q){const n=drNorm(q).trim();if(!n)return true;
+const hay=drNorm([r.co,r.cp,r.ar,r.fb,r.sn,r.mb].join(' '));
+if(/^[\d\s+\-()]+$/.test(n)){const d=n.replace(/\D/g,'');return !!d&&drDig(r.mb).replace(/\D/g,'').includes(d)}
+return n.split(/\s+/).every(t=>hay.includes(t))}
+function drView(){return DR_Q.trim()?drLoad().filter(r=>drMatch(r,DR_Q)).sort((a,b)=>(b.ts||0)-(a.ts||0)):drRows()}
+function tdBase(){return drLoad().filter(r=>r.fd)}
+function tdSel(){const t=drToday(),a=tdBase(),by=(x,y)=>tdKey(x)<tdKey(y)?-1:1;
+if(TD_P==='up')return a.filter(r=>!r.fx&&r.fd>t).sort(by);
+if(TD_P==='done')return a.filter(r=>r.fx).sort((x,y)=>y.fx-x.fx);
+return a.filter(r=>(!r.fx&&r.fd<=t)||(r.fx&&r.fd===t)).sort((x,y)=>((x.fx?1:0)-(y.fx?1:0))||by(x,y))}
+function tdBadge(){const g=el('gt');if(!g)return;let b=g.querySelector('i.tdbg');const t=drToday(),n=drLoad().filter(r=>r.fd&&!r.fx&&r.fd<=t).length;
+if(!n){if(b)b.remove();return}if(!b){b=document.createElement('i');b.className='tdbg';g.appendChild(b)}b.textContent=n}
+function tdAskPerm(){try{if('Notification' in window&&Notification.permission==='default')Notification.requestPermission().then(()=>{if(el('tdl'))tdList()})}catch(e){}}
+function tdCard(r){const id=drE(r.id),od=!r.fx&&tdKey(r)<tdNow(),tel=String(r.mb||'').replace(/[^\d+]/g,'');
+let p='';if(TD_PP===r.id){const t=drToday();p='<div class="tdp" data-id="'+id+'"><div class="tdch"><button data-q="30m">+30 دقيقة</button><button data-q="1h">+ ساعة</button><button data-q="1d">بكرة</button></div><div class="tdg"><input class="ni pd" type="date" dir="ltr" value="'+(r.fd>t?r.fd:t)+'"><input class="ni pt" type="time" dir="ltr" value="'+drE(r.ft||'09:00')+'"></div><div class="tde"></div><div class="tdr"><button class="nx" data-s="'+id+'">💾 حفظ الموعد الجديد</button><button class="qx" data-c="1">إلغاء</button></div></div>'}
+return '<div class="tdc'+(od?' od':'')+(r.fx?' dn':'')+'"><button class="tdk" data-k="'+id+'" title="تم">'+(r.fx?'✓':'')+'</button>'+
+'<div class="tdb" data-e="'+id+'"><b class="tdn">'+drE(r.co)+'</b><div class="tds">'+(r.wy==='Call'?'📞 Call':'📍 Visit')+' · '+(r.fd!==drToday()?drFmt(r.fd)+' · ':'')+tdT12(r.ft)+(od?' <em>متأخر</em>':'')+'</div>'+
+((r.mb||r.ar)?'<div class="tds">'+(r.mb?'<span dir="ltr" style="unicode-bidi:isolate">'+drE(r.mb)+'</span>':'')+(r.mb&&r.ar?' · ':'')+drE(r.ar)+'</div>':'')+(r.fb?'<div class="tdf">'+drE(r.fb)+'</div>':'')+'</div>'+
+(tel?'<a class="ic tdcall" href="tel:'+drE(tel)+'" title="اتصل" aria-label="اتصل">📞</a>':'')+'<button class="ic" data-p="'+id+'" title="تأجيل">🕒</button><button class="ic" data-i="'+id+'" title="منبه في تقويم الموبايل">📅</button>'+p+'</div>'}
+function tdList(){const L=el('tdl');if(!L)return;const t=drToday(),all=tdBase(),a=tdSel(),pend=all.filter(r=>!r.fx&&r.fd<=t),n=tdNow(),od=pend.filter(r=>tdKey(r)<n).length;
+const c={today:pend.length,up:all.filter(r=>!r.fx&&r.fd>t).length,done:all.filter(r=>r.fx).length};
+const F=[['today','النهارده',c.today],['up','الجاي',c.up],['done','خلصت',c.done]];
+let h='';
+if('Notification' in window&&Notification.permission==='default')h+='<button class="qx" data-n="1" style="width:100%;margin-bottom:8px">🔔 فعّل إشعارات المتابعة</button>';
+h+='<div class="vch">'+F.map(f=>'<button data-f="'+f[0]+'"'+(f[0]===TD_P?' class="on"':'')+'>'+f[1]+' ('+f[2]+')</button>').join('')+'</div>';
+if(TD_P==='today')h+='<p class="cm" style="margin:10px 0 0">'+(c.today?('متبقي '+c.today+(od?' · منهم '+od+' متأخر':'')):'مفيش متابعات متبقية')+'</p>';
+if(TD_MSG){h+='<p class="cm" style="color:#2e9e4a;margin:8px 0 0">'+drE(TD_MSG)+'</p>';TD_MSG=''}
+h+=a.length?a.map(tdCard).join(''):'<p class="cm" style="padding:18px 0;text-align:center">'+(TD_P==='today'?'مفيش مكالمات أو زيارات النهارده 🎉':TD_P==='up'?'مفيش متابعات جاية.':'لسه مفيش حاجة خلصت.')+'<br>ضيف تاريخ ووقت المتابعة من تسجيلات Daily Report.</p>';
+h+='<p class="cm" style="margin:12px 0 0;font-size:12px">🔔 المنبه بيرن والتطبيق مفتوح (أو شغال في الخلفية). عشان ينبّهك والتطبيق مقفول، دوس 📅 على المهمة وضيفها في تقويم الموبايل.</p>';
+L.innerHTML=h}
+function tdUI(){el('vsp').innerHTML='<div class="qz" id="tdv"><h3 style="margin-top:0">⏰ To Do List</h3><div id="tdl"></div></div>';el('tdl').onclick=tdClick;tdList()}
+function tdRender(){tdBadge();tdList();const m=el('tdal');if(m){const a=drLoad().filter(r=>TD_AL&&TD_AL.includes(r.id)&&!r.fx&&tdKey(r)<=tdNow());if(!a.length)tdClose();else el('tdal-l').innerHTML=a.map(tdCard).join('')}}
+function tdToggle(id){const a=drLoad(),r=a.find(x=>x.id===id);if(!r)return;r.fx=r.fx?0:Date.now();r.fl=tdKey(r);drSave(a);if(el('vsp')&&el('drl'))drList();tdRender()}
+function tdPostpone(id,d,t,box){const e=box&&box.querySelector('.tde'),a=drLoad(),r=a.find(x=>x.id===id);if(!r)return;
+if(!d||!t){if(e)e.textContent='اختار التاريخ والوقت.';return}
+if(d+' '+t<=tdNow()){if(e)e.textContent='اختار وقت جاي (بعد دلوقتي).';return}
+r.fd=d;r.ft=t;r.fx=0;r.fl='';drSave(a);TD_PP=null;TD_MSG='✅ اتأجلت لـ '+drFmt(d)+' '+tdT12(t)+' — واتحدّثت في Daily Report.';tdAskPerm();tdRender()}
+function tdEdit(id){const x=tdGet(id);if(!x)return;tdClose();if(!document.body.classList.contains('vsx'))openVs('r');else vsTab('r');drForm(x);scrollTo(0,0)}
+function tdIcs(id){const r=tdGet(id);if(!r||!r.fd)return;const esc=s=>String(s||'').replace(/\\/g,'\\\\').replace(/[,;]/g,m=>'\\'+m).replace(/\r?\n/g,'\\n'),ttl=(r.wy==='Call'?'📞 ':'📍 ')+'متابعة: '+r.co;
+const L=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Aptelecom//FollowUp//AR','BEGIN:VEVENT','UID:'+r.id+'-'+Date.now()+'@aptelecom','DTSTAMP:'+new Date().toISOString().replace(/[-:]/g,'').replace(/\.\d+/,''),'DTSTART:'+r.fd.replace(/-/g,'')+'T'+(r.ft||'09:00').replace(':','')+'00','DURATION:PT15M','SUMMARY:'+esc(ttl),'DESCRIPTION:'+esc([r.mb,r.ar,r.fb].filter(Boolean).join(' | ')),'BEGIN:VALARM','ACTION:DISPLAY','DESCRIPTION:'+esc(ttl),'TRIGGER:PT0M','END:VALARM','END:VEVENT','END:VCALENDAR'];
+const b=new Blob([L.join('\r\n')],{type:'text/calendar;charset=utf-8'}),u=document.createElement('a');u.href=URL.createObjectURL(b);u.download='followup_'+(r.co.replace(/[^A-Za-z0-9؀-ۿ]+/g,'_').slice(0,30)||'task')+'.ics';document.body.appendChild(u);u.click();setTimeout(()=>{URL.revokeObjectURL(u.href);u.remove()},5000)}
+function tdClick(e){const t=e.target.closest('[data-k],[data-p],[data-i],[data-e],[data-q],[data-s],[data-c],[data-f],[data-n]');if(!t||t.tagName==='A')return;tdStopSnd();const d=t.dataset;
+if(d.k)tdToggle(d.k);
+else if(d.p){TD_PP=TD_PP===d.p?null:d.p;tdRender()}
+else if(d.i)tdIcs(d.i);
+else if(d.e)tdEdit(d.e);
+else if(d.f){TD_P=d.f;TD_PP=null;tdList()}
+else if(d.n)tdAskPerm();
+else if(d.c){TD_PP=null;tdRender()}
+else if(d.q){const p=t.closest('.tdp'),r=tdGet(p.dataset.id),x=new Date();let tm=null;
+if(d.q==='30m')x.setMinutes(x.getMinutes()+30);else if(d.q==='1h')x.setHours(x.getHours()+1);else{x.setDate(x.getDate()+1);tm=r&&r.ft}
+p.querySelector('.pd').value=drIso(x);p.querySelector('.pt').value=tm||String(x.getHours()).padStart(2,'0')+':'+String(x.getMinutes()).padStart(2,'0')}
+else if(d.s){const p=t.closest('.tdp');tdPostpone(d.s,p.querySelector('.pd').value,p.querySelector('.pt').value,p)}}
+/* alarm */
+function tdBeep(){try{const C=window.AudioContext||window.webkitAudioContext;if(!C)return;TD_AC=TD_AC||new C();if(TD_AC.state==='suspended')TD_AC.resume();
+const play=()=>{const c=TD_AC;[0,.25,.5].forEach((o,i)=>{const os=c.createOscillator(),g=c.createGain(),s=c.currentTime+o;os.type='square';os.frequency.value=i===1?1175:880;g.gain.setValueAtTime(.0001,s);g.gain.exponentialRampToValueAtTime(.2,s+.02);g.gain.exponentialRampToValueAtTime(.0001,s+.2);os.connect(g);g.connect(c.destination);os.start(s);os.stop(s+.22)})};
+play();clearInterval(TD_SI);TD_SI=setInterval(play,1800);setTimeout(tdStopSnd,60000)}catch(e){}
+try{navigator.vibrate&&navigator.vibrate([400,200,400,200,400])}catch(e){}}
+function tdStopSnd(){if(TD_SI){clearInterval(TD_SI);TD_SI=null}try{navigator.vibrate&&navigator.vibrate(0)}catch(e){}}
+function tdClose(){tdStopSnd();const m=el('tdal');if(m)m.remove();TD_AL=null;tdBadge();if(el('tdl'))tdList()}
+function tdNotify(due){try{if(!document.hidden||!('Notification' in window)||Notification.permission!=='granted')return;
+const ti='⏰ موعد متابعة'+(due.length>1?' ('+due.length+')':''),o={body:due.slice(0,3).map(r=>(r.wy==='Call'?'📞 ':'📍 ')+r.co+' — '+tdT12(r.ft)).join('\n'),tag:'td-due',renotify:true,requireInteraction:true,vibrate:[300,150,300],icon:'icon-512.png'};
+if(navigator.serviceWorker&&navigator.serviceWorker.ready)navigator.serviceWorker.ready.then(g=>g.showNotification(ti,o)).catch(()=>{try{new Notification(ti,o)}catch(e){}});else new Notification(ti,o)}catch(e){}}
+function tdCheck(){if(!document.documentElement.classList.contains('unlocked'))return;
+const a=drLoad(),n=tdNow(),due=a.filter(r=>r.fd&&!r.fx&&tdKey(r)<=n&&r.fl!==tdKey(r));if(!due.length)return;
+due.sort((x,y)=>tdKey(x)<tdKey(y)?-1:1);due.forEach(r=>{r.fl=tdKey(r)});drSave(a);
+if(el('tdal')){TD_AL=(TD_AL||[]).concat(due.map(r=>r.id));tdRender()}
+else{TD_AL=due.map(r=>r.id);const m=document.createElement('div');m.id='tdal';m.innerHTML='<div class="tdbox"><div class="tdh"><span class="tdbell">🔔</span> موعد متابعة</div><div id="tdal-l"></div><button class="nx" id="tdalx" style="width:100%;margin:10px 0 0">إغلاق</button></div>';document.body.appendChild(m);m.onclick=ev=>{if(ev.target.id==='tdal'||ev.target.id==='tdalx')tdClose();else tdClick(ev)};tdRender();tdBeep()}
+tdNotify(due);tdBadge()}
+setInterval(tdCheck,15000);setTimeout(tdCheck,2500);addEventListener('visibilitychange',()=>{if(!document.hidden){tdCheck();tdBadge()}});
+addEventListener('pointerdown',()=>{try{const C=window.AudioContext||window.webkitAudioContext;if(C){TD_AC=TD_AC||new C();if(TD_AC.state==='suspended')TD_AC.resume()}}catch(e){}},{once:true});
+document.addEventListener('DOMContentLoaded',tdBadge);tdBadge();
 function openCm(){document.body.classList.add('cmx');el('intro').classList.add('hide');cmT='c';cmLast=null;cmUI();scrollTo(0,0)}
 function cmUI(){el('cmv').innerHTML='<div class="qbar"><span>💰 حاسبة الكومشن</span><button class="qx" id="cmh">🏠 الرئيسية</button></div><div class="qz"><div class="grid2"><div><label>تارجت الخطوط</label><input class="ni" id="ct" inputmode="numeric" placeholder="0"></div><div><label>الخطوط المباعة</label><input class="ni" id="cl" inputmode="numeric" placeholder="0"></div><div><label>عدد البوينت المباعة</label><input class="ni" id="cp" inputmode="numeric" placeholder="0"></div><div><label>الأيام اللي اشتغلها (تلقائي)</label><input class="ni" id="cd" inputmode="numeric" placeholder="0"></div></div><div id="cdn" class="cm" style="margin-top:8px"></div></div><div class="tb"><button data-t="c">الكومشن</button><button data-t="r">المتبقي</button><button data-t="p">Projection</button></div><div id="cr"></div>';
 ['t','l','p','d'].forEach(k=>{const i=el('c'+k);i.value=CV[k];i.oninput=()=>{CV[k]=i.value;cmR()}});
@@ -1292,7 +1398,7 @@ async function sLoad(){let a='stats';try{if(!sessionStorage.getItem('apvr')){a='
 function vis(){try{let n=+localStorage.getItem('apv')||0;if(!sessionStorage.getItem('apvs')){n++;localStorage.setItem('apv',n);sessionStorage.setItem('apvs',1)}return n||1}catch(e){return 1}}
 function hR(){const h=new Date().getHours(),D=new Date();el('gtx').textContent=(h<12?'صباح الخير':'مساء الخير')+' 👋';el('gdt').textContent=D.toLocaleDateString('ar-EG-u-nu-latn',{weekday:'long',day:'numeric',month:'long'});
 const dm=new Date(D.getFullYear(),D.getMonth()+1,0).getDate(),en=o=>D.toLocaleDateString('en-US',o),v=ST?ST.v:vis();
-el('pg').innerHTML=pt(1,'<text class="flame" x="50" y="62" font-size="31">🔥</text>','Weekly Challenge',' challenge'+(weeklyOpen()?' fire':''))+pt(1,'<g transform="translate(27 27) scale(1.85)" fill="none" stroke="#ff6600" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z"/><path d="M8.6 7.5c-.3.3-.8.9-.5 2 .4 1.3 1.7 3 3.4 3.9 1.4.7 2.2.6 2.8.2.4-.3.6-.8.5-1.1l-1.6-.8-.7.8c-.7-.2-2-1.2-2.3-2l.7-.7-.8-1.7c-.4-.1-1.2-.2-1.5.4z"/></g>','Chat with us',' wch')+pt(1,'<text x="50" y="62" font-size="31">🔐</text>','Top management',' mgmt') ;
+el('pg').innerHTML=pt(1,'<text x="50" y="62" font-size="31">📲</text>','Install App',' inst')+pt(1,'<g transform="translate(27 27) scale(1.85)" fill="none" stroke="#ff6600" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z"/><path d="M8.6 7.5c-.3.3-.8.9-.5 2 .4 1.3 1.7 3 3.4 3.9 1.4.7 2.2.6 2.8.2.4-.3.6-.8.5-1.1l-1.6-.8-.7.8c-.7-.2-2-1.2-2.3-2l.7-.7-.8-1.7c-.4-.1-1.2-.2-1.5.4z"/></g>','Chat with us',' wch')+pt(1,'<text x="50" y="62" font-size="31">🔐</text>','Top management',' mgmt')+pt(1,'<text x="50" y="62" font-size="31">📊</text>','RPM',' rpmt')+pt(1,'<text class="flame" x="50" y="62" font-size="31">🔥</text>','Weekly Challenge',' challenge'+(weeklyOpen()?' fire':''));{const ia=document.querySelector('#pg .inst');if(ia){ia.setAttribute('role','button');ia.setAttribute('tabindex','0');ia.style.cursor='pointer';ia.onclick=()=>window.openIns();ia.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();window.openIns()}}}const r=document.querySelector('#pg .rpmt');if(r){r.setAttribute('role','button');r.setAttribute('tabindex','0');r.style.cursor='pointer';r.onclick=openGm;r.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openGm()}}}}
 document.querySelector('#pg .wch').onclick=()=>open('https://wa.me/201211535557','_blank');const mg=document.querySelector('#pg .mgmt');if(mg){mg.setAttribute('role','button');mg.setAttribute('tabindex','0');mg.style.cursor='pointer';mg.onclick=openNw;mg.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openNw()}}}const wc=document.querySelector('#pg .challenge');if(wc){wc.setAttribute('role','button');wc.setAttribute('tabindex','0');wc.setAttribute('aria-label','Start Weekly challenge');const startWeekly=()=>{if(!weeklyOpen()){alert('🔥 Weekly Challenge متاح يوم الأحد فقط من 10:00 صباحًا لحد 5:00 مساءً بتوقيت مصر.\nارجع في المعاد وورّينا هتقدر توصل لـ 200/200 ولا لأ!');return}try{if(!isTest()&&localStorage.getItem('lock_'+weeklyDateKey())){alert('⛔ خدت محاولتك في التحدي الأسبوع ده. ارجع الأحد الجاي من 10 صباحًا لحد 5 مساءً.');return}}catch(e){}weeklyMode=true;el('intro').classList.add('hide');rulesScreen();scrollTo(0,0)};wc.onclick=startWeekly;wc.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();startWeekly()}}}
 let br=null;try{br=JSON.parse(localStorage.getItem('aptelecom_weekly_best')||localStorage.getItem('aptelecom_last_weekly_result')||'null')}catch(e){}
 const hv=br&&br.name&&br.total;clearInterval(rnT);
@@ -1305,7 +1411,7 @@ document.querySelectorAll('[data-r]').forEach(x=>x.onclick=()=>{const c=x.datase
 
 let dp=null;addEventListener('beforeinstallprompt',e=>{e.preventDefault();dp=e});
 const insT=k=>{document.querySelectorAll('#ins .it').forEach(x=>x.classList.toggle('on',x.dataset.k===k));document.querySelectorAll('#ins .ip').forEach(p=>p.style.display=p.dataset.k===k?'block':'none')};
-el('gi').onclick=()=>{el('ins').classList.add('on');insT(/iPhone|iPad|iPod/i.test(navigator.userAgent)?'i':'a');el('inb').style.display=dp?'block':'none'};
+window.openIns=()=>{el('ins').classList.add('on');insT(/iPhone|iPad|iPod/i.test(navigator.userAgent)?'i':'a');el('inb').style.display=dp?'block':'none'};
 el('inx').onclick=()=>el('ins').classList.remove('on');el('ins').onclick=e=>{if(e.target.id==='ins')el('ins').classList.remove('on')};
 document.querySelectorAll('#ins .it').forEach(x=>x.onclick=()=>insT(x.dataset.k));
 el('inb').onclick=()=>{if(dp){dp.prompt();dp=null}el('ins').classList.remove('on')};
