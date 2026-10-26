@@ -1438,12 +1438,13 @@ function boForm(){const emp=boLS('bo_emp'),F=BO.f||{};
 const fld=i=>{const h=BO_H[i].trim(),id='bo'+i,d=F[i]!=null?F[i]:(i===0?'Aptec Delta':i===4?boDay():'');
 if(i===7||i===9){const o=i===7?BO_ST:['','sent'];return '<label>'+esc(h)+'</label><select class="ni" id="'+id+'">'+o.map(x=>'<option value="'+x+'">'+(x||'—')+'</option>').join('')+'</select>'}
 if(i===8)return '<label>'+esc(h)+'</label><textarea class="ni" id="'+id+'" rows="3"></textarea>';
-return '<label>'+esc(h)+(i>0&&i<4?' *':'')+'</label><input class="ni" id="'+id+'" value="'+esc(d)+'"'+(i===4?' type="date"':'')+(i===0?' list="boA"':'')+(i===5?' list="boT"':'')+(i===1?' inputmode="decimal"':'')+' autocomplete="off">'};
+return '<label>'+esc(h)+((i===1||i===2)?' *':'')+'</label><input class="ni" id="'+id+'" value="'+esc(d)+'"'+(i===4?' type="date"':'')+(i===0?' list="boA"':'')+(i===5?' list="boT"':'')+(i===1?' inputmode="decimal"':'')+' autocomplete="off">'};
 el('bob').innerHTML='<div class="qz"><label>الموظف *</label><div class="tb" id="boe">'+BO_EMP.map(n=>'<button data-e="'+n+'"'+(emp===n?' class="on"':'')+'>'+n+'</button>').join('')+'</div><label>الفرع *</label><div class="tb" id="bor"><button data-r="C"'+(BO.reg==='C'?' class="on"':'')+'>قاهرة</button><button data-r="D"'+(BO.reg==='D'?' class="on"':'')+'>دلتا</button></div>'+BO_H.map((h,i)=>fld(i)).join('')+'<datalist id="boA"><option value="Aptec Delta"></datalist><datalist id="boT">'+BO_TL.map(x=>'<option value="'+x+'">').join('')+'</datalist><div id="bom" class="pe"></div><div style="text-align:center;margin-top:10px"><button class="nx" id="bos" style="width:100%">إرسال ✅</button></div></div>';
 const pick=(sel,fn)=>document.querySelectorAll(sel+' button').forEach(b=>b.onclick=()=>{document.querySelectorAll(sel+' button').forEach(x=>x.classList.toggle('on',x===b));fn(b)});
 pick('#boe',b=>boLS('bo_emp',b.dataset.e));pick('#bor',b=>{BO.reg=b.dataset.r});
 el('bos').onclick=async()=>{const m=el('bom'),e=boLS('bo_emp'),v=BO_H.map((h,i)=>el('bo'+i).value.trim());m.style.color='';
-if(!e||!BO.reg||!v[1]||!v[2]||!v[3]){m.textContent='اختار الموظف والفرع، واكتب رقم الحساب واسم الحساب ورقم الـ SR.';return}
+if(!e||!BO.reg||!v[1]||!v[2]){m.textContent='اختار الموظف والفرع، واكتب رقم الحساب واسم الحساب.';return}
+if(!v[3])v[3]='0';
 const b=el('bos');b.disabled=true;const row={id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),region:BO.reg,emp:e,day:boDay(),ts:new Date().toISOString(),v:v};
 const ok=await boSend(row);b.disabled=false;BO.f={0:v[0],4:v[4],5:v[5]};boForm();const n=el('bom');n.style.color='#1a7f37';
 n.textContent=ok?'✅ اتسجل':'✅ اتحفظ على الجهاز وهيتبعت لما النت يرجع';
@@ -1464,24 +1465,44 @@ el('bod').onchange=e=>{BO.day=e.target.value||boDay()};
 const dl=async rs=>{const m=el('bom'),rows=await boLoad(BO.day);if(!rows){m.textContent='تعذّر تحميل التفويضات: '+(BO.err||'مفيش اتصال بالسيرفر.');return}let c=0;
 rs.forEach(r=>{const x=rows.filter(y=>y.region===r);if(x.length){boDl(r,x,BO.day);c++}});m.textContent=c?'':'مفيش تفويضات في اليوم ده.'};
 el('bd1').onclick=()=>dl(['C']);el('bd2').onclick=()=>dl(['D']);el('bd3').onclick=()=>dl(['C','D'])}
-function boLoadX(){return window.ExcelJS?Promise.resolve():new Promise((ok,no)=>{const x=document.createElement('script');x.src='https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js';x.onload=ok;x.onerror=()=>no(new Error('exceljs'));document.head.appendChild(x)})}
-async function boDl(reg,rows,day){const nm='Delegation_report_'+day.split('-').reverse().join('-')+'_'+(reg==='C'?'Cairo':'Delta')+'.xlsx';
-try{await boLoadX()}catch(e){return boDlPlain(reg,rows,day)}
-try{const wb=new ExcelJS.Workbook();wb.creator='Aptelecom';wb.created=new Date();
-const ws=wb.addWorksheet(reg==='C'?'Cairo':'Delta',{views:[{state:'frozen',ySplit:1}],pageSetup:{orientation:'landscape',fitToPage:true,fitToWidth:1,fitToHeight:0,paperSize:9,printTitlesRow:'1:1'}});
-const W=[22,18,38,20,15,14,16,14,40,16],bd={style:'thin',color:{argb:'FFD9CBBE'}},BR={top:bd,left:bd,bottom:bd,right:bd};
-ws.columns=BO_H.map((h,i)=>({header:h.trim(),width:W[i]}));
-const hr=ws.getRow(1);hr.height=30;hr.eachCell(c=>{c.font={name:'Calibri',size:12,bold:true,color:{argb:'FFFFFFFF'}};c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFFF6A00'}};c.alignment={vertical:'middle',horizontal:'center',wrapText:true};c.border=BR});
-const ST={accepted:['FFC6EFCE','FF006100'],rejected:['FFFFC7CE','FF9C0006'],assigned:['FFDDEBF7','FF1F4E78'],pending:['FFFFEB9C','FF9C5700'],sent:['FFC6EFCE','FF006100']};
-rows.forEach((r,k)=>{const v=r.v.map((x,i)=>{x=x==null?'':String(x).trim();if(i===4&&/^\d{4}-\d\d-\d\d$/.test(x))return new Date(x+'T00:00:00Z');if(i===1&&/^\d{1,15}$/.test(x))return +x;return x});
-const row=ws.addRow(v);row.height=Math.max(22,Math.min(90,15*Math.ceil(String(v[8]||'').length/42)+7));
-row.eachCell({includeEmpty:true},(c,ci)=>{c.font={name:'Calibri',size:11};c.border=BR;c.alignment={vertical:'middle',horizontal:ci===9||ci===3?'left':'center',wrapText:ci===9||ci===3};if(k%2)c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFFFF4EA'}}});
-if(v[4] instanceof Date)row.getCell(5).numFmt='yyyy-mm-dd';if(typeof v[1]==='number')row.getCell(2).numFmt='0';
-[[8,v[7]],[10,v[9]]].forEach(z=>{const t=ST[String(z[1]||'').trim().toLowerCase()];if(t){const c=row.getCell(z[0]);c.fill={type:'pattern',pattern:'solid',fgColor:{argb:t[0]}};c.font={name:'Calibri',size:11,bold:true,color:{argb:t[1]}}}})});
-const n=rows.length+1;ws.autoFilter={from:{row:1,column:1},to:{row:1,column:BO_H.length}};
-const tr=ws.addRow(['الإجمالي',rows.length]);tr.height=24;tr.eachCell(c=>{c.font={name:'Calibri',size:12,bold:true};c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFFFE0C7'}};c.border=BR;c.alignment={vertical:'middle',horizontal:'center'}});
-const buf=await wb.xlsx.writeBuffer(),u=URL.createObjectURL(new Blob([buf],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'})),a=document.createElement('a');a.href=u;a.download=nm;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000)}
-catch(e){boDlPlain(reg,rows,day)}}
+const boX=t=>String(t==null?'':t).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g,'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const boCol=n=>String.fromCharCode(65+n);
+function boZip(files){const enc=new TextEncoder(),T=new Uint32Array(256);for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;T[n]=c>>>0}
+const crc=b=>{let c=0xFFFFFFFF;for(let i=0;i<b.length;i++)c=T[(c^b[i])&255]^(c>>>8);return (c^0xFFFFFFFF)>>>0};
+const parts=[],cen=[];let off=0;
+files.forEach(f=>{const nm=enc.encode(f[0]),d=enc.encode(f[1]),cr=crc(d),h=new DataView(new ArrayBuffer(30));
+h.setUint32(0,0x04034b50,true);h.setUint16(4,20,true);h.setUint16(6,0x0800,true);h.setUint16(8,0,true);h.setUint16(10,0,true);h.setUint16(12,0x21,true);h.setUint32(14,cr,true);h.setUint32(18,d.length,true);h.setUint32(22,d.length,true);h.setUint16(26,nm.length,true);h.setUint16(28,0,true);
+parts.push(new Uint8Array(h.buffer),nm,d);
+const c=new DataView(new ArrayBuffer(46));c.setUint32(0,0x02014b50,true);c.setUint16(4,20,true);c.setUint16(6,20,true);c.setUint16(8,0x0800,true);c.setUint16(10,0,true);c.setUint16(12,0,true);c.setUint16(14,0x21,true);c.setUint32(16,cr,true);c.setUint32(20,d.length,true);c.setUint32(24,d.length,true);c.setUint16(28,nm.length,true);c.setUint32(42,off,true);
+cen.push(new Uint8Array(c.buffer),nm);off+=30+nm.length+d.length});
+let cl=0;cen.forEach(x=>cl+=x.length);const e=new DataView(new ArrayBuffer(22));e.setUint32(0,0x06054b50,true);e.setUint16(8,files.length,true);e.setUint16(10,files.length,true);e.setUint32(12,cl,true);e.setUint32(16,off,true);
+return new Blob(parts.concat(cen,[new Uint8Array(e.buffer)]),{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'})}
+function boXlsx(reg,rows){const NC=BO_H.length,W=[22,18,38,20,15,14,16,14,40,16],stx={accepted:10,rejected:11,assigned:12,pending:13,sent:10};
+const cs=(r,c,v,st)=>'<c r="'+boCol(c)+r+'" s="'+st+'"'+(v===''?'/>':' t="inlineStr"><is><t xml:space="preserve">'+boX(v)+'</t></is></c>');
+let x='<row r="1" ht="30" customHeight="1">'+BO_H.map((h,i)=>cs(1,i,h.trim(),1)).join('')+'</row>';
+rows.forEach((r,k)=>{const R=k+2,b=k%2,v=BO_H.map((h,i)=>String(r.v[i]==null?'':r.v[i]).trim());let ht=Math.max(22,Math.min(120,15*Math.ceil(Math.max(v[8].length/38,v[2].length/34,1))+8));
+x+='<row r="'+R+'" ht="'+ht+'" customHeight="1">'+v.map((t,i)=>{
+if(i===4&&/^\d{4}-\d\d-\d\d$/.test(t)){const d=Date.UTC(+t.slice(0,4),+t.slice(5,7)-1,+t.slice(8,10))/864e5+25569;return '<c r="'+boCol(i)+R+'" s="'+(6+b)+'"><v>'+d+'</v></c>'}
+if(i===1&&/^[1-9]\d{0,14}$/.test(t))return '<c r="'+boCol(i)+R+'" s="'+(8+b)+'"><v>'+t+'</v></c>';
+if(i===7||i===9){const q=stx[t.toLowerCase()];if(q)return cs(R,i,t,q)}
+return cs(R,i,t,(i===2||i===8)?4+b:2+b)}).join('')+'</row>'});
+const L=rows.length+2;x+='<row r="'+L+'" ht="26" customHeight="1">'+cs(L,0,'الإجمالي',14)+'<c r="B'+L+'" s="14"><v>'+rows.length+'</v></c>'+Array.from({length:NC-2},(_,i)=>cs(L,i+2,'',14)).join('')+'</row>';
+const sh='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><sheetPr><pageSetUpPr fitToPage="1"/></sheetPr><dimension ref="A1:'+boCol(NC-1)+L+'"/><sheetViews><sheetView workbookViewId="0" showGridLines="0"><pane ySplit="1" topLeftCell="A2" activePane="bottomLeft" state="frozen"/><selection pane="bottomLeft" activeCell="A2" sqref="A2"/></sheetView></sheetViews><sheetFormatPr defaultRowHeight="18"/><cols>'+W.map((w,i)=>'<col min="'+(i+1)+'" max="'+(i+1)+'" width="'+w+'" customWidth="1"/>').join('')+'</cols><sheetData>'+x+'</sheetData>'+(rows.length?'<autoFilter ref="A1:'+boCol(NC-1)+(rows.length+1)+'"/>':'')+'<pageMargins left="0.4" right="0.4" top="0.5" bottom="0.5" header="0.3" footer="0.3"/><pageSetup paperSize="9" orientation="landscape" fitToWidth="1" fitToHeight="0"/></worksheet>';
+const bd='<border><left style="thin"><color rgb="FFD9CBBE"/></left><right style="thin"><color rgb="FFD9CBBE"/></right><top style="thin"><color rgb="FFD9CBBE"/></top><bottom style="thin"><color rgb="FFD9CBBE"/></bottom><diagonal/></border>';
+const fn=(b,sz,c)=>'<font>'+(b?'<b/>':'')+'<sz val="'+sz+'"/><color rgb="'+c+'"/><name val="Calibri"/><family val="2"/></font>';
+const fl=c=>'<fill><patternFill patternType="solid"><fgColor rgb="'+c+'"/><bgColor indexed="64"/></patternFill></fill>';
+const xf=(nf,fo,fi,al)=>'<xf numFmtId="'+nf+'" fontId="'+fo+'" fillId="'+fi+'" borderId="1" xfId="0" applyNumberFormat="1" applyFont="1" applyFill="1" applyBorder="1" applyAlignment="1"><alignment horizontal="'+al[0]+'" vertical="center"'+(al[1]?' wrapText="1"':'')+'/></xf>';
+const C=['center',0],Lf=['left',1];
+const xfs=['<xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/>',xf(0,1,2,['center',1]),xf(0,0,0,C),xf(0,0,3,C),xf(0,0,0,Lf),xf(0,0,3,Lf),xf(164,0,0,C),xf(164,0,3,C),xf(1,0,0,C),xf(1,0,3,C),xf(0,2,4,C),xf(0,3,5,C),xf(0,4,6,C),xf(0,5,7,C),xf(0,6,8,C)];
+const st='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><numFmts count="1"><numFmt numFmtId="164" formatCode="yyyy\\-mm\\-dd"/></numFmts><fonts count="7">'+[fn(0,11,'FF000000'),fn(1,12,'FFFFFFFF'),fn(1,11,'FF006100'),fn(1,11,'FF9C0006'),fn(1,11,'FF1F4E78'),fn(1,11,'FF9C5700'),fn(1,12,'FF000000')].join('')+'</fonts><fills count="9"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill>'+['FFFF6A00','FFFFF4EA','FFC6EFCE','FFFFC7CE','FFDDEBF7','FFFFEB9C','FFFFE0C7'].map(fl).join('')+'</fills><borders count="2"><border><left/><right/><top/><bottom/><diagonal/></border>'+bd+'</borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="'+xfs.length+'">'+xfs.join('')+'</cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>';
+const H='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>';
+return boZip([['[Content_Types].xml',H+'<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/><Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/></Types>'],
+['_rels/.rels',H+'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>'],
+['xl/workbook.xml',H+'<workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><bookViews><workbookView/></bookViews><sheets><sheet name="'+(reg==='C'?'Cairo':'Delta')+'" sheetId="1" r:id="rId1"/></sheets></workbook>'],
+['xl/_rels/workbook.xml.rels',H+'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet1.xml"/><Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>'],
+['xl/styles.xml',st],['xl/worksheets/sheet1.xml',sh]])}
+function boDl(reg,rows,day){const nm='Delegation_report_'+day.split('-').reverse().join('-')+'_'+(reg==='C'?'Cairo':'Delta')+'.xlsx';
+try{const u=URL.createObjectURL(boXlsx(reg,rows)),a=document.createElement('a');a.href=u;a.download=nm;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000)}catch(e){boDlPlain(reg,rows,day)}}
 function boDlPlain(reg,rows,day){if(typeof XLSX==='undefined'){alert('مكتبة Excel ماتحملتش. اتأكد من الإنترنت.');return}
 const a=[BO_H].concat(rows.map(r=>r.v.map((x,i)=>i===4&&/^\d{4}-\d\d-\d\d$/.test(x)?new Date(x+'T00:00:00'):i===1&&/^\d+(\.\d+)?$/.test(x)?+x:x)));
 const ws=XLSX.utils.aoa_to_sheet(a,{cellDates:true});for(let i=2;i<=a.length;i++){const c=ws['E'+i];if(c&&c.t==='d')c.z='yyyy-mm-dd'}
@@ -1491,17 +1512,25 @@ function boEdit(){el('bob').innerHTML='<div class="qz"><label>ابحث برقم 
 const go=async()=>{const q=el('bxq').value.trim(),R=el('bxr');if(q.replace(/\s/g,'').length<3){R.innerHTML='<div class="pe">اكتب 3 أرقام على الأقل.</div>';return}
 R.innerHTML='<div class="cm">⏳ جاري البحث...</div>';let d;try{d=await boApi({action:'bo_find',q:q})}catch(e){R.innerHTML='<div class="pe">'+esc(e.message||'تعذّر الاتصال بالسيرفر.')+'</div>';return}
 if(!d||!d.ok){R.innerHTML='<div class="pe">السيرفر لم يقبل البحث. اتأكد إنك نشرت نسخة جديدة من كود Google Apps Script.</div>';return}
-if(!d.rows.length){R.innerHTML='<div class="cm">مفيش نتايج.</div>';return}
+if(!d.rows.length){R.innerHTML=(BO.gone?'<div class="pe" style="color:#1a7f37">'+BO.gone+'</div>':'')+'<div class="cm">مفيش نتايج.</div>';BO.gone='';return}
 R.innerHTML=d.rows.map((r,k)=>boEC(r,k)).join('');
-d.rows.forEach((r,k)=>{el('bxs'+k).onclick=()=>boEs(r,k)})};
+d.rows.forEach((r,k)=>{el('bxs'+k).onclick=()=>boEs(r,k);el('bxd'+k).onclick=()=>boEd(r,k)});if(BO.gone){R.insertAdjacentHTML('afterbegin','<div class="pe" style="color:#1a7f37">'+BO.gone+'</div>');BO.gone=''}};BO.redo=go;
 el('bxf').onclick=go;el('bxq').onkeydown=e=>{if(e.key==='Enter')go()}}
-function boEC(r,k){const f=BO_H.map((h,i)=>{const id='bx'+k+'_'+i,x=String(r.v[i]==null?'':r.v[i]),L='<label>'+esc(h.trim())+(i>0&&i<4?' *':'')+'</label>';
+function boEC(r,k){const f=BO_H.map((h,i)=>{const id='bx'+k+'_'+i,x=String(r.v[i]==null?'':r.v[i]),L='<label>'+esc(h.trim())+((i===1||i===2)?' *':'')+'</label>';
 if(i===7||i===9){const o=(i===7?BO_ST:['','sent']).slice();if(o.indexOf(x)<0)o.push(x);return L+'<select class="ni" id="'+id+'">'+o.map(y=>'<option value="'+esc(y)+'"'+(y===x?' selected':'')+'>'+(esc(y)||'—')+'</option>').join('')+'</select>'}
 if(i===8)return L+'<textarea class="ni" id="'+id+'" rows="3">'+esc(x)+'</textarea>';
 return L+'<input class="ni" id="'+id+'" value="'+esc(x)+'"'+(i===4&&/^\d{4}-\d\d-\d\d$/.test(x)?' type="date"':'')+(i===1?' inputmode="decimal"':'')+' autocomplete="off">'}).join('');
-return '<div class="res" style="margin-top:10px"><h4 style="margin:0 0 6px;color:var(--or)">'+(r.region==='C'?'قاهرة':'دلتا')+' · '+esc(r.day)+' · '+esc(r.emp)+'</h4>'+f+'<div id="bxm'+k+'" class="pe"></div><div style="text-align:center;margin-top:10px"><button class="nx" id="bxs'+k+'" style="width:100%">💾 حفظ التعديل</button></div></div>'}
+return '<div class="res" style="margin-top:10px"><h4 style="margin:0 0 6px;color:var(--or)">'+(r.region==='C'?'قاهرة':'دلتا')+' · '+esc(r.day)+' · '+esc(r.emp)+'</h4>'+f+'<div id="bxm'+k+'" class="pe"></div><div style="text-align:center;margin-top:10px"><button class="nx" id="bxs'+k+'" style="width:100%">💾 حفظ التعديل</button><button class="nx" id="bxd'+k+'" style="width:100%;margin-top:8px;background:#d92d20">🗑️ حذف</button></div></div>'}
+async function boEd(r,k){const m=el('bxm'+k),b=el('bxd'+k);m.style.color='';
+if(!confirm('متأكد إنك عايز تحذف التفويض ده؟\nالحساب: '+r.v[1]+'\nSR: '+r.v[3]))return;
+b.disabled=true;m.textContent='⏳ جاري الحذف...';
+try{const d=await boApi({action:'bo_del',region:r.region,row:r.row,id:r.id,o:[r.v[1],r.v[3]]});
+if(d&&d.ok){BO.gone='✅ اتحذف التفويض (حساب '+esc(r.v[1])+')';if(BO.redo)BO.redo();return}
+m.textContent=d&&d.error==='changed'?'الصف اتغير من مكان تاني. اعمل بحث تاني.':'السيرفر لم يقبل الحذف ('+((d&&d.error)||'؟')+'). اتأكد إنك نشرت النسخة الجديدة من الكود.'}
+catch(e){m.textContent=e&&e.message?e.message:'تعذّر الاتصال بالسيرفر.'}b.disabled=false}
 async function boEs(r,k){const m=el('bxm'+k),b=el('bxs'+k),v=BO_H.map((h,i)=>el('bx'+k+'_'+i).value.trim());m.style.color='';
-if(!v[1]||!v[2]||!v[3]){m.textContent='رقم الحساب واسم الحساب ورقم الـ SR مطلوبين.';return}
+if(!v[1]||!v[2]){m.textContent='رقم الحساب واسم الحساب مطلوبين.';return}
+if(!v[3])v[3]='0';
 b.disabled=true;m.textContent='⏳ جاري الحفظ...';
 try{const d=await boApi({action:'bo_upd',region:r.region,row:r.row,id:r.id,o:[r.v[1],r.v[3]],v:v});if(d&&d.ok){r.v=v;m.style.color='#1a7f37';m.textContent='✅ اتعدّل في الشيت'}else m.textContent=d&&d.error==='changed'?'الصف اتغير من مكان تاني. اعمل بحث تاني.':'السيرفر لم يقبل التعديل ('+((d&&d.error)||'؟')+'). اتأكد إنك نشرت النسخة الجديدة من الكود.'}
 catch(e){m.textContent=e&&e.message?e.message:'تعذّر الاتصال بالسيرفر.'}b.disabled=false}
