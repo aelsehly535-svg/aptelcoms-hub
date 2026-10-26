@@ -1317,11 +1317,15 @@ const e=el('drps');if(e)e.textContent=can?(ok?'🛡️ المتصفح مأمّن
 function drBkInit(){const c=el('drabc');if(c){c.checked=drLS(DR_AB)!=='0';c.onchange=()=>{drLS(DR_AB,c.checked?'1':'0')}}
 el('drbk').onclick=()=>{const n=drBackupDownload();drToast(n?'💾 اتحفظت: '+n:'مفيش تسجيلات تتحفظ لسه.')};el('drrs').onclick=drPick;el('drrf').onchange=drOnFile;drBkStatus();drPersist()}
 document.addEventListener('click',()=>{setTimeout(drAutoTick,150)},true);
-function openCm(){document.body.classList.add('cmx');el('intro').classList.add('hide');cmT='c';cmLast=null;cmUI();scrollTo(0,0)}
-function cmUI(){el('cmv').innerHTML='<div class="qbar"><span>💰 حاسبة الكومشن</span><button class="qx" id="cmh">🏠 الرئيسية</button></div><div class="qz"><div class="grid2"><div><label>تارجت الخطوط</label><input class="ni" id="ct" inputmode="numeric" placeholder="0"></div><div><label>الخطوط المباعة</label><input class="ni" id="cl" inputmode="numeric" placeholder="0"></div><div><label>عدد البوينت المباعة</label><input class="ni" id="cp" inputmode="numeric" placeholder="0"></div><div><label>الأيام اللي اشتغلها (تلقائي)</label><input class="ni" id="cd" inputmode="numeric" placeholder="0"></div></div><div id="cdn" class="cm" style="margin-top:8px"></div></div><div class="tb"><button data-t="c">الكومشن</button><button data-t="r">المتبقي</button><button data-t="p">Projection</button></div><div id="cr"></div>';
+let cmMode='sales',cmTLUnlocked=false;
+function openCm(){document.body.classList.add('cmx');el('intro').classList.add('hide');cmMode='sales';cmTLUnlocked=false;cmT='c';cmLast=null;cmUI();scrollTo(0,0)}
+function cmChooseMode(mode){if(mode==='tl'&&!cmTLUnlocked){cmTLGate();return}cmMode=mode;cmT='c';cmLast=null;cmUI()}
+function cmTLGate(){el('cmv').innerHTML='<div class="qbar"><span>🔒 Team Leader Commission</span><button class="qx" id="cmh">🏠 الرئيسية</button></div><div class="qz"><div class="rb"><div class="lk">🔐</div><h2>Team Leader</h2><p>Commission access</p></div><label>الرقم السري</label><input class="ni" id="cmtlpw" type="password" inputmode="text" dir="ltr" autocomplete="off" placeholder="Password"><div id="cmtlerr" class="pe"></div><button class="nx" id="cmtlgo" style="width:100%">دخول</button><button class="qx" id="cmtlback" style="width:100%;margin-top:8px">العودة لكوميشن السيلز</button></div>';el('cmh').onclick=home;el('cmtlback').onclick=()=>{cmMode='sales';cmUI()};const go=()=>{if(el('cmtlpw').value==='9325TL'){cmTLUnlocked=true;cmMode='tl';cmT='c';cmUI()}else{el('cmtlerr').textContent='الرقم السري غير صحيح.';el('cmtlpw').value=''}};el('cmtlgo').onclick=go;el('cmtlpw').onkeydown=e=>{if(e.key==='Enter')go()};el('cmtlpw').focus()}
+function cmUI(){el('cmv').innerHTML='<div class="qbar"><span>💰 حاسبة الكومشن</span><button class="qx" id="cmh">🏠 الرئيسية</button></div><div class="tb" id="cmModes"><button data-mode="sales">💰 كوميشن السيلز</button><button data-mode="tl">👔 Team Leader Commission 🔒</button></div><div class="w">'+(cmMode==='tl'?'Team Leader Commission · سعر البوينت 15 قرش لأقل من أو يساوي 80%، و25 قرش لأعلى من 80%.':'Sales Commission · نفس الحاسبة الحالية بدون تغيير.')+'</div><div class="qz"><div class="grid2"><div><label>تارجت الخطوط</label><input class="ni" id="ct" inputmode="numeric" placeholder="0"></div><div><label>الخطوط المباعة</label><input class="ni" id="cl" inputmode="numeric" placeholder="0"></div><div><label>عدد البوينت المباعة</label><input class="ni" id="cp" inputmode="numeric" placeholder="0"></div><div><label>الأيام اللي اشتغلها (تلقائي)</label><input class="ni" id="cd" inputmode="numeric" placeholder="0"></div></div><div id="cdn" class="cm" style="margin-top:8px"></div></div><div class="tb" id="cmcalcTabs"><button data-t="c">الكومشن</button><button data-t="r">المتبقي</button><button data-t="p">Projection</button></div><div id="cr"></div>';
+document.querySelectorAll('#cmModes button').forEach(b=>{b.classList.toggle('on',b.dataset.mode===cmMode);b.onclick=()=>cmChooseMode(b.dataset.mode)});
 ['t','l','p','d'].forEach(k=>{const i=el('c'+k);i.value=CV[k];i.oninput=()=>{CV[k]=i.value;cmR()}});
-document.querySelectorAll('.tb button').forEach(b=>{b.onclick=()=>{cmT=b.dataset.t;cmLast=null;cmR()}});el('cmh').onclick=home;cmR()}
-function cmR(){document.querySelectorAll('.tb button').forEach(b=>b.classList.toggle('on',b.dataset.t===cmT));
+document.querySelectorAll('#cmcalcTabs button').forEach(b=>{b.onclick=()=>{cmT=b.dataset.t;cmLast=null;cmR()}});el('cmh').onclick=home;cmR()}
+function cmR(){document.querySelectorAll('#cmcalcTabs button').forEach(b=>b.classList.toggle('on',b.dataset.t===cmT));
 const T=+CV.t||0,L=+CV.l||0,P=+CV.p||0,D=+CV.d||0,R=el('cr');
 const n0=new Date(),dm0=new Date(n0.getFullYear(),n0.getMonth()+1,0).getDate(),au=autoD(),nd=el('cdn');
 nd.innerHTML=String(au)===String(CV.d)?'📅 محسوبة تلقائي: اليوم '+n0.getDate()+' من '+dm0+' يوم ≈ '+au+' يوم شغل من 22':'✏️ معدّلة يدوياً <button class="qx" id="cdr">↺ ارجع للتلقائي</button>';
@@ -1329,11 +1333,11 @@ const rb=el('cdr');if(rb)rb.onclick=()=>{CV.d=String(autoD());el('cd').value=CV.
 const f=(n,d)=>(+n).toLocaleString('en-US',{maximumFractionDigits:d===undefined?1:d,minimumFractionDigits:d||0});
 const rw=(a,b)=>'<div class="row"><span>'+a+'</span><b>'+b+'</b></div>';
 if(T<=0){R.innerHTML='<div class="res"><p style="text-align:center;margin:0">اكتب تارجت الخطوط عشان تبدأ الحساب.</p></div>';return}
-const pct=L/T*100,rate=pct>=80?0.55:0.4,comm=P*rate,need80=Math.ceil(T*0.8);let h='';
-if(cmT==='c'){h='<div class="res"><div class="big">'+f(comm,2)+' جنيه</div><p style="text-align:center;margin:4px 0 10px">الكومشن الحالي</p>'+rw('نسبة تحقيق الخطوط',f(pct)+'%')+rw('سعر البوينت',pct>=80?'55 قرش':'40 قرش')+rw('عدد البوينت',f(P,0))+rw('الخطوط المطلوبة لـ 80%',f(need80,0))+'</div>'+(pct>=80?'':'<div class="w">أقل من 80%: البوينت محسوبة بـ 40 قرش. ناقصك '+f(Math.max(0,need80-L),0)+' خط للوصول لـ 55 قرش.</div>')}
+const pct=L/T*100,rate=cmMode==='tl'?(pct>80?0.25:0.15):(pct>=80?0.55:0.4),comm=P*rate,need80=Math.ceil(T*0.8);let h='';
+if(cmT==='c'){h='<div class="res"><div class="big">'+f(comm,2)+' جنيه</div><p style="text-align:center;margin:4px 0 10px">الكومشن الحالي</p>'+rw('نسبة تحقيق الخطوط',f(pct)+'%')+rw('سعر البوينت',cmMode==='tl'?(pct>80?'25 قرش':'15 قرش'):(pct>=80?'55 قرش':'40 قرش'))+rw('عدد البوينت',f(P,0))+rw('الخطوط المطلوبة لـ 80%',f(need80,0))+'</div>'+(cmMode==='tl'?(pct>80?'':'<div class="w">سعر البوينت 15 قرش حتى تتجاوز 80%.</div>'):(pct>=80?'':'<div class="w">أقل من 80%: البوينت محسوبة بـ 40 قرش. ناقصك '+f(Math.max(0,need80-L),0)+' خط للوصول لـ 55 قرش.</div>'))}
 else if(cmT==='r'){const dl=Math.max(0,22-D),r100=Math.max(0,T-L),r80=Math.max(0,need80-L);h='<div class="res">'+rw('المتبقي من التارجت (100%)',f(r100,0)+' خط')+rw('المتبقي للوصول لـ 80%',f(r80,0)+' خط')+rw('الأيام المتبقية (من 22)',f(dl,0)+' يوم')+rw('المطلوب يومياً للوصول لـ 80%',dl>0?f(r80/dl,1)+' خط/يوم':'—')+rw('المطلوب يومياً للتارجت كامل',dl>0?f(r100/dl,1)+' خط/يوم':'—')+'</div>'+(D>22?'<div class="w">عدد الأيام أكبر من 22.</div>':'')}
-else{if(D<=0){h='<div class="res"><p style="text-align:center;margin:0">اكتب عدد الأيام اللي اشتغلها عشان نحسب الـ Projection.</p></div>'}else{const pl=L/D*22,pp=P/D*22,pc=pl/T*100,ok=pc>=80,pm=pp*(ok?0.55:0.4);
-h='<div class="res"><div class="mood">'+(ok?'🎉🥳':'😢')+'</div><div class="msg" style="color:'+(ok?'#1e9e4a':'#d93025')+'">'+(ok?'ممتاز! هتقفل فوق الـ 80% 🔥':'شد حيلك، إنت قدها 💪')+'</div>'+rw('الخطوط المتوقعة',f(pl,0)+' خط')+rw('نسبة التحقيق المتوقعة',f(pc)+'%')+rw('البوينت المتوقعة',f(pp,0))+rw('سعر البوينت',ok?'55 قرش':'40 قرش')+rw('الكومشن المتوقع',f(pm,2)+' جنيه')+'</div><p class="cm">لو كمّل بنفس الأداء لحد 22 يوم</p>';
+else{if(D<=0){h='<div class="res"><p style="text-align:center;margin:0">اكتب عدد الأيام اللي اشتغلها عشان نحسب الـ Projection.</p></div>'}else{const pl=L/D*22,pp=P/D*22,pc=pl/T*100,ok=cmMode==='tl'?pc>80:pc>=80,pm=pp*(cmMode==='tl'?(ok?0.25:0.15):(ok?0.55:0.4));
+h='<div class="res"><div class="mood">'+(ok?'🎉🥳':'😢')+'</div><div class="msg" style="color:'+(ok?'#1e9e4a':'#d93025')+'">'+(ok?'ممتاز! هتقفل فوق الـ 80% 🔥':'شد حيلك، إنت قدها 💪')+'</div>'+rw('الخطوط المتوقعة',f(pl,0)+' خط')+rw('نسبة التحقيق المتوقعة',f(pc)+'%')+rw('البوينت المتوقعة',f(pp,0))+rw('سعر البوينت',cmMode==='tl'?(ok?'25 قرش':'15 قرش'):(ok?'55 قرش':'40 قرش'))+rw('الكومشن المتوقع',f(pm,2)+' جنيه')+'</div><p class="cm">لو كمّل بنفس الأداء لحد 22 يوم</p>';
 if(ok&&cmLast!==true)party(true);cmLast=ok}}
 R.innerHTML=h}
 
@@ -1406,17 +1410,17 @@ return {rows:rows,tot:tot.size,rem:tot.size-used.size}}
 const BO_URL='https://script.google.com/macros/s/AKfycbzftdyf33wcffsTd4SHkNLm1Aaf96Zqi4mnFFb1J3mbXIJwMkGy3S831Sd_pAHJEoA/exec';
 const BO_EMP=['Tamer','Dina','Ayman','Fatma'],BO_TL=['Yasmine','Marghny','Hassan','Sehly','Wael','Haitham'],BO_ST=['','accepted','rejected','assigned','Pending'];
 const BO_H=['Authorized Agents Name','Account number ','account name ','delegation letter SR #','SR Creation Date','TL Name','Sales Name','SR status ',' Reason','تم تسليم الورق '];
-const BO={tab:'f',reg:'',day:'',f:null};
+const BO={tab:'f',reg:'',day:'',f:null,err:''};
 const boDay=()=>new Date().toLocaleDateString('en-CA',{timeZone:'Africa/Cairo'});
 const boLS=(k,v)=>{try{if(v===undefined)return JSON.parse(localStorage.getItem(k)||'null');localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}};
-async function boApi(o){const r=await fetch(BO_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(o)});return await r.json()}
+async function boApi(o){const r=await fetch(BO_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(o),cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);const t=await r.text();try{return JSON.parse(t)}catch(e){throw new Error('رابط السيرفر رجّع صفحة غير JSON؛ راجع نشر Google Apps Script وصلاحية الوصول.')}}
 async function boSend(r){if(!BO_URL){const a=boLS('bo_rows')||[];a.push(r);boLS('bo_rows',a);return true}
 try{const d=await boApi(Object.assign({action:'bo_add'},r));if(d&&d.ok)return true}catch(e){}
 const q=boLS('bo_q')||[];q.push(r);boLS('bo_q',q);return false}
 async function boFlush(){const q=boLS('bo_q')||[];if(!q.length||!BO_URL)return;const left=[];
 for(const r of q){try{const d=await boApi(Object.assign({action:'bo_add'},r));if(!d||!d.ok)left.push(r)}catch(e){left.push(r)}}boLS('bo_q',left)}
 async function boLoad(day){let rows=[];
-if(BO_URL){try{const d=await boApi({action:'bo_list',day:day});if(!d||!d.ok)return null;rows=d.rows}catch(e){return null}}
+if(BO_URL){try{const d=await boApi({action:'bo_list',day:day});if(!d||!d.ok){BO.err='السيرفر اتصل لكنه لم يقبل action bo_list. راجع كود Google Apps Script.';return null}rows=Array.isArray(d.rows)?d.rows:[]}catch(e){BO.err=e&&e.message?e.message:'تعذّر الاتصال بالرابط. راجع الإنترنت ورابط النشر وصلاحية الوصول.';return null}}
 else rows=(boLS('bo_rows')||[]).filter(r=>r.day===day);
 const ids=new Set(rows.map(r=>r.id));(boLS('bo_q')||[]).forEach(r=>{if(r.day===day&&!ids.has(r.id))rows.push(r)});return rows}
 function openGm(){document.body.classList.add('gmx');el('intro').classList.add('hide');gmOK=false;GMD=null;BO.day=boDay();BO.tab='f';BO.top='d';boFlush();boGate();scrollTo(0,0)}
@@ -1446,7 +1450,7 @@ n.textContent=ok?'✅ اتسجل':'✅ اتحفظ على الجهاز وهيتب
 const rows=await boLoad(boDay());if(rows&&el('bom'))el('bom').textContent+=' · تفويضاتك النهارده: '+rows.filter(r=>r.emp===e).length}}
 async function boTot(){el('bob').innerHTML='<div class="res"><label>اليوم</label><input class="ni" type="date" id="bod" value="'+BO.day+'"><div id="bot2" class="cm" style="margin-top:10px">⏳ جاري التحميل...</div></div>';
 el('bod').onchange=e=>{BO.day=e.target.value||boDay();boTot()};
-const rows=await boLoad(BO.day);if(!el('bot2'))return;if(!rows){el('bot2').textContent='مفيش اتصال بالسيرفر.';return}
+const rows=await boLoad(BO.day);if(!el('bot2'))return;if(!rows){el('bot2').textContent='تعذّر تحميل التفويضات: '+(BO.err||'مفيش اتصال بالسيرفر.');return}
 const m={};BO_EMP.forEach(n=>m[n]=[0,0]);rows.forEach(r=>{(m[r.emp]=m[r.emp]||[0,0])[r.region==='C'?0:1]++});const t=[0,0];
 const body=Object.keys(m).map(n=>{t[0]+=m[n][0];t[1]+=m[n][1];return [esc(n),String(m[n][0]),String(m[n][1]),String(m[n][0]+m[n][1])]});
 el('bot2').outerHTML=tb(['الموظف','قاهرة','دلتا','الإجمالي'],body.concat([['الإجمالي',String(t[0]),String(t[1]),String(t[0]+t[1])]]),true)+'<p class="cm">عدد التفويضات اللي اتبعتت في اليوم ده</p>'}
@@ -1457,7 +1461,7 @@ if(await sha(gmNorm(el('gpw').value))===GMH){gmOK=true;boMgr()}else{el('gpe').te
 el('gpb').onclick=go;el('gpw').onkeydown=e=>{if(e.key==='Enter')go()};return}
 b.innerHTML='<div class="res"><label>اليوم</label><input class="ni" type="date" id="bod" value="'+BO.day+'"><div style="display:flex;gap:6px;margin-top:10px"><button class="nx" id="bd1" style="flex:1">⬇️ القاهرة</button><button class="nx" id="bd2" style="flex:1">⬇️ الدلتا</button></div><button class="nx" id="bd3" style="width:100%;margin-top:6px">⬇️ الاتنين</button><div id="bom" class="pe"></div></div>';
 el('bod').onchange=e=>{BO.day=e.target.value||boDay()};
-const dl=async rs=>{const m=el('bom'),rows=await boLoad(BO.day);if(!rows){m.textContent='مفيش اتصال بالسيرفر.';return}let c=0;
+const dl=async rs=>{const m=el('bom'),rows=await boLoad(BO.day);if(!rows){m.textContent='تعذّر تحميل التفويضات: '+(BO.err||'مفيش اتصال بالسيرفر.');return}let c=0;
 rs.forEach(r=>{const x=rows.filter(y=>y.region===r);if(x.length){boDl(r,x,BO.day);c++}});m.textContent=c?'':'مفيش تفويضات في اليوم ده.'};
 el('bd1').onclick=()=>dl(['C']);el('bd2').onclick=()=>dl(['D']);el('bd3').onclick=()=>dl(['C','D'])}
 function boDl(reg,rows,day){if(typeof XLSX==='undefined'){alert('مكتبة Excel ماتحملتش. اتأكد من الإنترنت.');return}
