@@ -497,7 +497,7 @@ html.unlocked #lock{display:none}
 @media (orientation:landscape) and (max-height:520px){#intro .qg{grid-template-columns:repeat(7,1fr)!important}}
 #pg .pt.challenge{grid-column:span 2;flex-direction:row;gap:16px;font-size:17px!important}#intro #pg .pt.challenge svg{width:72px!important;height:72px!important;flex:none}#intro #pg .pt.challenge span{font-size:18px!important}#pg .pt.challenge .flame{font-size:34px}
 .lk-ask{display:block;margin-top:12px;font-size:13px;color:#c9d1e6;text-decoration:underline;cursor:pointer;text-align:center}.lk-bst{margin-top:10px;font-size:12.5px;line-height:1.7;color:#ffd9a8;text-align:center}.lk-bst:empty{display:none}
-</style>
+#gmv label{display:block;font-size:13px;font-weight:700;margin:10px 0 4px;color:var(--mut)}#gmv .qz .ni,#gmv .res .ni{width:100%;box-sizing:border-box}#bob .tb,#bot,#btop{display:flex;gap:6px;margin-bottom:8px}#gmv textarea.ni{resize:vertical;font-family:inherit}</style>
 </head>
 <body><div id="lock" dir="rtl" role="dialog" aria-modal="true" aria-labelledby="lkT"><div class="lk-bg"></div><div class="lk-card"><img id="lockimg" class="lk-logo" alt="Aptelecom"><h1 id="lkT">Aptelecom</h1><p class="lk-sub">TRAINING &amp; SALES EXCELLENCE PORTAL</p><div class="lk-line"></div><p class="lk-hint">🔒 منطقة محمية · أدخل كلمة السر للمتابعة</p><div class="lk-f"><input id="lkp" type="password" autocomplete="current-password" placeholder="كلمة السر" dir="ltr" autocapitalize="off" spellcheck="false"><button type="button" id="lkeye" aria-label="إظهار كلمة السر">👁</button></div><div id="lke" class="lk-e" role="alert"></div><button id="lkb" class="lk-b" type="button">دخول</button><button id="lkbio" class="lk-bio" type="button">🔐 الدخول بالبصمة</button><div id="lkbst" class="lk-bst"></div><a id="lkbask" class="lk-ask" href="#" style="display:none">🔐 فعّل الدخول بالبصمة</a><a id="lkbof" class="lk-ask" href="#" style="display:none">إلغاء البصمة على الجهاز ده</a></div><div class="lk-ft">© 2026 Aptelecom · Authorized access only</div></div>
 <script>(function(){var SALT='aptelecom::',DEF='37686a124cf544267887006cde1a4c9cfcf8626cfcfeaff98d496d6d4c2fb831',d=document,$=function(i){return d.getElementById(i)};
@@ -1402,14 +1402,77 @@ const rows=GT.map((tn,i)=>{const d=gmTQd(i);return {n:tn,A:d.tt.A.size,H:d.tt.H.
 const used=new Set(rows.flatMap(r=>[...r.set]));
 return {rows:rows,tot:tot.size,rem:tot.size-used.size}}
 // GM-END
-function openGm(){document.body.classList.add('gmx');el('intro').classList.add('hide');gmOK=false;GMD=null;gmGate();scrollTo(0,0)}
-function gmGate(){el('gmv').innerHTML='<div class="qbar"><span>🔒 RPM</span><button class="qx" id="gmh">🏠 الرئيسية</button></div><div class="qz"><div class="rb"><div class="lk">🔒</div><h2>RPM</h2></div><h3 style="text-align:center;margin:0 0 8px">ادخل الرقم السري</h3><input class="ni" id="gpw" type="password" dir="ltr" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="••••••"><div id="gpe" class="pe"></div><div style="text-align:center"><button class="nx" id="gpb" style="width:100%">دخول</button></div></div>';
-el('gmh').onclick=home;
+// BO-START
+const BO_URL='https://script.google.com/macros/s/AKfycbzftdyf33wcffsTd4SHkNLm1Aaf96Zqi4mnFFb1J3mbXIJwMkGy3S831Sd_pAHJEoA/exec';
+const BO_EMP=['Tamer','Dina','Ayman','Fatma'],BO_TL=['Yasmine','Marghny','Hassan','Sehly','Wael','Haitham'],BO_ST=['','accepted','rejected','assigned','Pending'];
+const BO_H=['Authorized Agents Name','Account number ','account name ','delegation letter SR #','SR Creation Date','TL Name','Sales Name','SR status ',' Reason','تم تسليم الورق '];
+const BO={tab:'f',reg:'',day:'',f:null};
+const boDay=()=>new Date().toLocaleDateString('en-CA',{timeZone:'Africa/Cairo'});
+const boLS=(k,v)=>{try{if(v===undefined)return JSON.parse(localStorage.getItem(k)||'null');localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}};
+async function boApi(o){const r=await fetch(BO_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(o)});return await r.json()}
+async function boSend(r){if(!BO_URL){const a=boLS('bo_rows')||[];a.push(r);boLS('bo_rows',a);return true}
+try{const d=await boApi(Object.assign({action:'bo_add'},r));if(d&&d.ok)return true}catch(e){}
+const q=boLS('bo_q')||[];q.push(r);boLS('bo_q',q);return false}
+async function boFlush(){const q=boLS('bo_q')||[];if(!q.length||!BO_URL)return;const left=[];
+for(const r of q){try{const d=await boApi(Object.assign({action:'bo_add'},r));if(!d||!d.ok)left.push(r)}catch(e){left.push(r)}}boLS('bo_q',left)}
+async function boLoad(day){let rows=[];
+if(BO_URL){try{const d=await boApi({action:'bo_list',day:day});if(!d||!d.ok)return null;rows=d.rows}catch(e){return null}}
+else rows=(boLS('bo_rows')||[]).filter(r=>r.day===day);
+const ids=new Set(rows.map(r=>r.id));(boLS('bo_q')||[]).forEach(r=>{if(r.day===day&&!ids.has(r.id))rows.push(r)});return rows}
+function openGm(){document.body.classList.add('gmx');el('intro').classList.add('hide');gmOK=false;GMD=null;BO.day=boDay();BO.tab='f';BO.top='d';boFlush();boGate();scrollTo(0,0)}
+function boGate(){el('gmv').innerHTML='<div class="qbar"><span>🧾 Back-office</span><button class="qx" id="gmh">🏠 الرئيسية</button></div><div class="qz"><div class="rb"><div class="lk">🔒</div><h2>Back-office</h2></div><h3 style="text-align:center;margin:0 0 8px">ادخل الرقم السري</h3><input class="ni" id="gpw" type="password" dir="ltr" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="••••••"><div id="gpe" class="pe"></div><div style="text-align:center"><button class="nx" id="gpb" style="width:100%">دخول</button></div></div>';el('gmh').onclick=home;
+const go=async()=>{if(!(window.crypto&&crypto.subtle)){el('gpe').textContent='افتح الموقع من رابط https عشان التحقق يشتغل.';return}
+if(await sha(gmNorm(el('gpw').value))===GMH){gmOK=true;boTop()}else{el('gpe').textContent='الرقم السري غلط.';el('gpw').value=''}};
+el('gpb').onclick=go;el('gpw').onkeydown=e=>{if(e.key==='Enter')go()};el('gpw').focus()}
+function boTop(){el('gmv').innerHTML='<div class="qbar"><span>🧾 Back-office</span><button class="qx" id="gmh">🏠 الرئيسية</button></div><div class="tb" id="btop"><button data-p="s">📊 المبيعات</button><button data-p="d">📝 Delegation</button></div><div id="bmain"></div>';el('gmh').onclick=home;
+document.querySelectorAll('#btop button').forEach(b=>{b.classList.toggle('on',b.dataset.p===BO.top);b.onclick=()=>{BO.top=b.dataset.p;boTop()}});BO.top==='s'?(gmOK?gmUI():gmGate()):boView()}
+function boView(){const T=[['f','إدخال تفويض'],['t','إجمالي الشغل'],['m','المدير']];
+el('bmain').innerHTML=(BO_URL?'':'<div class="w">⚠️ وضع تجريبي: الداتا محفوظة على الجهاز ده بس (لسه مفيش رابط سيرفر في BO_URL).</div>')+'<div class="tb" id="bot">'+T.map(t=>'<button data-t="'+t[0]+'"'+(BO.tab===t[0]?' class="on"':'')+'>'+t[1]+'</button>').join('')+'</div><div id="bob"></div>';
+document.querySelectorAll('#bot button').forEach(b=>b.onclick=()=>{BO.tab=b.dataset.t;boView()});
+({f:boForm,t:boTot,m:boMgr})[BO.tab]()}
+function boForm(){const emp=boLS('bo_emp'),F=BO.f||{};
+const fld=i=>{const h=BO_H[i].trim(),id='bo'+i,d=F[i]!=null?F[i]:(i===0?'Aptec Delta':i===4?boDay():'');
+if(i===7||i===9){const o=i===7?BO_ST:['','sent'];return '<label>'+esc(h)+'</label><select class="ni" id="'+id+'">'+o.map(x=>'<option value="'+x+'">'+(x||'—')+'</option>').join('')+'</select>'}
+if(i===8)return '<label>'+esc(h)+'</label><textarea class="ni" id="'+id+'" rows="3"></textarea>';
+return '<label>'+esc(h)+(i>0&&i<4?' *':'')+'</label><input class="ni" id="'+id+'" value="'+esc(d)+'"'+(i===4?' type="date"':'')+(i===0?' list="boA"':'')+(i===5?' list="boT"':'')+(i===1?' inputmode="decimal"':'')+' autocomplete="off">'};
+el('bob').innerHTML='<div class="qz"><label>الموظف *</label><div class="tb" id="boe">'+BO_EMP.map(n=>'<button data-e="'+n+'"'+(emp===n?' class="on"':'')+'>'+n+'</button>').join('')+'</div><label>الفرع *</label><div class="tb" id="bor"><button data-r="C"'+(BO.reg==='C'?' class="on"':'')+'>قاهرة</button><button data-r="D"'+(BO.reg==='D'?' class="on"':'')+'>دلتا</button></div>'+BO_H.map((h,i)=>fld(i)).join('')+'<datalist id="boA"><option value="Aptec Delta"></datalist><datalist id="boT">'+BO_TL.map(x=>'<option value="'+x+'">').join('')+'</datalist><div id="bom" class="pe"></div><div style="text-align:center;margin-top:10px"><button class="nx" id="bos" style="width:100%">إرسال ✅</button></div></div>';
+const pick=(sel,fn)=>document.querySelectorAll(sel+' button').forEach(b=>b.onclick=()=>{document.querySelectorAll(sel+' button').forEach(x=>x.classList.toggle('on',x===b));fn(b)});
+pick('#boe',b=>boLS('bo_emp',b.dataset.e));pick('#bor',b=>{BO.reg=b.dataset.r});
+el('bos').onclick=async()=>{const m=el('bom'),e=boLS('bo_emp'),v=BO_H.map((h,i)=>el('bo'+i).value.trim());m.style.color='';
+if(!e||!BO.reg||!v[1]||!v[2]||!v[3]){m.textContent='اختار الموظف والفرع، واكتب رقم الحساب واسم الحساب ورقم الـ SR.';return}
+const b=el('bos');b.disabled=true;const row={id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),region:BO.reg,emp:e,day:boDay(),ts:new Date().toISOString(),v:v};
+const ok=await boSend(row);b.disabled=false;BO.f={0:v[0],4:v[4],5:v[5]};boForm();const n=el('bom');n.style.color='#1a7f37';
+n.textContent=ok?'✅ اتسجل':'✅ اتحفظ على الجهاز وهيتبعت لما النت يرجع';
+const rows=await boLoad(boDay());if(rows&&el('bom'))el('bom').textContent+=' · تفويضاتك النهارده: '+rows.filter(r=>r.emp===e).length}}
+async function boTot(){el('bob').innerHTML='<div class="res"><label>اليوم</label><input class="ni" type="date" id="bod" value="'+BO.day+'"><div id="bot2" class="cm" style="margin-top:10px">⏳ جاري التحميل...</div></div>';
+el('bod').onchange=e=>{BO.day=e.target.value||boDay();boTot()};
+const rows=await boLoad(BO.day);if(!el('bot2'))return;if(!rows){el('bot2').textContent='مفيش اتصال بالسيرفر.';return}
+const m={};BO_EMP.forEach(n=>m[n]=[0,0]);rows.forEach(r=>{(m[r.emp]=m[r.emp]||[0,0])[r.region==='C'?0:1]++});const t=[0,0];
+const body=Object.keys(m).map(n=>{t[0]+=m[n][0];t[1]+=m[n][1];return [esc(n),String(m[n][0]),String(m[n][1]),String(m[n][0]+m[n][1])]});
+el('bot2').outerHTML=tb(['الموظف','قاهرة','دلتا','الإجمالي'],body.concat([['الإجمالي',String(t[0]),String(t[1]),String(t[0]+t[1])]]),true)+'<p class="cm">عدد التفويضات اللي اتبعتت في اليوم ده</p>'}
+function boMgr(){const b=el('bob');
+if(!gmOK){b.innerHTML='<div class="qz"><h3 style="text-align:center;margin:0 0 8px">🔒 للمدير أو من ينوب عنه</h3><input class="ni" id="gpw" type="password" dir="ltr" autocomplete="off" placeholder="الرقم السري"><div id="gpe" class="pe"></div><div style="text-align:center"><button class="nx" id="gpb" style="width:100%">دخول</button></div></div>';
+const go=async()=>{if(!(window.crypto&&crypto.subtle)){el('gpe').textContent='افتح الموقع من رابط https عشان التحقق يشتغل.';return}
+if(await sha(gmNorm(el('gpw').value))===GMH){gmOK=true;boMgr()}else{el('gpe').textContent='الرقم السري غلط.';el('gpw').value=''}};
+el('gpb').onclick=go;el('gpw').onkeydown=e=>{if(e.key==='Enter')go()};return}
+b.innerHTML='<div class="res"><label>اليوم</label><input class="ni" type="date" id="bod" value="'+BO.day+'"><div style="display:flex;gap:6px;margin-top:10px"><button class="nx" id="bd1" style="flex:1">⬇️ القاهرة</button><button class="nx" id="bd2" style="flex:1">⬇️ الدلتا</button></div><button class="nx" id="bd3" style="width:100%;margin-top:6px">⬇️ الاتنين</button><div id="bom" class="pe"></div></div>';
+el('bod').onchange=e=>{BO.day=e.target.value||boDay()};
+const dl=async rs=>{const m=el('bom'),rows=await boLoad(BO.day);if(!rows){m.textContent='مفيش اتصال بالسيرفر.';return}let c=0;
+rs.forEach(r=>{const x=rows.filter(y=>y.region===r);if(x.length){boDl(r,x,BO.day);c++}});m.textContent=c?'':'مفيش تفويضات في اليوم ده.'};
+el('bd1').onclick=()=>dl(['C']);el('bd2').onclick=()=>dl(['D']);el('bd3').onclick=()=>dl(['C','D'])}
+function boDl(reg,rows,day){if(typeof XLSX==='undefined'){alert('مكتبة Excel ماتحملتش. اتأكد من الإنترنت.');return}
+const a=[BO_H].concat(rows.map(r=>r.v.map((x,i)=>i===4&&/^\d{4}-\d\d-\d\d$/.test(x)?new Date(x+'T00:00:00'):i===1&&/^\d+(\.\d+)?$/.test(x)?+x:x)));
+const ws=XLSX.utils.aoa_to_sheet(a,{cellDates:true});for(let i=2;i<=a.length;i++){const c=ws['E'+i];if(c&&c.t==='d')c.z='yyyy-mm-dd'}
+ws['!cols']=[13,21,46,20,16,10,12,10,32,20].map(w=>({wch:w}));const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Sheet1');
+XLSX.writeFile(wb,'Delegation_report_'+day.split('-').reverse().join('-')+'_'+(reg==='C'?'Cairo':'Delta')+'.xlsx')}
+function gmGate(){el('bmain').innerHTML='<div class="qz"><div class="rb"><div class="lk">🔒</div><h2>المبيعات</h2></div><h3 style="text-align:center;margin:0 0 8px">ادخل الرقم السري</h3><input class="ni" id="gpw" type="password" dir="ltr" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="••••••"><div id="gpe" class="pe"></div><div style="text-align:center"><button class="nx" id="gpb" style="width:100%">دخول</button></div></div>';
+
 const go=async()=>{const v=el('gpw').value;if(!(window.crypto&&crypto.subtle)){el('gpe').textContent='افتح الموقع من رابط https عشان التحقق يشتغل.';return}
 if(await sha(gmNorm(v))===GMH){gmOK=true;gmUI()}else{el('gpe').textContent='الرقم السري غلط.';el('gpw').value=''}};
 el('gpb').onclick=go;el('gpw').onkeydown=e=>{if(e.key==='Enter')go()};el('gpw').focus()}
-function gmUI(){el('gmv').innerHTML='<div class="qbar"><span>🔒 RPM</span><button class="qx" id="gmh">🏠 الرئيسية</button></div><div class="rb"><h2>RPM</h2><p>تقارير المبيعات</p></div><div class="qz"><p style="margin:0 0 8px;text-align:start">ارفع شيت المبيعات (Excel). الملف بيتقرا على جهازك ومش بيتبعت لأي مكان.</p><input type="file" id="gf" accept=".xlsx,.xls,.xlsm,.csv" class="ni"><div id="gpe" class="pe"></div></div><div id="gr"></div>';
-el('gmh').onclick=home;el('gf').onchange=gmFile}
+function gmUI(){el('bmain').innerHTML='<div class="rb"><h2>المبيعات</h2><p>تقارير المبيعات</p></div><div class="qz"><p style="margin:0 0 8px;text-align:start">ارفع شيت المبيعات (Excel). الملف بيتقرا على جهازك ومش بيتبعت لأي مكان.</p><input type="file" id="gf" accept=".xlsx,.xls,.xlsm,.csv" class="ni"><div id="gpe" class="pe"></div></div><div id="gr"></div>';
+el('gf').onchange=gmFile}
+// BO-END
 function gmFile(e){const f=e.target.files[0];if(!f)return;if(typeof XLSX==='undefined'){el('gpe').textContent='مكتبة Excel ماتحملتش. اتأكد من الإنترنت وجرّب تاني.';return}
 const rd=new FileReader();rd.onload=()=>{try{GMD=gmParse(XLSX.read(new Uint8Array(rd.result),{type:'array'}));if(!GMD){el('gpe').textContent='ماقدرتش ألاقي الأعمدة المطلوبة (اسم البائع، سوبر فيزر، الحاله، points).';el('gr').innerHTML=''}else{el('gpe').textContent='';gmShow()}}catch(x){el('gpe').textContent='مشكلة في قراءة الملف.'}};rd.readAsArrayBuffer(f)}
 function gmShow(){const co=gmCo(),R=GMD.recs,tot=[co.A[0]+co.H[0]+co.R[0],co.A[1]+co.H[1]+co.R[1]],nwAll=new Set([...co.A[2],...co.H[2],...co.R[2]]);
@@ -1503,7 +1566,7 @@ async function sLoad(){let a='stats';try{if(!sessionStorage.getItem('apvr')){a='
 function vis(){try{let n=+localStorage.getItem('apv')||0;if(!sessionStorage.getItem('apvs')){n++;localStorage.setItem('apv',n);sessionStorage.setItem('apvs',1)}return n||1}catch(e){return 1}}
 function hR(){const h=new Date().getHours(),D=new Date();el('gtx').textContent=(h<12?'صباح الخير':'مساء الخير')+' 👋';el('gdt').textContent=D.toLocaleDateString('ar-EG-u-nu-latn',{weekday:'long',day:'numeric',month:'long'});
 const dm=new Date(D.getFullYear(),D.getMonth()+1,0).getDate(),en=o=>D.toLocaleDateString('en-US',o),v=ST?ST.v:vis();
-el('pg').innerHTML=pt(1,'<text x="50" y="62" font-size="31">📲</text>','Install App',' inst')+pt(1,'<text x="50" y="62" font-size="31">📊</text>','RPM',' rpmt')+pt(1,'<text x="50" y="62" font-size="31">🔐</text>','Top management',' mgmt')+pt(1,'<g transform="translate(27 27) scale(1.85)" fill="none" stroke="#ff6600" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z"/><path d="M8.6 7.5c-.3.3-.8.9-.5 2 .4 1.3 1.7 3 3.4 3.9 1.4.7 2.2.6 2.8.2.4-.3.6-.8.5-1.1l-1.6-.8-.7.8c-.7-.2-2-1.2-2.3-2l.7-.7-.8-1.7c-.4-.1-1.2-.2-1.5.4z"/></g>','Chat with us',' wch')+pt(1,'<text class="flame" x="50" y="62" font-size="31">🔥</text>','Weekly Challenge',' challenge'+(weeklyOpen()?' fire':''));{const ia=document.querySelector('#pg .inst');if(ia){ia.setAttribute('role','button');ia.setAttribute('tabindex','0');ia.style.cursor='pointer';ia.onclick=()=>window.openIns();ia.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();window.openIns()}}}const r=document.querySelector('#pg .rpmt');if(r){r.setAttribute('role','button');r.setAttribute('tabindex','0');r.style.cursor='pointer';r.onclick=openGm;r.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openGm()}}}}
+el('pg').innerHTML=pt(1,'<text x="50" y="62" font-size="31">📲</text>','Install App',' inst')+pt(1,'<text x="50" y="62" font-size="31">📊</text>','Back-office',' rpmt')+pt(1,'<text x="50" y="62" font-size="31">🔐</text>','Top management',' mgmt')+pt(1,'<g transform="translate(27 27) scale(1.85)" fill="none" stroke="#ff6600" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z"/><path d="M8.6 7.5c-.3.3-.8.9-.5 2 .4 1.3 1.7 3 3.4 3.9 1.4.7 2.2.6 2.8.2.4-.3.6-.8.5-1.1l-1.6-.8-.7.8c-.7-.2-2-1.2-2.3-2l.7-.7-.8-1.7c-.4-.1-1.2-.2-1.5.4z"/></g>','Chat with us',' wch')+pt(1,'<text class="flame" x="50" y="62" font-size="31">🔥</text>','Weekly Challenge',' challenge'+(weeklyOpen()?' fire':''));{const ia=document.querySelector('#pg .inst');if(ia){ia.setAttribute('role','button');ia.setAttribute('tabindex','0');ia.style.cursor='pointer';ia.onclick=()=>window.openIns();ia.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();window.openIns()}}}const r=document.querySelector('#pg .rpmt');if(r){r.setAttribute('role','button');r.setAttribute('tabindex','0');r.style.cursor='pointer';r.onclick=openGm;r.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openGm()}}}}
 document.querySelector('#pg .wch').onclick=()=>open('https://wa.me/201211535557','_blank');const mg=document.querySelector('#pg .mgmt');if(mg){mg.setAttribute('role','button');mg.setAttribute('tabindex','0');mg.style.cursor='pointer';mg.onclick=openNw;mg.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openNw()}}}const wc=document.querySelector('#pg .challenge');if(wc){wc.setAttribute('role','button');wc.setAttribute('tabindex','0');wc.setAttribute('aria-label','Start Weekly challenge');const startWeekly=()=>{if(!weeklyOpen()){alert('🔥 Weekly Challenge متاح يوم الأحد فقط من 10:00 صباحًا لحد 5:00 مساءً بتوقيت مصر.\nارجع في المعاد وورّينا هتقدر توصل لـ 200/200 ولا لأ!');return}try{if(!isTest()&&localStorage.getItem('lock_'+weeklyDateKey())){alert('⛔ خدت محاولتك في التحدي الأسبوع ده. ارجع الأحد الجاي من 10 صباحًا لحد 5 مساءً.');return}}catch(e){}weeklyMode=true;el('intro').classList.add('hide');rulesScreen();scrollTo(0,0)};wc.onclick=startWeekly;wc.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();startWeekly()}}}
 let br=null;try{br=JSON.parse(localStorage.getItem('aptelecom_weekly_best')||localStorage.getItem('aptelecom_last_weekly_result')||'null')}catch(e){}
 const hv=br&&br.name&&br.total;clearInterval(rnT);
