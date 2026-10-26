@@ -1430,10 +1430,10 @@ if(await sha(gmNorm(el('gpw').value))===GMH){gmOK=true;boTop()}else{el('gpe').te
 el('gpb').onclick=go;el('gpw').onkeydown=e=>{if(e.key==='Enter')go()};el('gpw').focus()}
 function boTop(){el('gmv').innerHTML='<div class="qbar"><span>🧾 Back-office</span><button class="qx" id="gmh">🏠 الرئيسية</button></div><div class="tb" id="btop"><button data-p="s">📊 المبيعات</button><button data-p="d">📝 Delegation</button></div><div id="bmain"></div>';el('gmh').onclick=home;
 document.querySelectorAll('#btop button').forEach(b=>{b.classList.toggle('on',b.dataset.p===BO.top);b.onclick=()=>{BO.top=b.dataset.p;boTop()}});BO.top==='s'?(gmOK?gmUI():gmGate()):boView()}
-function boView(){const T=[['f','إدخال تفويض'],['t','إجمالي الشغل'],['m','المدير']];
+function boView(){const T=[['f','إدخال تفويض'],['t','إجمالي الشغل'],['e','تعديل'],['m','المدير']];
 el('bmain').innerHTML=(BO_URL?'':'<div class="w">⚠️ وضع تجريبي: الداتا محفوظة على الجهاز ده بس (لسه مفيش رابط سيرفر في BO_URL).</div>')+'<div class="tb" id="bot">'+T.map(t=>'<button data-t="'+t[0]+'"'+(BO.tab===t[0]?' class="on"':'')+'>'+t[1]+'</button>').join('')+'</div><div id="bob"></div>';
 document.querySelectorAll('#bot button').forEach(b=>b.onclick=()=>{BO.tab=b.dataset.t;boView()});
-({f:boForm,t:boTot,m:boMgr})[BO.tab]()}
+({f:boForm,t:boTot,e:boEdit,m:boMgr})[BO.tab]()}
 function boForm(){const emp=boLS('bo_emp'),F=BO.f||{};
 const fld=i=>{const h=BO_H[i].trim(),id='bo'+i,d=F[i]!=null?F[i]:(i===0?'Aptec Delta':i===4?boDay():'');
 if(i===7||i===9){const o=i===7?BO_ST:['','sent'];return '<label>'+esc(h)+'</label><select class="ni" id="'+id+'">'+o.map(x=>'<option value="'+x+'">'+(x||'—')+'</option>').join('')+'</select>'}
@@ -1464,11 +1464,47 @@ el('bod').onchange=e=>{BO.day=e.target.value||boDay()};
 const dl=async rs=>{const m=el('bom'),rows=await boLoad(BO.day);if(!rows){m.textContent='تعذّر تحميل التفويضات: '+(BO.err||'مفيش اتصال بالسيرفر.');return}let c=0;
 rs.forEach(r=>{const x=rows.filter(y=>y.region===r);if(x.length){boDl(r,x,BO.day);c++}});m.textContent=c?'':'مفيش تفويضات في اليوم ده.'};
 el('bd1').onclick=()=>dl(['C']);el('bd2').onclick=()=>dl(['D']);el('bd3').onclick=()=>dl(['C','D'])}
-function boDl(reg,rows,day){if(typeof XLSX==='undefined'){alert('مكتبة Excel ماتحملتش. اتأكد من الإنترنت.');return}
+function boLoadX(){return window.ExcelJS?Promise.resolve():new Promise((ok,no)=>{const x=document.createElement('script');x.src='https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js';x.onload=ok;x.onerror=()=>no(new Error('exceljs'));document.head.appendChild(x)})}
+async function boDl(reg,rows,day){const nm='Delegation_report_'+day.split('-').reverse().join('-')+'_'+(reg==='C'?'Cairo':'Delta')+'.xlsx';
+try{await boLoadX()}catch(e){return boDlPlain(reg,rows,day)}
+try{const wb=new ExcelJS.Workbook();wb.creator='Aptelecom';wb.created=new Date();
+const ws=wb.addWorksheet(reg==='C'?'Cairo':'Delta',{views:[{state:'frozen',ySplit:1}],pageSetup:{orientation:'landscape',fitToPage:true,fitToWidth:1,fitToHeight:0,paperSize:9,printTitlesRow:'1:1'}});
+const W=[22,18,38,20,15,14,16,14,40,16],bd={style:'thin',color:{argb:'FFD9CBBE'}},BR={top:bd,left:bd,bottom:bd,right:bd};
+ws.columns=BO_H.map((h,i)=>({header:h.trim(),width:W[i]}));
+const hr=ws.getRow(1);hr.height=30;hr.eachCell(c=>{c.font={name:'Calibri',size:12,bold:true,color:{argb:'FFFFFFFF'}};c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFFF6A00'}};c.alignment={vertical:'middle',horizontal:'center',wrapText:true};c.border=BR});
+const ST={accepted:['FFC6EFCE','FF006100'],rejected:['FFFFC7CE','FF9C0006'],assigned:['FFDDEBF7','FF1F4E78'],pending:['FFFFEB9C','FF9C5700'],sent:['FFC6EFCE','FF006100']};
+rows.forEach((r,k)=>{const v=r.v.map((x,i)=>{x=x==null?'':String(x).trim();if(i===4&&/^\d{4}-\d\d-\d\d$/.test(x))return new Date(x+'T00:00:00Z');if(i===1&&/^\d{1,15}$/.test(x))return +x;return x});
+const row=ws.addRow(v);row.height=Math.max(22,Math.min(90,15*Math.ceil(String(v[8]||'').length/42)+7));
+row.eachCell({includeEmpty:true},(c,ci)=>{c.font={name:'Calibri',size:11};c.border=BR;c.alignment={vertical:'middle',horizontal:ci===9||ci===3?'left':'center',wrapText:ci===9||ci===3};if(k%2)c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFFFF4EA'}}});
+if(v[4] instanceof Date)row.getCell(5).numFmt='yyyy-mm-dd';if(typeof v[1]==='number')row.getCell(2).numFmt='0';
+[[8,v[7]],[10,v[9]]].forEach(z=>{const t=ST[String(z[1]||'').trim().toLowerCase()];if(t){const c=row.getCell(z[0]);c.fill={type:'pattern',pattern:'solid',fgColor:{argb:t[0]}};c.font={name:'Calibri',size:11,bold:true,color:{argb:t[1]}}}})});
+const n=rows.length+1;ws.autoFilter={from:{row:1,column:1},to:{row:1,column:BO_H.length}};
+const tr=ws.addRow(['الإجمالي',rows.length]);tr.height=24;tr.eachCell(c=>{c.font={name:'Calibri',size:12,bold:true};c.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFFFE0C7'}};c.border=BR;c.alignment={vertical:'middle',horizontal:'center'}});
+const buf=await wb.xlsx.writeBuffer(),u=URL.createObjectURL(new Blob([buf],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'})),a=document.createElement('a');a.href=u;a.download=nm;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000)}
+catch(e){boDlPlain(reg,rows,day)}}
+function boDlPlain(reg,rows,day){if(typeof XLSX==='undefined'){alert('مكتبة Excel ماتحملتش. اتأكد من الإنترنت.');return}
 const a=[BO_H].concat(rows.map(r=>r.v.map((x,i)=>i===4&&/^\d{4}-\d\d-\d\d$/.test(x)?new Date(x+'T00:00:00'):i===1&&/^\d+(\.\d+)?$/.test(x)?+x:x)));
 const ws=XLSX.utils.aoa_to_sheet(a,{cellDates:true});for(let i=2;i<=a.length;i++){const c=ws['E'+i];if(c&&c.t==='d')c.z='yyyy-mm-dd'}
 ws['!cols']=[13,21,46,20,16,10,12,10,32,20].map(w=>({wch:w}));const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Sheet1');
 XLSX.writeFile(wb,'Delegation_report_'+day.split('-').reverse().join('-')+'_'+(reg==='C'?'Cairo':'Delta')+'.xlsx')}
+function boEdit(){el('bob').innerHTML='<div class="qz"><label>ابحث برقم SR أو رقم الحساب</label><input class="ni" id="bxq" inputmode="search" autocomplete="off" placeholder="اكتب 3 أرقام على الأقل"><div style="text-align:center;margin-top:10px"><button class="nx" id="bxf" style="width:100%">🔍 بحث</button></div><div id="bxr" style="margin-top:10px"></div></div>';
+const go=async()=>{const q=el('bxq').value.trim(),R=el('bxr');if(q.replace(/\s/g,'').length<3){R.innerHTML='<div class="pe">اكتب 3 أرقام على الأقل.</div>';return}
+R.innerHTML='<div class="cm">⏳ جاري البحث...</div>';let d;try{d=await boApi({action:'bo_find',q:q})}catch(e){R.innerHTML='<div class="pe">'+esc(e.message||'تعذّر الاتصال بالسيرفر.')+'</div>';return}
+if(!d||!d.ok){R.innerHTML='<div class="pe">السيرفر لم يقبل البحث. اتأكد إنك نشرت نسخة جديدة من كود Google Apps Script.</div>';return}
+if(!d.rows.length){R.innerHTML='<div class="cm">مفيش نتايج.</div>';return}
+R.innerHTML=d.rows.map((r,k)=>boEC(r,k)).join('');
+d.rows.forEach((r,k)=>{el('bxs'+k).onclick=()=>boEs(r,k)})};
+el('bxf').onclick=go;el('bxq').onkeydown=e=>{if(e.key==='Enter')go()}}
+function boEC(r,k){const f=BO_H.map((h,i)=>{const id='bx'+k+'_'+i,x=String(r.v[i]==null?'':r.v[i]),L='<label>'+esc(h.trim())+(i>0&&i<4?' *':'')+'</label>';
+if(i===7||i===9){const o=(i===7?BO_ST:['','sent']).slice();if(o.indexOf(x)<0)o.push(x);return L+'<select class="ni" id="'+id+'">'+o.map(y=>'<option value="'+esc(y)+'"'+(y===x?' selected':'')+'>'+(esc(y)||'—')+'</option>').join('')+'</select>'}
+if(i===8)return L+'<textarea class="ni" id="'+id+'" rows="3">'+esc(x)+'</textarea>';
+return L+'<input class="ni" id="'+id+'" value="'+esc(x)+'"'+(i===4&&/^\d{4}-\d\d-\d\d$/.test(x)?' type="date"':'')+(i===1?' inputmode="decimal"':'')+' autocomplete="off">'}).join('');
+return '<div class="res" style="margin-top:10px"><h4 style="margin:0 0 6px;color:var(--or)">'+(r.region==='C'?'قاهرة':'دلتا')+' · '+esc(r.day)+' · '+esc(r.emp)+'</h4>'+f+'<div id="bxm'+k+'" class="pe"></div><div style="text-align:center;margin-top:10px"><button class="nx" id="bxs'+k+'" style="width:100%">💾 حفظ التعديل</button></div></div>'}
+async function boEs(r,k){const m=el('bxm'+k),b=el('bxs'+k),v=BO_H.map((h,i)=>el('bx'+k+'_'+i).value.trim());m.style.color='';
+if(!v[1]||!v[2]||!v[3]){m.textContent='رقم الحساب واسم الحساب ورقم الـ SR مطلوبين.';return}
+b.disabled=true;m.textContent='⏳ جاري الحفظ...';
+try{const d=await boApi({action:'bo_upd',region:r.region,row:r.row,id:r.id,o:[r.v[1],r.v[3]],v:v});if(d&&d.ok){r.v=v;m.style.color='#1a7f37';m.textContent='✅ اتعدّل في الشيت'}else m.textContent=d&&d.error==='changed'?'الصف اتغير من مكان تاني. اعمل بحث تاني.':'السيرفر لم يقبل التعديل ('+((d&&d.error)||'؟')+'). اتأكد إنك نشرت النسخة الجديدة من الكود.'}
+catch(e){m.textContent=e&&e.message?e.message:'تعذّر الاتصال بالسيرفر.'}b.disabled=false}
 function gmGate(){el('bmain').innerHTML='<div class="qz"><div class="rb"><div class="lk">🔒</div><h2>المبيعات</h2></div><h3 style="text-align:center;margin:0 0 8px">ادخل الرقم السري</h3><input class="ni" id="gpw" type="password" dir="ltr" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="••••••"><div id="gpe" class="pe"></div><div style="text-align:center"><button class="nx" id="gpb" style="width:100%">دخول</button></div></div>';
 
 const go=async()=>{const v=el('gpw').value;if(!(window.crypto&&crypto.subtle)){el('gpe').textContent='افتح الموقع من رابط https عشان التحقق يشتغل.';return}
