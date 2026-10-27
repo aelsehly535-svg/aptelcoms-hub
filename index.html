@@ -1088,7 +1088,7 @@ document.querySelectorAll('#vsc button').forEach(b=>b.onclick=()=>{VS_CAT=b.data
 el('vsbig').onclick=()=>{const w=el('vsmw'),big=w.dataset.big!=='1';w.dataset.big=big?'1':'';w.style.height=big?'80vh':'55vh';el('vsbig').textContent=big?'⛶ تصغير':'⛶ تكبير';if(big)w.scrollIntoView({behavior:'smooth',block:'start'})};
 el('qscp').onclick=()=>vsPaste('qsc');el('qsph').onclick=()=>{const c=el('qsc').value.trim();if(!c){vsQs('اكتب أو الصق اسم الشركة الأول.',1);return}vsQs('');window.open('https://www.google.com/maps/search/'+encodeURIComponent(c+' '+(el('qsa').value.trim()||VS_PL||''))+'?hl=ar','_blank','noopener')};el('qsmp').onclick=()=>vsPaste('qsm');el('qsv').onclick=vsQuick;
 vsSt(VS_ST);vsCnt();vsMap()}
-const DR_K='dr_v1',DR_N='dr_sales',DR_H=['Account','Company Name','CP Name','Mobile','Area','Date','Way','Feedback','Sales Name','Follow-up Date','Follow-up Time'];
+const DR_K='dr_v1',DR_N='dr_sales',DR_H=['Account','Account Number','Company Name','CP Name','Mobile','Area','Date','Way','Feedback','Sales Name','Follow-up Date','Follow-up Time'];
 let DR_P='today',DR_ED=null,DR_AC='New',DR_WY='Visit';
 function drLoad(){try{const a=JSON.parse(localStorage.getItem(DR_K)||'[]');return Array.isArray(a)?a:[]}catch(e){return[]}}
 function drSave(a){try{localStorage.setItem(DR_K,JSON.stringify(a));DR_DIRTY=true;return true}catch(e){return false}}
@@ -1101,12 +1101,14 @@ const DR_PL={today:'Today',week:'Last 7 days',month:'This month',all:'All entrie
 function drFrom(){const n=new Date();if(DR_P==='today')return drToday();if(DR_P==='week')return drIso(new Date(n.getFullYear(),n.getMonth(),n.getDate()-6));if(DR_P==='month')return drIso(new Date(n.getFullYear(),n.getMonth(),1));return '0000-00-00'}
 function drRows(){const f=drFrom(),t=drToday();return drLoad().filter(r=>DR_P==='all'||(r.d>=f&&r.d<=t)).sort((a,b)=>(b.ts||0)-(a.ts||0))}
 function openDr(){openVs('r')}
+function drAnVis(){const w=el('dranw');if(!w)return;const ex=DR_AC==='Existing';w.style.display=ex?'':'none';if(!ex)el('dran').value=''}
 function drSeg(id,v){document.querySelectorAll('#'+id+' button').forEach(b=>b.classList.toggle('on',b.dataset.v===v))}
 function drUI(){
 el('vsp').innerHTML='<div id="drv">'+
 '<div class="qz"><h3 id="drft" style="margin-top:0">➕ New entry</h3>'+
 '<label>Sales Name</label><input class="ni" id="drs" autocomplete="name" placeholder="اسمك">'+
 '<label>Account</label><div class="vch" id="drac"><button data-v="New">New</button><button data-v="Existing">Existing</button></div>'+
+'<div id="dranw" style="display:none"><label>Account Number</label><input class="ni" id="dran" dir="ltr" inputmode="decimal" autocomplete="off" maxlength="40"></div>'+
 '<label>Company Name *</label><input class="ni" id="drc" placeholder="اسم الشركة">'+
 '<div class="grid2"><div><label>CP Name</label><input class="ni" id="drp" placeholder="الشخص المسؤول"></div><div><label>Mobile</label><input class="ni" id="drm" type="tel" inputmode="tel" dir="ltr" placeholder="01xxxxxxxxx"></div></div>'+
 '<label>Area</label><input class="ni" id="dra" placeholder="المنطقة">'+
@@ -1122,7 +1124,7 @@ el('vsp').innerHTML='<div id="drv">'+
 '<div class="cm" id="drbm" style="margin-top:8px;font-weight:700"></div><div class="cm" id="drbs" style="margin-top:6px"></div><div class="cm" id="drps" style="margin-top:4px"></div>'+
 '<p class="cm" style="margin:8px 0 0;font-size:12px">💡 مسح السجل (History) لوحده ما بيمسحش التقرير. اللي بيمسحه هو "Cookies and site data". لو اتمسح، اضغط ♻️ واختار آخر ملف نسخة احتياطية.</p><input type="file" id="drrf" accept=".json,application/json" hidden></div></div>';
 try{el('drs').value=localStorage.getItem(DR_N)||''}catch(e){}
-document.querySelectorAll('#drac button').forEach(b=>b.onclick=()=>{DR_AC=b.dataset.v;drSeg('drac',DR_AC)});
+document.querySelectorAll('#drac button').forEach(b=>b.onclick=()=>{DR_AC=b.dataset.v;drSeg('drac',DR_AC);drAnVis()});
 document.querySelectorAll('#drw button').forEach(b=>b.onclick=()=>{DR_WY=b.dataset.v;drSeg('drw',DR_WY)});
 el('drq').value=DR_Q;el('drq').oninput=()=>{DR_Q=el('drq').value;drList()};el('drper').value=DR_P;el('drper').onchange=()=>{DR_P=el('drper').value;drList()};
 el('drsv').onclick=drSubmit;el('drfc').onclick=()=>{el('drfd').value='';el('drfu').value=''};el('drcx').onclick=()=>{DR_ED=null;drForm()};
@@ -1130,17 +1132,18 @@ el('drxl').onclick=()=>drExport();
 drForm();drPre();drList();drBkInit()}
 function drPre(){if(!VS_PRE)return;const p=VS_PRE;VS_PRE=null;el('drc').value=p.co;el('drm').value=p.mb;el('dra').value=p.ar;el('drfb').value=p.fb||'';const e=el('drer');e.style.color='var(--mut)';e.textContent='📥 اتجابت بيانات الشركة من Nearby. أضف CP Name وFeedback واضغط Save.'}
 function drForm(r){const ed=!!r;DR_ED=ed?r.id:null;DR_AC=ed?r.ac:'New';DR_WY=ed?r.wy:'Visit';
-el('drft').textContent=ed?'✏️ Edit entry':'➕ New entry';el('drc').value=ed?r.co:'';el('drp').value=ed?r.cp:'';el('drm').value=ed?r.mb:'';el('dra').value=ed?r.ar:'';el('drfb').value=ed?r.fb:'';el('drfd').value=ed?(r.fd||''):'';el('drfu').value=ed?(r.ft||''):'';
+el('drft').textContent=ed?'✏️ Edit entry':'➕ New entry';el('dran').value=ed?(r.an||''):'';el('drc').value=ed?r.co:'';el('drp').value=ed?r.cp:'';el('drm').value=ed?r.mb:'';el('dra').value=ed?r.ar:'';el('drfb').value=ed?r.fb:'';el('drfd').value=ed?(r.fd||''):'';el('drfu').value=ed?(r.ft||''):'';
 if(ed)el('drs').value=r.sn;
-drSeg('drac',DR_AC);drSeg('drw',DR_WY);el('drsv').textContent=ed?'💾 Update':'💾 Save';el('drcx').style.display=ed?'':'none';
+drSeg('drac',DR_AC);drAnVis();drSeg('drw',DR_WY);el('drsv').textContent=ed?'💾 Update':'💾 Save';el('drcx').style.display=ed?'':'none';
 el('drdt').textContent='📅 Date: '+drFmt(ed?r.d:drToday())+' (تلقائي)';el('drer').textContent='';el('drer').style.color=''}
 function drSubmit(){const g=i=>el(i).value.trim(),e=el('drer');e.style.color='';
-const sn=g('drs'),co=g('drc'),mb=drDig(g('drm')).replace(/\s+/g,' ').trim();
+const sn=g('drs'),co=g('drc'),mb=drDig(g('drm')).replace(/\s+/g,' ').trim(),an=DR_AC==='Existing'?drDig(g('dran')).replace(/\s+/g,''):'';
 if(!sn){e.textContent='اكتب اسمك في Sales Name.';return}
 if(!co){e.textContent='اكتب اسم الشركة (Company Name).';return}
 if(mb&&!/^\+?[0-9 ()\-]{6,20}$/.test(mb)){e.textContent='رقم الموبايل مش مظبوط.';return}
+if(an&&!/^[0-9A-Za-z.\-_\/]{1,40}$/.test(an)){e.textContent='Account Number: أرقام أو حروف إنجليزي ونقطة بس (من غير مسافات أو رموز غريبة).';return}
 let fd=el('drfd').value,ft=el('drfu').value;if(ft&&!fd)fd=drToday();if(fd&&!ft)ft='09:00';
-const a=drLoad(),rec={ac:DR_AC,co:co,cp:g('drp'),mb:mb,ar:g('dra'),wy:DR_WY,fb:g('drfb'),sn:sn,fd:fd,ft:ft};
+const a=drLoad(),rec={ac:DR_AC,an:an,co:co,cp:g('drp'),mb:mb,ar:g('dra'),wy:DR_WY,fb:g('drfb'),sn:sn,fd:fd,ft:ft};
 if(DR_ED){const i=a.findIndex(x=>x.id===DR_ED);if(i>=0){if(a[i].fd!==fd||a[i].ft!==ft){rec.fx=0;rec.fl=''}a[i]=Object.assign(a[i],rec)}else{rec.id=DR_ED;rec.ts=Date.now();rec.d=drToday();a.push(rec)}}
 else{rec.id=Date.now().toString(36)+Math.random().toString(36).slice(2,6);rec.ts=Date.now();rec.d=drToday();rec.fx=0;a.push(rec)}
 if(!drSave(a)){e.textContent='مش قادر أحفظ على الجهاز (المساحة ممتلئة أو التصفح الخاص).';return}
@@ -1150,7 +1153,7 @@ function drList(){const r=drView(),L=el('drl'),q=DR_Q.trim();el('drcnt').textCon
 if(!r.length){const none=!q&&!drLoad().length;L.innerHTML='<p class="cm" style="padding:14px 0">'+(q?'مفيش نتيجة للبحث ده.':'مفيش تسجيلات في الفترة دي.')+'</p>'+(none?'<div class="qz" style="margin:0;text-align:center"><p class="cm" style="margin:0 0 8px">لو كنت مسحت بيانات المتصفح، استرجع آخر نسخة احتياطية.</p><button class="nx" id="drrs2" type="button" style="width:100%;margin:0">♻️ استرجاع من نسخة احتياطية</button></div>':'');const rb=el('drrs2');if(rb)rb.onclick=drPick;return}
 const n=tdNow();
 L.innerHTML='<p class="cm" style="margin:0 0 2px;font-size:12px">اضغط على اسم الشركة للتعديل</p>'+r.map(x=>{const tel=String(x.mb||'').replace(/[^\d+]/g,''),id=drE(x.id);
-const l2=[x.mb?'<span dir="ltr" style="unicode-bidi:isolate">'+drE(x.mb)+'</span>':'—'];if(q||DR_P!=='today')l2.push(drFmt(x.d));
+const l2=[];if(x.an)l2.push('<span dir="ltr" style="unicode-bidi:isolate">#'+drE(x.an)+'</span>');l2.push(x.mb?'<span dir="ltr" style="unicode-bidi:isolate">'+drE(x.mb)+'</span>':'—');if(q||DR_P!=='today')l2.push(drFmt(x.d));
 let l3='';if(x.fd){const od=!x.fx&&tdKey(x)<n;l3='<div class="l2" style="color:'+(x.fx?'#2e9e4a':od?'#e5484d':'var(--or)')+'">'+(x.fx?'✅ ':'⏰ ')+drFmt(x.fd)+' '+tdT12(x.ft)+'</div>'}
 return '<div class="dri"><div class="drb" data-e="'+id+'"><b>'+drE(x.co)+'</b><div class="l2">'+l2.join(' · ')+'</div>'+l3+'</div>'+
 (tel?'<a class="ic" href="tel:'+drE(tel)+'" title="Call">📞</a>':'')+'<button class="ic" data-x="'+id+'" title="Delete">🗑️</button></div>'}).join('');
@@ -1171,14 +1174,14 @@ const drX=s=>String(s==null?'':s).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u00
 function drSerial(s){const m=/^(\d{4})-(\d\d)-(\d\d)$/.exec(s||'');return m?Math.round(Date.UTC(+m[1],+m[2]-1,+m[3])/86400000)+25569:null}
 function drBuild(rows,sales,label){const SS=[],SI={},si=t=>{t=String(t==null?'':t);if(!(t in SI)){SI[t]=SS.length;SS.push(t)}return SI[t]};let cnt=0;
 const cs=(ref,t,st)=>{if(t==null||t==='')return '<c r="'+ref+'" s="'+st+'"/>';cnt++;return '<c r="'+ref+'" s="'+st+'" t="s"><v>'+si(t)+'</v></c>'};
-const n=rows.length,last=4+n,C='ABCDEFGHIJK',ds=rows.map(r=>r.d).sort(),rng=ds.length?drFmt(ds[0])+' – '+drFmt(ds[ds.length-1]):'';
+const n=rows.length,last=4+n,C='ABCDEFGHIJKL',ds=rows.map(r=>r.d).sort(),rng=ds.length?drFmt(ds[0])+' – '+drFmt(ds[ds.length-1]):'';
 let sd='<row r="1" ht="28" customHeight="1">'+cs('A1','Daily Report',1)+'</row>'+
 '<row r="2">'+cs('A2','Sales: '+sales+'   |   Period: '+label+(rng?' ('+rng+')':'')+'   |   Entries: '+n,2)+'</row><row r="3"/>'+
 '<row r="4" ht="24" customHeight="1">'+DR_H.map((h,i)=>cs(C[i]+'4',h,3)).join('')+'</row>';
-rows.forEach((r,i)=>{const R=5+i,b=i%2?1:0,v=[r.ac,r.co,r.cp,r.mb,r.ar,null,r.wy,r.fb,r.sn,null,r.ft];
-const st=[[4,5],[6,7],[6,7],[10,11],[6,7],[8,9],[4,5],[6,7],[6,7],[8,9],[4,5]];
-sd+='<row r="'+R+'">'+v.map((x,k)=>{const ref=C[k]+R,s2=st[k][b];if(k===5||k===9){const q=drSerial(k===5?r.d:r.fd);return q==null?'<c r="'+ref+'" s="'+s2+'"/>':'<c r="'+ref+'" s="'+s2+'"><v>'+q+'</v></c>'}return cs(ref,x,s2)}).join('')+'</row>'});
-const sheet='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheetPr><pageSetUpPr fitToPage="1"/></sheetPr><dimension ref="A1:K'+last+'"/><sheetViews><sheetView workbookViewId="0" showGridLines="0"><pane ySplit="4" topLeftCell="A5" activePane="bottomLeft" state="frozen"/><selection pane="bottomLeft" activeCell="A5" sqref="A5"/></sheetView></sheetViews><sheetFormatPr defaultRowHeight="15"/><cols><col min="1" max="1" width="13" customWidth="1"/><col min="2" max="2" width="30" customWidth="1"/><col min="3" max="3" width="22" customWidth="1"/><col min="4" max="4" width="16" customWidth="1"/><col min="5" max="5" width="20" customWidth="1"/><col min="6" max="6" width="13" customWidth="1"/><col min="7" max="7" width="9" customWidth="1"/><col min="8" max="8" width="52" customWidth="1"/><col min="9" max="9" width="20" customWidth="1"/><col min="10" max="10" width="16" customWidth="1"/><col min="11" max="11" width="14" customWidth="1"/></cols><sheetData>'+sd+'</sheetData><mergeCells count="2"><mergeCell ref="A1:K1"/><mergeCell ref="A2:K2"/></mergeCells><pageMargins left="0.5" right="0.5" top="0.6" bottom="0.6" header="0.3" footer="0.3"/><pageSetup orientation="landscape" fitToWidth="1" fitToHeight="0"/><tableParts count="1"><tablePart r:id="rId1"/></tableParts></worksheet>';
+rows.forEach((r,i)=>{const R=5+i,b=i%2?1:0,v=[r.ac,r.an,r.co,r.cp,r.mb,r.ar,null,r.wy,r.fb,r.sn,null,r.ft];
+const st=[[4,5],[10,11],[6,7],[6,7],[10,11],[6,7],[8,9],[4,5],[6,7],[6,7],[8,9],[4,5]];
+sd+='<row r="'+R+'">'+v.map((x,k)=>{const ref=C[k]+R,s2=st[k][b];if(k===6||k===10){const q=drSerial(k===6?r.d:r.fd);return q==null?'<c r="'+ref+'" s="'+s2+'"/>':'<c r="'+ref+'" s="'+s2+'"><v>'+q+'</v></c>'}return cs(ref,x,s2)}).join('')+'</row>'});
+const sheet='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheetPr><pageSetUpPr fitToPage="1"/></sheetPr><dimension ref="A1:L'+last+'"/><sheetViews><sheetView workbookViewId="0" showGridLines="0"><pane ySplit="4" topLeftCell="A5" activePane="bottomLeft" state="frozen"/><selection pane="bottomLeft" activeCell="A5" sqref="A5"/></sheetView></sheetViews><sheetFormatPr defaultRowHeight="15"/><cols><col min="1" max="1" width="13" customWidth="1"/><col min="2" max="2" width="18" customWidth="1"/><col min="3" max="3" width="30" customWidth="1"/><col min="4" max="4" width="22" customWidth="1"/><col min="5" max="5" width="16" customWidth="1"/><col min="6" max="6" width="20" customWidth="1"/><col min="7" max="7" width="13" customWidth="1"/><col min="8" max="8" width="9" customWidth="1"/><col min="9" max="9" width="52" customWidth="1"/><col min="10" max="10" width="20" customWidth="1"/><col min="11" max="11" width="16" customWidth="1"/><col min="12" max="12" width="14" customWidth="1"/></cols><sheetData>'+sd+'</sheetData><mergeCells count="2"><mergeCell ref="A1:L1"/><mergeCell ref="A2:L2"/></mergeCells><pageMargins left="0.5" right="0.5" top="0.6" bottom="0.6" header="0.3" footer="0.3"/><pageSetup orientation="landscape" fitToWidth="1" fitToHeight="0"/><tableParts count="1"><tablePart r:id="rId1"/></tableParts></worksheet>';
 const fn='<font><sz val="10"/><name val="Arial"/></font>',bd='<border><left style="thin"><color rgb="FFD9D9D9"/></left><right style="thin"><color rgb="FFD9D9D9"/></right><top style="thin"><color rgb="FFD9D9D9"/></top><bottom style="thin"><color rgb="FFD9D9D9"/></bottom><diagonal/></border>';
 const xf=(nf,f,fi,b,al)=>'<xf numFmtId="'+nf+'" fontId="'+f+'" fillId="'+fi+'" borderId="'+b+'" xfId="0" applyFont="1" applyFill="1" applyBorder="1" applyNumberFormat="1"'+(al?' applyAlignment="1"><alignment '+al+'/></xf>':'/>');
 const T='vertical="top" wrapText="1"',TC='horizontal="center" vertical="top" wrapText="1"';
@@ -1187,7 +1190,7 @@ xf(0,0,0,0)+xf(0,1,0,0,'vertical="center"')+xf(0,2,0,0,'vertical="center"')+xf(0
 xf(0,0,0,1,TC)+xf(0,0,3,1,TC)+xf(0,0,0,1,T)+xf(0,0,3,1,T)+xf(164,0,0,1,TC)+xf(164,0,3,1,TC)+xf(49,0,0,1,'horizontal="left" vertical="top"')+xf(49,0,3,1,'horizontal="left" vertical="top"')+
 '</cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>';
 const sst='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><sst xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" count="'+(cnt)+'" uniqueCount="'+SS.length+'">'+SS.map(t=>'<si><t xml:space="preserve">'+drX(t)+'</t></si>').join('')+'</sst>';
-const table='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><table xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" id="1" name="DailyReport" displayName="DailyReport" ref="A4:K'+last+'" totalsRowShown="0"><autoFilter ref="A4:K'+last+'"/><tableColumns count="11">'+DR_H.map((h,i)=>'<tableColumn id="'+(i+1)+'" name="'+drX(h)+'"/>').join('')+'</tableColumns><tableStyleInfo name="TableStyleLight1" showFirstColumn="0" showLastColumn="0" showRowStripes="0" showColumnStripes="0"/></table>';
+const table='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><table xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" id="1" name="DailyReport" displayName="DailyReport" ref="A4:L'+last+'" totalsRowShown="0"><autoFilter ref="A4:L'+last+'"/><tableColumns count="12">'+DR_H.map((h,i)=>'<tableColumn id="'+(i+1)+'" name="'+drX(h)+'"/>').join('')+'</tableColumns><tableStyleInfo name="TableStyleLight1" showFirstColumn="0" showLastColumn="0" showRowStripes="0" showColumnStripes="0"/></table>';
 const R='http://schemas.openxmlformats.org/officeDocument/2006/relationships',H='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>';
 return drZip([
 {n:'[Content_Types].xml',d:H+'<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/><Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/><Override PartName="/xl/sharedStrings.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sharedStrings+xml"/><Override PartName="/xl/tables/table1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.table+xml"/></Types>'},
@@ -1210,8 +1213,8 @@ const tdT12=t=>{t=t||'09:00';const h=+t.slice(0,2),m=t.slice(3,5);return (h%12||
 const tdGet=id=>drLoad().find(r=>r.id===id);
 const drNorm=s=>drDig(s).toLowerCase().replace(/[ً-ٟـ]/g,'').replace(/[أإآ]/g,'ا').replace(/ة/g,'ه').replace(/ى/g,'ي');
 function drMatch(r,q){const n=drNorm(q).trim();if(!n)return true;
-const hay=drNorm([r.co,r.cp,r.ar,r.fb,r.sn,r.mb].join(' '));
-if(/^[\d\s+\-()]+$/.test(n)){const d=n.replace(/\D/g,'');return !!d&&drDig(r.mb).replace(/\D/g,'').includes(d)}
+const hay=drNorm([r.co,r.cp,r.ar,r.fb,r.sn,r.mb,r.an].join(' '));
+if(/^[\d\s+\-()]+$/.test(n)){const d=n.replace(/\D/g,'');return !!d&&(drDig(r.mb).replace(/\D/g,'').includes(d)||drDig(r.an).replace(/\D/g,'').includes(d))}
 return n.split(/\s+/).every(t=>hay.includes(t))}
 function drView(){return DR_Q.trim()?drLoad().filter(r=>drMatch(r,DR_Q)).sort((a,b)=>(b.ts||0)-(a.ts||0)):drRows()}
 function tdBase(){return drLoad().filter(r=>r.fd)}
@@ -1297,7 +1300,7 @@ if(a.length&&(stale||!t))s+=' · ⚠️ فيه تسجيلات لسه ما اتح
 const drOkD=v=>{if(!/^\d{4}-\d\d-\d\d$/.test(v||''))return false;const d=new Date(v+'T00:00:00');return !isNaN(d)&&drIso(d)===v},drOkT=v=>{const m=/^(\d\d):(\d\d)$/.exec(v||'');return !!m&&+m[1]<24&&+m[2]<60};
 function drClean(x){if(!x||typeof x!=='object'||Array.isArray(x))return null;const S=(v,n)=>String(v==null?'':v).slice(0,n),N=v=>(typeof v==='number'&&isFinite(v))?v:0;
 const id=S(x.id,40);if(!id||!S(x.co,300).trim())return null;
-const o={id:id,ts:N(x.ts)||Date.now(),d:drOkD(x.d)?x.d:drToday(),ac:x.ac==='Existing'?'Existing':'New',co:S(x.co,300),cp:S(x.cp,200),mb:S(x.mb,40),ar:S(x.ar,200),wy:x.wy==='Call'?'Call':'Visit',fb:S(x.fb,5000),sn:S(x.sn,100),fd:drOkD(x.fd)?x.fd:'',ft:drOkT(x.ft)?x.ft:'',fx:N(x.fx),fl:S(x.fl,40)};
+const o={id:id,ts:N(x.ts)||Date.now(),d:drOkD(x.d)?x.d:drToday(),ac:x.ac==='Existing'?'Existing':'New',an:S(x.an,40),co:S(x.co,300),cp:S(x.cp,200),mb:S(x.mb,40),ar:S(x.ar,200),wy:x.wy==='Call'?'Call':'Visit',fb:S(x.fb,5000),sn:S(x.sn,100),fd:drOkD(x.fd)?x.fd:'',ft:drOkT(x.ft)?x.ft:'',fx:N(x.fx),fl:S(x.fl,40)};
 Object.keys(x).forEach(k=>{if(k in o||!/^[A-Za-z_]{1,12}$/.test(k)||k==='__proto__'||k==='constructor'||k==='prototype')return;const v=x[k];if(typeof v==='string')o[k]=S(v,500);else if(typeof v==='number'&&isFinite(v))o[k]=v;else if(typeof v==='boolean')o[k]=v});return o}
 function drRestoreText(t){let j;try{j=JSON.parse(t)}catch(e){return{err:'الملف مش نسخة احتياطية صالحة.'}}
 const arr=Array.isArray(j)?j:(j&&Array.isArray(j.entries)?j.entries:null);if(!arr)return{err:'الملف ده مش نسخة Daily Report.'}
