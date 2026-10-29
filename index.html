@@ -498,6 +498,14 @@ html.unlocked #lock{display:none}
 #pg .pt.challenge{grid-column:span 2;flex-direction:row;gap:16px;font-size:17px!important}#intro #pg .pt.challenge svg{width:72px!important;height:72px!important;flex:none}#intro #pg .pt.challenge span{font-size:18px!important}#pg .pt.challenge .flame{font-size:34px}
 .lk-ask{display:block;margin-top:12px;font-size:13px;color:#c9d1e6;text-decoration:underline;cursor:pointer;text-align:center}.lk-bst{margin-top:10px;font-size:12.5px;line-height:1.7;color:#ffd9a8;text-align:center}.lk-bst:empty{display:none}
 #gmv label{display:block;font-size:13px;font-weight:700;margin:10px 0 4px;color:var(--mut)}#gmv .qz .ni,#gmv .res .ni{width:100%;box-sizing:border-box}#bob .tb,#bot,#btop{display:flex;gap:6px;margin-bottom:8px}#gmv textarea.ni{resize:vertical;font-family:inherit}</style>
+<style id="qastyle">
+@media (max-width:899px) and (orientation:portrait){
+#intro .hl .qg{grid-template-columns:repeat(12,1fr)!important;grid-auto-rows:92px!important;gap:10px!important}
+#intro .hl .qg .qa{grid-column:span 4}
+#intro .hl .qg .qa:nth-child(-n+4){grid-column:span 3}
+}
+@media (min-width:900px){#intro .hl .qg{grid-template-columns:repeat(7,1fr)!important}}
+</style>
 </head>
 <body><div id="lock" dir="rtl" role="dialog" aria-modal="true" aria-labelledby="lkT"><div class="lk-bg"></div><div class="lk-card"><img id="lockimg" class="lk-logo" alt="Aptelecom"><h1 id="lkT">Aptelecom</h1><p class="lk-sub">TRAINING &amp; SALES EXCELLENCE PORTAL</p><div class="lk-line"></div><p class="lk-hint">🔒 منطقة محمية · أدخل كلمة السر للمتابعة</p><div class="lk-f"><input id="lkp" type="password" autocomplete="current-password" placeholder="كلمة السر" dir="ltr" autocapitalize="off" spellcheck="false"><button type="button" id="lkeye" aria-label="إظهار كلمة السر">👁</button></div><div id="lke" class="lk-e" role="alert"></div><button id="lkb" class="lk-b" type="button">دخول</button><button id="lkbio" class="lk-bio" type="button">🔐 الدخول بالبصمة</button><div id="lkbst" class="lk-bst"></div><a id="lkbask" class="lk-ask" href="#" style="display:none">🔐 فعّل الدخول بالبصمة</a><a id="lkbof" class="lk-ask" href="#" style="display:none">إلغاء البصمة على الجهاز ده</a></div><div class="lk-ft">© 2026 Aptelecom · Authorized access only</div></div>
 <script>(function(){var SALT='aptelecom::',DEF='37686a124cf544267887006cde1a4c9cfcf8626cfcfeaff98d496d6d4c2fb831',d=document,$=function(i){return d.getElementById(i)};
@@ -581,7 +589,7 @@ if(!skip&&!IOS)setTimeout(function(){tryBio(true)},500);
 <section id="intro"><aside class="side" id="sideR" aria-label="Top Performance"><div class="sd-h">🏆 Top Performance</div><div class="sd-c" id="sdS"></div><div class="sd-c t" id="sdT"></div></aside><aside class="side" id="sideL" aria-label="Weekly"><div class="sd-c king" id="sdK"></div><div class="sd-c" id="cdBox"></div></aside><img class="wm wm1" alt=""><img class="wm wm2" alt=""><div class="hl"><div class="ht2"><div class="gr"><img id="introimg" alt="Aptelecom"><div class="g1" id="gtx">صباح الخير 👋</div><div class="g2">Aptelecom training team</div><div class="dchip" id="gdt"></div></div></div>
 <div class="sb">🔍<input id="hq" type="search" placeholder="ابحث في كل المحتوى..."></div>
 <div class="bn" id="bn"><div class="bs on" data-k="top"><div><small>⭐ نجم الشهر</small><b>Top Performance</b><i>🏆 أحسن Sales وأحسن Telesales</i></div><div class="bc">🏆</div></div><div class="bs" data-k="week" id="bsWeek"><div><small>⭐ نجم الأسبوع</small><b>The King of Info</b><i>👑 اضغط وشوف مين الملك</i></div><div class="bc">🌟</div></div><div class="bs" data-k="w"><div><small>Aptelecom</small><b>أهلاً بيك في دليل Orange Business</b><i>Training team</i></div><div class="bc">🟧</div></div><button class="bnnav bnnext" id="bnnext" aria-label="التالي">‹</button><div class="dt"><u class="on"></u><u></u><u></u></div></div>
-<div class="sh">Quick Access</div><div class="qg"><div class="qa" id="go"><span>🟧</span>Orange Business</div><div class="qa" id="gs"><span>🎯</span>Sales Skills</div><div class="qa" id="gc"><span>💰</span>Commission</div><div class="qa" id="gq"><span>📝</span>Quiz</div><div class="qa" id="gv"><span>📋</span>Reporting</div><div class="qa" id="gt"><span>⏰</span>To Do List</div></div>
+<div class="sh">Quick Access</div><div class="qg"><div class="qa" id="go"><span>🟧</span>Orange Business</div><div class="qa" id="gs"><span>🎯</span>Sales Skills</div><div class="qa" id="gc"><span>💰</span>Commission</div><div class="qa" id="gb"><span>🧾</span>Bill</div><div class="qa" id="gq"><span>📝</span>Quiz</div><div class="qa" id="gv"><span>📋</span>Reporting</div><div class="qa" id="gt"><span>⏰</span>To Do List</div></div>
 <div class="sh">Weekly high score</div><div class="ts" id="ts"></div>
 <div class="sh">My Progress</div><div class="pg" id="pg"></div></div>
 <button id="gst" style="display:none"></button>
@@ -900,7 +908,7 @@ function draw(){const q=N(el('q').value.trim());const r=D.filter(d=>(d.g||'ob')=
 el('list').innerHTML=r.length?r.map(d=>'<div class="card'+(q&&r.length<3?' open':'')+'"><div class="hd"><div><b>'+d.t+'</b><small>'+d.s+'</small></div><span class="ar">◀</span></div><div class="bd">'+d.b+'</div></div>').join(''):'<div class="none">مفيش نتائج مطابقة. جرّب كلمة تانية.</div>'}
 el('chips').onclick=e=>{if(e.target.dataset.c){cat=e.target.dataset.c;chips();draw()}};
 el('list').onclick=e=>{const h=e.target.closest('.hd');if(h)h.parentNode.classList.toggle('open')};
-el('q').oninput=draw;chips();draw();el('introimg').src=document.querySelector('.lg').src;el('go').onclick=()=>openS('ob');el('gs').onclick=()=>openS('ss');el('gc').onclick=openCm;el('gv').onclick=()=>openVs();el('gt').onclick=()=>openVs('t');el('gst').onclick=openSt;
+el('q').oninput=draw;chips();draw();el('introimg').src=document.querySelector('.lg').src;el('go').onclick=()=>openS('ob');el('gs').onclick=()=>openS('ss');el('gc').onclick=openCm;el('gb').onclick=openBill;el('gv').onclick=()=>openVs();el('gt').onclick=()=>openVs('t');el('gst').onclick=openSt;
 el('gq').onclick=()=>{weeklyMode=false;el('intro').classList.add('hide');askName()};
 el('hm').onclick=home;
 el('dk').onclick=()=>el('dlg').classList.remove('on');
@@ -1356,16 +1364,17 @@ const INV_FAM=[
 {k:'so',n:'Smart Office',t:[290,375,535,800,1900],data:1}];
 const INV={q:{},d:{},g:'',tax:'23',ret:'6',dev:'13'};
 const invN=v=>{const n=parseFloat(String(v==null?'':v).replace(/[\u0660-\u0669]/g,d=>d.charCodeAt(0)-1632).replace(/[\u06F0-\u06F9]/g,d=>d.charCodeAt(0)-1776).replace(/[\u066B,]/g,'.').replace(/[^0-9.]/g,''));return isNaN(n)?0:n};
-function cmModesBar(){return '<div class="tb" id="cmModes" style="flex-wrap:wrap"><button data-mode="sales">💰 Sales Commission</button><button data-mode="tl">👔 Team Leader Commission 🔒</button><button data-mode="inv" style="flex-basis:100%">🧾 فاتورة العميل</button></div>'}
-function invCalc(I){I=I||INV;const tp=Math.max(0,invN(I.tax)),tx0=tp/100,ret=invN(I.ret),dev=invN(I.dev);
-const o={tp:tp,ret:ret,dev:dev,rows:[],nv:0,nd:0,sub:0,dis:0,net:0,tx:0,rt:0,dv:0,total:0};
-INV_FAM.forEach(F=>{const dp=F.data?0:Math.min(100,Math.max(0,invN(I.g)));
-F.t.forEach(p=>{const q=Math.floor(invN(I.q[F.k+'_'+p]));if(q<=0)return;
-const s=p*q,d=s*dp/100,n=s-d,t=n*tx0,r=F.data?0:ret*q,tot=n+t+r;
+function openBill(){document.body.classList.add('cmx');el('intro').classList.add('hide');cmMode='inv';cmT='c';cmLast=null;cmUI();scrollTo(0,0)}
+function cmModesBar(){return '<div class="tb" id="cmModes"><button data-mode="sales">💰 Sales Commission</button><button data-mode="tl">👔 Team Leader Commission 🔒</button></div>'}
+function invCalc(I){I=I||INV;const tp=Math.max(0,invN(I.tax)),tx0=tp/100,ret=invN(I.ret),dev=invN(I.dev),gd=Math.min(100,Math.max(0,invN(I.g)));
+const o={tp:tp,ret:ret,dev:dev,gd:gd,rows:[],nv:0,nd:0,sub:0,tx:0,rt:0,dv:0,dvn:0,dis:0,gross:0,total:0};
+INV_FAM.forEach(F=>{F.t.forEach(p=>{const q=Math.floor(invN(I.q[F.k+'_'+p]));if(q<=0)return;
+const s=p*q,t=s*tx0,r=F.data?0:ret*q,g=s+t+r,d=F.data?0:g*gd/100;
 if(F.data)o.nd+=q;else o.nv+=q;
-o.sub+=s;o.dis+=d;o.net+=n;o.tx+=t;o.rt+=r;
-o.rows.push({n:F.n+' '+p,q:q,dp:dp,tot:tot})})});
-o.dv=o.rows.length?dev:0;o.total=o.net+o.tx+o.rt+o.dv;return o}
+o.sub+=s;o.tx+=t;o.rt+=r;o.dis+=d;
+o.rows.push({n:F.n+' '+p,q:q,dp:F.data?0:gd,tot:g-d})})});
+o.dv=o.rows.length?dev:0;const dd=o.nv>0?o.dv*gd/100:0;o.dis+=dd;o.dvn=o.dv-dd;
+o.gross=o.sub+o.tx+o.rt+o.dv;o.total=o.gross-o.dis;return o}
 function invR(){const o=invCalc(),R=el('invr');
 if(!o.rows.length){R.innerHTML='<div class="res"><p style="text-align:center;margin:0">اكتب عدد الخطوط تحت الباقات عشان تبدأ الحساب.</p></div>';return}
 const f=(n,d)=>(+n).toLocaleString('en-US',{minimumFractionDigits:d===undefined?2:d,maximumFractionDigits:d===undefined?2:d});
@@ -1374,19 +1383,19 @@ const rw=(a,b)=>'<div class="row"><span>'+a+'</span><b>'+b+'</b></div>';
 const nl=o.nv+o.nd;
 let h='<div class="res"><div class="big">'+f(o.total)+' جنيه</div><p class="cm" style="margin:4px 0 10px">إجمالي الفاتورة الشهرية</p>'
 +rw('عدد الخطوط',nl+(o.nv&&o.nd?' ('+o.nv+' صوت + '+o.nd+' داتا)':(o.nd?' (داتا)':'')))
-+rw('الاشتراكات قبل الخصم',f(o.sub))
-+rw('الخصم','− '+f(o.dis))
-+rw('بعد الخصم',f(o.net))
++rw('الاشتراكات قبل الضريبة',f(o.sub))
 +rw('ضريبة الدولة '+fx(o.tp)+'%',f(o.tx))
 +rw('الاحتفاظ بالمكالمات ('+fx(o.ret)+' × '+o.nv+')',f(o.rt))
-+rw('تنمية موارد الدولة (مرة واحدة)',f(o.dv))+'</div>'
-+'<div class="tw"><table><tr><th>الباقة</th><th>العدد</th><th>الخصم</th><th>الإجمالي بالضريبة</th></tr>'
++rw('تنمية موارد الدولة (مرة واحدة)',f(o.dv))
++rw('الإجمالي قبل الخصم',f(o.gross))
++rw('الخصم'+(o.gd?' '+fx(o.gd)+'%':''),'− '+f(o.dis))+'</div>'
++'<div class="tw"><table><tr><th>الباقة</th><th>العدد</th><th>الخصم</th><th>الإجمالي بعد الخصم</th></tr>'
 +o.rows.map(r=>'<tr><td>'+r.n+'</td><td>'+r.q+'</td><td>'+(r.dp?fx(r.dp)+'%':'—')+'</td><td>'+f(r.tot)+'</td></tr>').join('')
-+'<tr><td>تنمية موارد الدولة</td><td></td><td></td><td>'+f(o.dv)+'</td></tr><tr class="tot"><td>الإجمالي</td><td>'+nl+'</td><td></td><td>'+f(o.total)+'</td></tr></table></div>'
-+'<div class="cm">الخصم على باقات الصوت فقط · رسوم الاحتفاظ على خطوط الصوت فقط · تنمية الموارد مرة واحدة على الفاتورة</div>';
++'<tr><td>تنمية موارد الدولة</td><td></td><td>'+(o.nv&&o.gd?fx(o.gd)+'%':'—')+'</td><td>'+f(o.dvn)+'</td></tr><tr class="tot"><td>الإجمالي</td><td>'+nl+'</td><td></td><td>'+f(o.total)+'</td></tr></table></div>'
++'<div class="cm">الترتيب: الضريبة ← الاحتفاظ وتنمية الموارد ← الخصم · خطوط الداتا من غير خصم</div>';
 R.innerHTML=h}
 function invUI(){
-let h='<style>#cmv .invd{display:flex;align-items:center;gap:10px}#cmv .invd b{font-size:16px;color:var(--or)}#cmv .invd input.ni{width:120px;padding:12px 8px;font-size:26px;font-weight:800;text-align:center;border:2px solid var(--or);border-radius:16px;color:var(--or);animation:invPulse 1.6s ease-in-out infinite}@keyframes invPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,102,0,.55),0 0 8px 2px rgba(255,102,0,.35)}50%{box-shadow:0 0 0 10px rgba(255,102,0,0),0 0 18px 6px rgba(255,102,0,.6)}}@media (prefers-reduced-motion:reduce){#cmv .invd input.ni{animation:none;box-shadow:0 0 12px 3px rgba(255,102,0,.5)}}</style><div class="qbar"><span>🧾 فاتورة العميل</span><button class="qx" id="cmh">🏠 الرئيسية</button></div>'+cmModesBar()
+let h='<style>#cmv .invd{display:flex;align-items:center;gap:10px}#cmv .invd b{font-size:16px;color:var(--or)}#cmv .invd input.ni{width:120px;padding:12px 8px;font-size:26px;font-weight:800;text-align:center;border:2px solid var(--or);border-radius:16px;color:var(--or);animation:invPulse 1.6s ease-in-out infinite}@keyframes invPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,102,0,.55),0 0 8px 2px rgba(255,102,0,.35)}50%{box-shadow:0 0 0 10px rgba(255,102,0,0),0 0 18px 6px rgba(255,102,0,.6)}}@media (prefers-reduced-motion:reduce){#cmv .invd input.ni{animation:none;box-shadow:0 0 12px 3px rgba(255,102,0,.5)}}</style><div class="qbar"><span>🧾 Bill · فاتورة العميل</span><button class="qx" id="cmh">🏠 الرئيسية</button></div>'
 +'<div class="w">اكتب عدد الخطوط تحت كل باقة. الخصم بيتطبق على كل الباقات ماعدا خطوط الداتا (Business Go وSmart Office).</div><div class="qz" style="padding:14px;text-align:center"><span class="invd" style="flex-direction:column;gap:8px"><b>🔥 الخصم % (على كله ماعدا الداتا)</b><input class="ni" id="invg" inputmode="decimal" placeholder="0" dir="ltr"></span></div>';
 INV_FAM.forEach(F=>{
 h+='<div class="qz" style="padding:12px"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><b style="color:var(--or)">'+F.n+'</b>'
@@ -1397,7 +1406,6 @@ h+='</div></div>'});
 h+='<details class="qz" style="padding:12px"><summary style="cursor:pointer;font-weight:700;color:var(--mut)">⚙️ الضريبة والرسوم (قابلة للتعديل)</summary><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px"><div><label style="text-align:center">ضريبة %</label><input class="ni" style="padding:8px;text-align:center" id="invtax" inputmode="decimal" dir="ltr"></div><div><label style="text-align:center">احتفاظ/خط</label><input class="ni" style="padding:8px;text-align:center" id="invret" inputmode="decimal" dir="ltr"></div><div><label style="text-align:center">تنمية/فاتورة</label><input class="ni" style="padding:8px;text-align:center" id="invdev" inputmode="decimal" dir="ltr"></div></div></details>'
 +'<div id="invr"></div><button class="qx" id="invclr" style="width:100%;margin-top:8px">🗑️ مسح الكل</button>';
 el('cmv').innerHTML=h;
-document.querySelectorAll('#cmModes button').forEach(b=>{b.classList.toggle('on',b.dataset.mode===cmMode);b.onclick=()=>cmChooseMode(b.dataset.mode)});
 el('cmh').onclick=home;
 document.querySelectorAll('#cmv [data-q]').forEach(i=>{i.value=INV.q[i.dataset.q]||'';i.oninput=()=>{INV.q[i.dataset.q]=i.value;invR()}});
 document.querySelectorAll('#cmv [data-d]').forEach(i=>{i.value=INV.d[i.dataset.d]||'';i.oninput=()=>{INV.d[i.dataset.d]=i.value;invR()}});
