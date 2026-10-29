@@ -1321,12 +1321,12 @@ const e=el('drps');if(e)e.textContent=can?(ok?'🛡️ المتصفح مأمّن
 function drBkInit(){const c=el('drabc');if(c){c.checked=drLS(DR_AB)!=='0';c.onchange=()=>{drLS(DR_AB,c.checked?'1':'0')}}
 el('drbk').onclick=()=>{const n=drBackupDownload();drToast(n?'💾 اتحفظت: '+n:'مفيش تسجيلات تتحفظ لسه.')};el('drrs').onclick=drPick;el('drrf').onchange=drOnFile;drBkStatus();drPersist()}
 document.addEventListener('click',()=>{setTimeout(drAutoTick,150)},true);
-let cmMode='sales',cmTLUnlocked=false;
-function openCm(){document.body.classList.add('cmx');el('intro').classList.add('hide');cmMode='sales';cmTLUnlocked=false;cmT='c';cmLast=null;cmUI();scrollTo(0,0)}
+let cmMode='sales',cmTLUnlocked=false,cmCalc='sales';
+function openCm(){document.body.classList.add('cmx');el('intro').classList.add('hide');cmMode='sales';cmCalc='sales';cmTLUnlocked=false;cmT='c';cmLast=null;cmUI();scrollTo(0,0)}
 function cmReset(){CV.t='';CV.l='';CV.p='';CV.d=String(autoD())}
-function cmChooseMode(mode){if(mode==='tl'&&!cmTLUnlocked){cmTLGate();return}if(mode!==cmMode)cmReset();cmMode=mode;cmT='c';cmLast=null;cmUI()}
-function cmTLGate(){el('cmv').innerHTML='<div class="qbar"><span>🔒 Team Leader Commission</span><button class="qx" id="cmh">🏠 الرئيسية</button></div><div class="qz"><div class="rb"><div class="lk">🔐</div><h2>Team Leader</h2><p>Commission access</p></div><label>الرقم السري</label><input class="ni" id="cmtlpw" type="password" inputmode="text" dir="ltr" autocomplete="off" placeholder="Password"><div id="cmtlerr" class="pe"></div><button class="nx" id="cmtlgo" style="width:100%">دخول</button><button class="qx" id="cmtlback" style="width:100%;margin-top:8px">العودة لكوميشن السيلز</button></div>';el('cmh').onclick=home;el('cmtlback').onclick=()=>{cmMode='sales';cmUI()};const go=()=>{if(el('cmtlpw').value==='9325TL'){cmTLUnlocked=true;cmReset();cmMode='tl';cmT='c';cmLast=null;cmUI()}else{el('cmtlerr').textContent='الرقم السري غير صحيح.';el('cmtlpw').value=''}};el('cmtlgo').onclick=go;el('cmtlpw').onkeydown=e=>{if(e.key==='Enter')go()};el('cmtlpw').focus()}
-function cmUI(){el('cmv').innerHTML='<div class="qbar"><span>💰 حاسبة الكومشن</span><button class="qx" id="cmh">🏠 الرئيسية</button></div><div class="tb" id="cmModes"><button data-mode="sales">💰 Sales Commission</button><button data-mode="tl">👔 Team Leader Commission 🔒</button></div><div class="w">'+(cmMode==='tl'?'Team Leader Commission · سعر البوينت 15 قرش لأقل من 80%، و25 قرش لـ 80% أو أعلى.':'Sales Commission · نفس الحاسبة الحالية بدون تغيير.')+'</div><div class="qz"><div class="grid2"><div><label>تارجت الخطوط</label><input class="ni" id="ct" inputmode="numeric" placeholder="0"></div><div><label>الخطوط المباعة</label><input class="ni" id="cl" inputmode="numeric" placeholder="0"></div><div><label>عدد البوينت المباعة</label><input class="ni" id="cp" inputmode="numeric" placeholder="0"></div><div><label>الأيام اللي اشتغلها (تلقائي)</label><input class="ni" id="cd" inputmode="numeric" placeholder="0"></div></div><div id="cdn" class="cm" style="margin-top:8px"></div></div><div class="tb" id="cmcalcTabs"><button data-t="c">الكومشن</button><button data-t="r">المتبقي</button><button data-t="p">Projection</button></div><div id="cr"></div>';
+function cmChooseMode(mode){if(mode==='tl'&&!cmTLUnlocked){cmTLGate();return}if(mode!=='inv'){if(mode!==cmCalc)cmReset();cmCalc=mode}cmMode=mode;cmT='c';cmLast=null;cmUI()}
+function cmTLGate(){el('cmv').innerHTML='<div class="qbar"><span>🔒 Team Leader Commission</span><button class="qx" id="cmh">🏠 الرئيسية</button></div><div class="qz"><div class="rb"><div class="lk">🔐</div><h2>Team Leader</h2><p>Commission access</p></div><label>الرقم السري</label><input class="ni" id="cmtlpw" type="password" inputmode="text" dir="ltr" autocomplete="off" placeholder="Password"><div id="cmtlerr" class="pe"></div><button class="nx" id="cmtlgo" style="width:100%">دخول</button><button class="qx" id="cmtlback" style="width:100%;margin-top:8px">العودة لكوميشن السيلز</button></div>';el('cmh').onclick=home;el('cmtlback').onclick=()=>{cmMode='sales';cmUI()};const go=()=>{if(el('cmtlpw').value==='9325TL'){cmTLUnlocked=true;cmReset();cmCalc='tl';cmMode='tl';cmT='c';cmLast=null;cmUI()}else{el('cmtlerr').textContent='الرقم السري غير صحيح.';el('cmtlpw').value=''}};el('cmtlgo').onclick=go;el('cmtlpw').onkeydown=e=>{if(e.key==='Enter')go()};el('cmtlpw').focus()}
+function cmUI(){if(cmMode==='inv'){invUI();return}el('cmv').innerHTML='<div class="qbar"><span>💰 حاسبة الكومشن</span><button class="qx" id="cmh">🏠 الرئيسية</button></div>'+cmModesBar()+'<div class="w">'+(cmMode==='tl'?'Team Leader Commission · سعر البوينت 15 قرش لأقل من 80%، و25 قرش لـ 80% أو أعلى.':'Sales Commission · نفس الحاسبة الحالية بدون تغيير.')+'</div><div class="qz"><div class="grid2"><div><label>تارجت الخطوط</label><input class="ni" id="ct" inputmode="numeric" placeholder="0"></div><div><label>الخطوط المباعة</label><input class="ni" id="cl" inputmode="numeric" placeholder="0"></div><div><label>عدد البوينت المباعة</label><input class="ni" id="cp" inputmode="numeric" placeholder="0"></div><div><label>الأيام اللي اشتغلها (تلقائي)</label><input class="ni" id="cd" inputmode="numeric" placeholder="0"></div></div><div id="cdn" class="cm" style="margin-top:8px"></div></div><div class="tb" id="cmcalcTabs"><button data-t="c">الكومشن</button><button data-t="r">المتبقي</button><button data-t="p">Projection</button></div><div id="cr"></div>';
 document.querySelectorAll('#cmModes button').forEach(b=>{b.classList.toggle('on',b.dataset.mode===cmMode);b.onclick=()=>cmChooseMode(b.dataset.mode)});
 ['t','l','p','d'].forEach(k=>{const i=el('c'+k);i.value=CV[k];i.oninput=()=>{CV[k]=i.value;cmR()}});
 document.querySelectorAll('#cmcalcTabs button').forEach(b=>{b.onclick=()=>{cmT=b.dataset.t;cmLast=null;cmR()}});el('cmh').onclick=home;cmR()}
@@ -1345,6 +1345,66 @@ else{if(D<=0){h='<div class="res"><p style="text-align:center;margin:0">اكتب
 h='<div class="res"><div class="mood">'+(ok?'🎉🥳':'😢')+'</div><div class="msg" style="color:'+(ok?'#1e9e4a':'#d93025')+'">'+(ok?'ممتاز! هتقفل فوق الـ 80% 🔥':'شد حيلك، إنت قدها 💪')+'</div>'+rw('الخطوط المتوقعة',f(pl,0)+' خط')+rw('نسبة التحقيق المتوقعة',f(pc)+'%')+rw('البوينت المتوقعة',f(pp,0))+rw('سعر البوينت',cmMode==='tl'?(ok?'25 قرش':'15 قرش'):(ok?'55 قرش':'40 قرش'))+rw('الكومشن المتوقع',f(pm,2)+' جنيه')+'</div><p class="cm">لو كمّل بنفس الأداء لحد 22 يوم</p>';
 if(ok&&cmLast!==true)party(true);cmLast=ok}}
 R.innerHTML=h}
+
+/* ---- Customer Invoice calculator (tab inside Commission) ---- */
+const INV_FAM=[
+{k:'pr',n:'Premier',t:[440,630,860,1200,1725]},
+{k:'ob',n:'Orange Business',t:[63,75,115,175]},
+{k:'om',n:'Orange Business Mix',t:[63,75,115,175]},
+{k:'mu',n:'Orange Business Mix Unit',t:[60,98,126]},
+{k:'go',n:'Business Go',t:[29,60,105,180,300,460,690],data:1},
+{k:'so',n:'Smart Office',t:[290,375,535,800,1900],data:1}];
+const INV={q:{},d:{},g:'',tax:'23',ret:'6',dev:'13'};
+const invN=v=>{const n=parseFloat(String(v==null?'':v).replace(/[\u0660-\u0669]/g,d=>d.charCodeAt(0)-1632).replace(/[\u06F0-\u06F9]/g,d=>d.charCodeAt(0)-1776).replace(/[\u066B,]/g,'.').replace(/[^0-9.]/g,''));return isNaN(n)?0:n};
+function cmModesBar(){return '<div class="tb" id="cmModes" style="flex-wrap:wrap"><button data-mode="sales">💰 Sales Commission</button><button data-mode="tl">👔 Team Leader Commission 🔒</button><button data-mode="inv" style="flex-basis:100%">🧾 فاتورة العميل</button></div>'}
+function invCalc(I){I=I||INV;const tp=Math.max(0,invN(I.tax)),tx0=tp/100,ret=invN(I.ret),dev=invN(I.dev);
+const o={tp:tp,ret:ret,dev:dev,rows:[],nv:0,nd:0,sub:0,dis:0,net:0,tx:0,rt:0,dv:0,total:0};
+INV_FAM.forEach(F=>{const dp=F.data?0:Math.min(100,Math.max(0,invN(I.g)));
+F.t.forEach(p=>{const q=Math.floor(invN(I.q[F.k+'_'+p]));if(q<=0)return;
+const s=p*q,d=s*dp/100,n=s-d,t=n*tx0,r=F.data?0:ret*q,tot=n+t+r;
+if(F.data)o.nd+=q;else o.nv+=q;
+o.sub+=s;o.dis+=d;o.net+=n;o.tx+=t;o.rt+=r;
+o.rows.push({n:F.n+' '+p,q:q,dp:dp,tot:tot})})});
+o.dv=o.rows.length?dev:0;o.total=o.net+o.tx+o.rt+o.dv;return o}
+function invR(){const o=invCalc(),R=el('invr');
+if(!o.rows.length){R.innerHTML='<div class="res"><p style="text-align:center;margin:0">اكتب عدد الخطوط تحت الباقات عشان تبدأ الحساب.</p></div>';return}
+const f=(n,d)=>(+n).toLocaleString('en-US',{minimumFractionDigits:d===undefined?2:d,maximumFractionDigits:d===undefined?2:d});
+const fx=n=>f(n,n%1?2:0);
+const rw=(a,b)=>'<div class="row"><span>'+a+'</span><b>'+b+'</b></div>';
+const nl=o.nv+o.nd;
+let h='<div class="res"><div class="big">'+f(o.total)+' جنيه</div><p class="cm" style="margin:4px 0 10px">إجمالي الفاتورة الشهرية</p>'
++rw('عدد الخطوط',nl+(o.nv&&o.nd?' ('+o.nv+' صوت + '+o.nd+' داتا)':(o.nd?' (داتا)':'')))
++rw('الاشتراكات قبل الخصم',f(o.sub))
++rw('الخصم','− '+f(o.dis))
++rw('بعد الخصم',f(o.net))
++rw('ضريبة الدولة '+fx(o.tp)+'%',f(o.tx))
++rw('الاحتفاظ بالمكالمات ('+fx(o.ret)+' × '+o.nv+')',f(o.rt))
++rw('تنمية موارد الدولة (مرة واحدة)',f(o.dv))+'</div>'
++'<div class="tw"><table><tr><th>الباقة</th><th>العدد</th><th>الخصم</th><th>الإجمالي بالضريبة</th></tr>'
++o.rows.map(r=>'<tr><td>'+r.n+'</td><td>'+r.q+'</td><td>'+(r.dp?fx(r.dp)+'%':'—')+'</td><td>'+f(r.tot)+'</td></tr>').join('')
++'<tr><td>تنمية موارد الدولة</td><td></td><td></td><td>'+f(o.dv)+'</td></tr><tr class="tot"><td>الإجمالي</td><td>'+nl+'</td><td></td><td>'+f(o.total)+'</td></tr></table></div>'
++'<div class="cm">الخصم على باقات الصوت فقط · رسوم الاحتفاظ على خطوط الصوت فقط · تنمية الموارد مرة واحدة على الفاتورة</div>';
+R.innerHTML=h}
+function invUI(){
+let h='<style>#cmv .invd{display:flex;align-items:center;gap:10px}#cmv .invd b{font-size:16px;color:var(--or)}#cmv .invd input.ni{width:120px;padding:12px 8px;font-size:26px;font-weight:800;text-align:center;border:2px solid var(--or);border-radius:16px;color:var(--or);animation:invPulse 1.6s ease-in-out infinite}@keyframes invPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,102,0,.55),0 0 8px 2px rgba(255,102,0,.35)}50%{box-shadow:0 0 0 10px rgba(255,102,0,0),0 0 18px 6px rgba(255,102,0,.6)}}@media (prefers-reduced-motion:reduce){#cmv .invd input.ni{animation:none;box-shadow:0 0 12px 3px rgba(255,102,0,.5)}}</style><div class="qbar"><span>🧾 فاتورة العميل</span><button class="qx" id="cmh">🏠 الرئيسية</button></div>'+cmModesBar()
++'<div class="w">اكتب عدد الخطوط تحت كل باقة. الخصم بيتطبق على كل الباقات ماعدا خطوط الداتا (Business Go وSmart Office).</div><div class="qz" style="padding:14px;text-align:center"><span class="invd" style="flex-direction:column;gap:8px"><b>🔥 الخصم % (على كله ماعدا الداتا)</b><input class="ni" id="invg" inputmode="decimal" placeholder="0" dir="ltr"></span></div>';
+INV_FAM.forEach(F=>{
+h+='<div class="qz" style="padding:12px"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><b style="color:var(--or)">'+F.n+'</b>'
++(F.data?'<span class="cm" style="margin:0">داتا · بدون خصم</span>':'')
++'</div><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px">';
+F.t.forEach(p=>{h+='<div><label style="margin:0 0 3px;text-align:center">'+p+' ج</label><input class="ni" style="padding:8px;text-align:center" data-q="'+F.k+'_'+p+'" inputmode="numeric" placeholder="0" dir="ltr"></div>'});
+h+='</div></div>'});
+h+='<details class="qz" style="padding:12px"><summary style="cursor:pointer;font-weight:700;color:var(--mut)">⚙️ الضريبة والرسوم (قابلة للتعديل)</summary><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px"><div><label style="text-align:center">ضريبة %</label><input class="ni" style="padding:8px;text-align:center" id="invtax" inputmode="decimal" dir="ltr"></div><div><label style="text-align:center">احتفاظ/خط</label><input class="ni" style="padding:8px;text-align:center" id="invret" inputmode="decimal" dir="ltr"></div><div><label style="text-align:center">تنمية/فاتورة</label><input class="ni" style="padding:8px;text-align:center" id="invdev" inputmode="decimal" dir="ltr"></div></div></details>'
++'<div id="invr"></div><button class="qx" id="invclr" style="width:100%;margin-top:8px">🗑️ مسح الكل</button>';
+el('cmv').innerHTML=h;
+document.querySelectorAll('#cmModes button').forEach(b=>{b.classList.toggle('on',b.dataset.mode===cmMode);b.onclick=()=>cmChooseMode(b.dataset.mode)});
+el('cmh').onclick=home;
+document.querySelectorAll('#cmv [data-q]').forEach(i=>{i.value=INV.q[i.dataset.q]||'';i.oninput=()=>{INV.q[i.dataset.q]=i.value;invR()}});
+document.querySelectorAll('#cmv [data-d]').forEach(i=>{i.value=INV.d[i.dataset.d]||'';i.oninput=()=>{INV.d[i.dataset.d]=i.value;invR()}});
+[['invtax','tax'],['invret','ret'],['invdev','dev']].forEach(a=>{const i=el(a[0]);i.value=INV[a[1]];i.oninput=()=>{INV[a[1]]=i.value;invR()}});
+{const g=el('invg');g.value=INV.g||'';g.oninput=()=>{INV.g=g.value;invR()}}
+el('invclr').onclick=()=>{if(!confirm('تمسح كل الأعداد والخصم؟'))return;INV.q={};INV.g='';invUI()};
+invR()}
 
 // GM-START
 let gmOK=false,GMD=null;const GMH='5fac2194de6b2be9f344f2539ff3cfa662dcc7e71c67f37dcb57ddcf1707f446';
