@@ -1362,54 +1362,61 @@ const INV_FAM=[
 {k:'mu',n:'Orange Business Mix Unit',t:[60,98,126]},
 {k:'go',n:'Business Go',t:[29,60,105,180,300,460,690],data:1},
 {k:'so',n:'Smart Office',t:[290,375,535,800,1900],data:1}];
-const INV={q:{},d:{},g:'',tax:'23',ret:'6',dev:'13'};
+const INV={q:{},d:{},g:'',t8:'8',vat:'14',ret:'5',dev:'10'};
 const invN=v=>{const n=parseFloat(String(v==null?'':v).replace(/[\u0660-\u0669]/g,d=>d.charCodeAt(0)-1632).replace(/[\u06F0-\u06F9]/g,d=>d.charCodeAt(0)-1776).replace(/[\u066B,]/g,'.').replace(/[^0-9.]/g,''));return isNaN(n)?0:n};
 function openBill(){document.body.classList.add('cmx');el('intro').classList.add('hide');cmMode='inv';cmT='c';cmLast=null;cmUI();scrollTo(0,0)}
 function cmModesBar(){return '<div class="tb" id="cmModes"><button data-mode="sales">💰 Sales Commission</button><button data-mode="tl">👔 Team Leader Commission 🔒</button></div>'}
-function invCalc(I){I=I||INV;const tp=Math.max(0,invN(I.tax)),tx0=tp/100,ret=invN(I.ret),dev=invN(I.dev),gd=Math.min(100,Math.max(0,invN(I.g)));
-const o={tp:tp,ret:ret,dev:dev,gd:gd,rows:[],nv:0,nd:0,sub:0,tx:0,rt:0,dv:0,dvn:0,dis:0,gross:0,total:0};
+function invCalc(I){I=I||INV;const t8p=Math.max(0,invN(I.t8)),vp=Math.max(0,invN(I.vat)),ret=invN(I.ret),dev=invN(I.dev),gd=Math.min(100,Math.max(0,invN(I.g)));
+const R2=x=>Math.round(x*100)/100,k=(1+t8p/100)*(1+vp/100);
+const o={t8p:t8p,vp:vp,ret:ret,dev:dev,gd:gd,rows:[],nv:0,nd:0,sub:0,dis:0,vnet:0,dnet:0,rt:0,dv:0,devTot:0,pre:0,t8:0,mid:0,vat:0,total:0};
 INV_FAM.forEach(F=>{F.t.forEach(p=>{const q=Math.floor(invN(I.q[F.k+'_'+p]));if(q<=0)return;
-const s=p*q,t=s*tx0,r=F.data?0:ret*q,g=s+t+r,d=F.data?0:g*gd/100;
-if(F.data)o.nd+=q;else o.nv+=q;
-o.sub+=s;o.tx+=t;o.rt+=r;o.dis+=d;
-o.rows.push({n:F.n+' '+p,q:q,dp:F.data?0:gd,tot:g-d})})});
-o.dv=o.rows.length?dev:0;const dd=o.nv>0?o.dv*gd/100:0;o.dis+=dd;o.dvn=o.dv-dd;
-o.gross=o.sub+o.tx+o.rt+o.dv;o.total=o.gross-o.dis;return o}
+const s=p*q,d=F.data?0:s*gd/100,n=s-d,r=F.data?0:ret*q;
+o.sub+=s;o.dis+=d;o.rt+=r;if(F.data){o.nd+=q;o.dnet+=n}else{o.nv+=q;o.vnet+=n}
+o.rows.push({n:F.n+' '+p,q:q,net:n,tot:(n+r)*k})})});
+if(o.rows.length)o.dv=dev;
+o.devTot=o.dv*k;o.pre=o.vnet+o.dnet+o.rt+o.dv;
+o.t8=R2(o.pre*t8p/100);o.mid=R2(o.pre+o.t8);o.vat=R2(o.mid*vp/100);o.total=R2(o.mid+o.vat);return o}
 function invR(){const o=invCalc(),R=el('invr');
 if(!o.rows.length){R.innerHTML='<div class="res"><p style="text-align:center;margin:0">اكتب عدد الخطوط تحت الباقات عشان تبدأ الحساب.</p></div>';return}
 const f=(n,d)=>(+n).toLocaleString('en-US',{minimumFractionDigits:d===undefined?2:d,maximumFractionDigits:d===undefined?2:d});
-const fx=n=>f(n,n%1?2:0);
-const rw=(a,b)=>'<div class="row"><span>'+a+'</span><b>'+b+'</b></div>';
+const fx=n=>f(Math.round(n*100)/100,(Math.round(n*100)/100)%1?2:0);
+const sh=(t,l)=>'<div style="background:'+(l?'var(--bd)':'#1d1d1b')+';color:'+(l?'var(--tx)':'#fff')+';font-weight:800;font-size:14px;padding:8px 14px">'+t+'</div>';
+const rw=(a,b,h)=>'<div class="row" style="padding:9px 14px;'+(h?'background:rgba(255,102,0,.14);font-weight:800;':'')+'"><span>'+a+'</span><b>'+b+'</b></div>';
 const nl=o.nv+o.nd;
-let h='<div class="res"><div class="big">'+f(o.total)+' جنيه</div><p class="cm" style="margin:4px 0 10px">إجمالي الفاتورة الشهرية</p>'
+let h='<div class="res" style="padding:0;overflow:hidden;margin:10px 0">'+sh('🧾 ملخص الفاتورة')+sh('رسوم شهرية',1)
 +rw('عدد الخطوط',nl+(o.nv&&o.nd?' ('+o.nv+' صوت + '+o.nd+' داتا)':(o.nd?' (داتا)':'')))
-+rw('الاشتراكات قبل الضريبة',f(o.sub))
-+rw('ضريبة الدولة '+fx(o.tp)+'%',f(o.tx))
-+rw('الاحتفاظ بالمكالمات ('+fx(o.ret)+' × '+o.nv+')',f(o.rt))
-+rw('تنمية موارد الدولة (مرة واحدة)',f(o.dv))
-+rw('الإجمالي قبل الخصم',f(o.gross))
-+rw('الخصم'+(o.gd?' '+fx(o.gd)+'%':''),'− '+f(o.dis))+'</div>'
-+'<div class="tw"><table><tr><th>الباقة</th><th>العدد</th><th>الخصم</th><th>الإجمالي بعد الخصم</th></tr>'
-+o.rows.map(r=>'<tr><td>'+r.n+'</td><td>'+r.q+'</td><td>'+(r.dp?fx(r.dp)+'%':'—')+'</td><td>'+f(r.tot)+'</td></tr>').join('')
-+'<tr><td>تنمية موارد الدولة</td><td></td><td>'+(o.nv&&o.gd?fx(o.gd)+'%':'—')+'</td><td>'+f(o.dvn)+'</td></tr><tr class="tot"><td>الإجمالي</td><td>'+nl+'</td><td></td><td>'+f(o.total)+'</td></tr></table></div>'
-+'<div class="cm">الترتيب: الضريبة ← الاحتفاظ وتنمية الموارد ← الخصم · خطوط الداتا من غير خصم</div>';
++rw('اشتراك الباقات قبل الخصم',f(o.sub))
++(o.dis?rw('خصم '+fx(o.gd)+'% (على الصوت)','− '+f(o.dis)):'')
++rw('الاشتراك الشهري بعد الخصم',f(o.vnet+o.dnet))
++rw('خدمة الاحتفاظ بالمكالمات ('+fx(o.ret)+' × '+o.nv+' خط صوت)',f(o.rt))
++sh('رسوم أخرى',1)
++rw('دمغات ورسوم تنمية (مرة واحدة)',f(o.dv))
++rw('المجموع قبل الضرائب',f(o.pre),1)
++rw('ضريبة الجدول '+fx(o.t8p)+'%',f(o.t8))
++rw('المجموع شامل ضريبة الجدول',f(o.mid),1)
++rw('ضريبة القيمة المضافة '+fx(o.vp)+'%',f(o.vat))
++'<div style="background:var(--or);color:#fff;padding:14px;display:flex;justify-content:space-between;align-items:center"><span style="font-weight:800;font-size:15px">الإجمالي المستحق</span><span style="font-weight:800;font-size:28px">'+f(o.total)+' <span style="font-size:14px">جنيه</span></span></div></div>'
++'<div class="qz" style="padding:0;overflow:hidden;margin:10px 0">'+sh('📋 تفصيل الخطوط')+'<div class="tw" style="margin:0"><table style="width:100%"><tr><th>الباقة</th><th>العدد</th><th>بعد الخصم</th><th>الإجمالي بالضرائب</th></tr>'
++o.rows.map(r=>'<tr><td>'+r.n+'</td><td>'+r.q+'</td><td>'+f(r.net)+'</td><td>'+f(r.tot)+'</td></tr>').join('')
++'<tr><td>دمغات ورسوم تنمية</td><td>1</td><td>'+f(o.dv)+'</td><td>'+f(o.devTot)+'</td></tr><tr class="tot"><td>الإجمالي</td><td>'+nl+'</td><td></td><td>'+f(o.total)+'</td></tr></table></div></div>'
++'<div class="cm">نفس ترتيب الفاتورة: الرسوم قبل الضرائب، والخصم على سعر اشتراك الصوت بس</div>';
 R.innerHTML=h}
 function invUI(){
 let h='<style>#cmv .invd{display:flex;align-items:center;gap:10px}#cmv .invd b{font-size:16px;color:var(--or)}#cmv .invd input.ni{width:120px;padding:12px 8px;font-size:26px;font-weight:800;text-align:center;border:2px solid var(--or);border-radius:16px;color:var(--or);animation:invPulse 1.6s ease-in-out infinite}@keyframes invPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,102,0,.55),0 0 8px 2px rgba(255,102,0,.35)}50%{box-shadow:0 0 0 10px rgba(255,102,0,0),0 0 18px 6px rgba(255,102,0,.6)}}@media (prefers-reduced-motion:reduce){#cmv .invd input.ni{animation:none;box-shadow:0 0 12px 3px rgba(255,102,0,.5)}}</style><div class="qbar"><span>🧾 Bill · فاتورة العميل</span><button class="qx" id="cmh">🏠 الرئيسية</button></div>'
-+'<div class="w">اكتب عدد الخطوط تحت كل باقة. الخصم بيتطبق على كل الباقات ماعدا خطوط الداتا (Business Go وSmart Office).</div><div class="qz" style="padding:14px;text-align:center"><span class="invd" style="flex-direction:column;gap:8px"><b>🔥 الخصم % (على كله ماعدا الداتا)</b><input class="ni" id="invg" inputmode="decimal" placeholder="0" dir="ltr"></span></div>';
++'<div class="w">اكتب عدد الخطوط تحت كل باقة. الخصم بيتطبق على سعر اشتراك الباقات ماعدا خطوط الداتا (Business Go وSmart Office). الرسوم والضرائب بتتحسب زي الفاتورة الفعلية.</div><div class="qz" style="padding:14px;text-align:center"><span class="invd" style="flex-direction:column;gap:8px"><b>🔥 الخصم % (على كله ماعدا الداتا)</b><input class="ni" id="invg" inputmode="decimal" placeholder="0" dir="ltr"></span></div>';
 INV_FAM.forEach(F=>{
 h+='<div class="qz" style="padding:12px"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><b style="color:var(--or)">'+F.n+'</b>'
 +(F.data?'<span class="cm" style="margin:0">داتا · بدون خصم</span>':'')
 +'</div><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px">';
 F.t.forEach(p=>{h+='<div><label style="margin:0 0 3px;text-align:center">'+p+' ج</label><input class="ni" style="padding:8px;text-align:center" data-q="'+F.k+'_'+p+'" inputmode="numeric" placeholder="0" dir="ltr"></div>'});
 h+='</div></div>'});
-h+='<details class="qz" style="padding:12px"><summary style="cursor:pointer;font-weight:700;color:var(--mut)">⚙️ الضريبة والرسوم (قابلة للتعديل)</summary><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px"><div><label style="text-align:center">ضريبة %</label><input class="ni" style="padding:8px;text-align:center" id="invtax" inputmode="decimal" dir="ltr"></div><div><label style="text-align:center">احتفاظ/خط</label><input class="ni" style="padding:8px;text-align:center" id="invret" inputmode="decimal" dir="ltr"></div><div><label style="text-align:center">تنمية/فاتورة</label><input class="ni" style="padding:8px;text-align:center" id="invdev" inputmode="decimal" dir="ltr"></div></div></details>'
+h+='<details class="qz" style="padding:12px"><summary style="cursor:pointer;font-weight:700;color:var(--mut)">⚙️ الضرائب والرسوم (قابلة للتعديل)</summary><div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:8px"><div><label style="text-align:center">ضريبة الجدول %</label><input class="ni" style="padding:8px;text-align:center" id="invt8" inputmode="decimal" dir="ltr"></div><div><label style="text-align:center">القيمة المضافة %</label><input class="ni" style="padding:8px;text-align:center" id="invvat" inputmode="decimal" dir="ltr"></div><div><label style="text-align:center">احتفاظ/خط صوت</label><input class="ni" style="padding:8px;text-align:center" id="invret" inputmode="decimal" dir="ltr"></div><div><label style="text-align:center">تنمية/فاتورة</label><input class="ni" style="padding:8px;text-align:center" id="invdev" inputmode="decimal" dir="ltr"></div></div></details>'
 +'<div id="invr"></div><button class="qx" id="invclr" style="width:100%;margin-top:8px">🗑️ مسح الكل</button>';
 el('cmv').innerHTML=h;
 el('cmh').onclick=home;
 document.querySelectorAll('#cmv [data-q]').forEach(i=>{i.value=INV.q[i.dataset.q]||'';i.oninput=()=>{INV.q[i.dataset.q]=i.value;invR()}});
 document.querySelectorAll('#cmv [data-d]').forEach(i=>{i.value=INV.d[i.dataset.d]||'';i.oninput=()=>{INV.d[i.dataset.d]=i.value;invR()}});
-[['invtax','tax'],['invret','ret'],['invdev','dev']].forEach(a=>{const i=el(a[0]);i.value=INV[a[1]];i.oninput=()=>{INV[a[1]]=i.value;invR()}});
+[['invt8','t8'],['invvat','vat'],['invret','ret'],['invdev','dev']].forEach(a=>{const i=el(a[0]);i.value=INV[a[1]];i.oninput=()=>{INV[a[1]]=i.value;invR()}});
 {const g=el('invg');g.value=INV.g||'';g.oninput=()=>{INV.g=g.value;invR()}}
 el('invclr').onclick=()=>{if(!confirm('تمسح كل الأعداد والخصم؟'))return;INV.q={};INV.g='';invUI()};
 invR()}
