@@ -1424,15 +1424,15 @@ t+='\nعرض استرشادي، والفاتورة الفعلية حسب نظا�
 function invQuoteCanvas(){const o=invCalc(),f=invF,fx=invFx,W=1080,P=48,RH=58,FN='Tahoma,Arial,sans-serif';
 const sum=[['الاشتراكات قبل الخصم',f(o.sub)]];if(o.dis)sum.push(['الخصم '+fx(o.gd)+'%','− '+f(o.dis)]);if(o.per&&o.pf>0.004)sum.push(['محاسبة جزئية ('+o.per.days+' يوم من '+o.per.cyc+')','− '+f(o.pf)]);
 sum.push(['رسوم الاحتفاظ والتنمية',f(o.rt+o.dv)]);sum.push(['الضرائب ('+fx(o.t8p)+'% + '+fx(o.vp)+'%)',f(o.t8+o.vat)]);
-const H=470+(o.rows.length+1)*RH+sum.length*60+(o.per?60:0)+360;
+const H=492+(o.rows.length+1)*RH+sum.length*60+(o.per?60:0)+360;
 const cv=document.createElement('canvas');cv.width=W;cv.height=H;const x=cv.getContext('2d');
 const T=(s,px,py,al,dir,font,col)=>{x.direction=dir;x.textAlign=al;x.font=font;x.fillStyle=col;x.fillText(s,px,py)};
 x.fillStyle='#fff';x.fillRect(0,0,W,H);x.fillStyle='#ff6600';x.fillRect(0,0,W,18);
 const lg=document.querySelector('img.lg');if(lg&&lg.complete&&lg.naturalWidth){const hh=110,ww=hh*lg.naturalWidth/lg.naturalHeight;x.drawImage(lg,W-P-ww,50,ww,hh)}
 if(INV_ORGIMG.complete)x.drawImage(INV_ORGIMG,P,50,110,110);
-T('عرض سعر',W/2,250,'center','rtl','bold 62px '+FN,'#1d1d1b');
-T('Orange Business · '+invFmtD(new Date())+'/'+new Date().getFullYear(),W/2,308,'center','ltr','30px '+FN,'#666');
-let y=350;if(INV.nm){T('العميل: '+INV.nm,W-P,y+20,'right','rtl','bold 34px '+FN,'#1d1d1b');y+=60}
+T('Price List',W/2,228,'center','ltr','bold 66px '+FN,'#1d1d1b');T('عرض سعر',W/2,284,'center','rtl','bold 34px '+FN,'#c25400');
+T('Orange Business · '+invFmtD(new Date())+'/'+new Date().getFullYear(),W/2,332,'center','ltr','28px '+FN,'#666');
+let y=372;if(INV.nm){T('العميل: '+INV.nm,W-P,y+20,'right','rtl','bold 34px '+FN,'#1d1d1b');y+=60}
 y+=20;x.fillStyle='#1d1d1b';x.fillRect(P,y,W-2*P,64);
 T('الباقة',W-P-20,y+43,'right','rtl','bold 28px '+FN,'#fff');T('العدد',W/2+60,y+43,'center','rtl','bold 28px '+FN,'#fff');T('الإجمالي',P+20,y+43,'left','rtl','bold 28px '+FN,'#fff');y+=64;
 const rows=o.rows.map(r=>[r.n,String(r.q),f(r.tot)]);rows.push(['دمغات ورسوم تنمية','1',f(o.devTot)]);
