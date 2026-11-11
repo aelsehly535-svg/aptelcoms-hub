@@ -1057,23 +1057,29 @@ el('dk').onclick=()=>el('dlg').classList.remove('on');
 el('dx').onclick=stop;
 addEventListener('beforeunload',e=>{if(live||needSend){e.preventDefault();e.returnValue=''}});
 function home(){setTimeout(()=>{try{wchRender();wchLoad()}catch(e){}},60);live=false;clearInterval(tm);document.body.classList.remove('qm','cmx','gmx','stx','nwx','vsx','drx','sox');gmOK=false;GMD=null;el('gmv').innerHTML='';el('stv').innerHTML='';el('vsv').innerHTML='';NWP='';el('nwv').innerHTML='';memStop();el('socv').innerHTML='';el('soct').classList.remove('on');el('dlg').classList.remove('on');el('intro').classList.remove('hide');if(window.hR)hR();tdBadge();try{homeActRender();homeAct()}catch(e){}scrollTo(0,0)}
-/* Back button: stay inside the app (history layer) */
-(function(){const CL=['qm','cmx','gmx','stx','nwx','vsx','drx','sox'];
-const inner=()=>{const b=document.body,i=el('intro');return (i&&i.classList.contains('hide'))||CL.some(c=>b.classList.contains(c))};
-const st=()=>{try{return history.state&&history.state.inner}catch(e){return false}};
-let busy=false;
-function sync(){if(busy)return;try{if(inner()){if(!st())history.pushState({inner:1},'')}else if(st()){busy=true;history.back();setTimeout(()=>{busy=false},120)}}catch(e){}}
+/* Back button: step-by-step history inside the app */
+(function(){const CL=['qm','cmx','gmx','stx','nwx','vsx','drx','sox'],B=()=>document.body;
+const inner=()=>{const i=el('intro');return (i&&i.classList.contains('hide'))||CL.some(c=>B().classList.contains(c))};
+let hc=0,NAV=[],fwd=false,busy=false,rest=false,snap={};
+const K={
+soc:{g:()=>B().classList.contains('sox')?SOCTAB:null,u:p=>{const t=document.querySelector('.stb span[data-t="'+p+'"]');if(t)t.click()}},
+game:{g:()=>B().classList.contains('sox')&&SOCTAB==='g'?(MEM.v==='list'?'list':'in'):null,u:()=>{const bk=['glb','memback','gback','memlist','glist'].map(x=>el(x)).find(x=>x&&x.offsetParent);if(bk)bk.click();else{try{memStop()}catch(e){}MEM.v='list';memDraw()}}},
+vs:{g:()=>B().classList.contains('vsx')?VS_T:null,u:p=>vsTab(p)},
+cm:{g:()=>B().classList.contains('cmx')?cmMode+'|'+cmT+'|'+(cmLast?1:0):null,u:p=>{const a=p.split('|');cmMode=a[0];cmT=a[1];cmLast=null;cmUI()}},
+bo:{g:()=>B().classList.contains('gmx')?BO.top+BO.tab:null,u:p=>{BO.top=p[0];BO.tab=p.slice(1);boTop()}},
+cat:{g:()=>{const i=el('intro');return i&&i.classList.contains('hide')&&!CL.some(c=>B().classList.contains(c))&&typeof cat!=='undefined'?cat:null},u:p=>{cat=p;const q=el('q');if(q&&p==='الكل')q.value='';chips();draw()}}};
+const read=()=>{const o={};for(const k in K){try{o[k]=K[k].g()}catch(e){o[k]=null}}return o};
+function check(){if(rest||busy)return;const n=read();try{for(const k in K){const v=n[k],pv=snap[k];if(v!=null&&pv!=null&&v!==pv){NAV.push(()=>K[k].u(pv));hc++;history.pushState({inner:1,n:hc},'')}}}catch(e){}snap=n}
+function sync(){if(busy)return;try{if(inner()){if(hc===0){hc=1;history.pushState({inner:1,n:1},'');snap=read()}}else if(hc>0){const n=hc;hc=0;NAV=[];snap={};busy=true;history.go(-n);setTimeout(()=>{busy=false},250)}}catch(e){}}
 try{new MutationObserver(sync).observe(document.body,{attributes:true,attributeFilter:['class']});const i=el('intro');if(i)new MutationObserver(sync).observe(i,{attributes:true,attributeFilter:['class']})}catch(e){}
-addEventListener('popstate',()=>{if(busy)return;try{const d=el('dlg');if(d&&d.classList.contains('on')&&inner()){d.classList.remove('on');history.pushState({inner:1},'');return}
-if(inner()){if(live){history.pushState({inner:1},'');askExit()}else if(subBack()){history.pushState({inner:1},'')}else{busy=true;home();setTimeout(()=>{busy=false},120)}}}catch(e){}});
-function subBack(){try{const b=document.body;
-const pb=el('pb');if(b.classList.contains('qm')&&pb&&pb.offsetParent){pb.click();return true}
-if(b.classList.contains('sox')){if(SOCTAB==='g'){if(MEM.v&&MEM.v!=='list'){const bk=['glb','memback','gback','memlist','glist'].map(x=>el(x)).find(x=>x&&x.offsetParent);if(bk)bk.click();else{try{memStop()}catch(e){}MEM.v='list';memDraw()}return true}
-const t=document.querySelector('.stb span[data-t="e"]');if(t){t.click();return true}}return false}
-if(b.classList.contains('vsx')&&VS_BK==='t'&&VS_T==='r'){vsTab('t');return true}
-if(b.classList.contains('cmx')){if(typeof cmLast!=='undefined'&&cmLast){cmLast=null;cmUI();return true}if(cmMode==='tl'){cmMode='sales';cmUI();return true}return false}
-if(!CL.some(c=>b.classList.contains(c))&&typeof cat!=='undefined'&&cat!=='الكل'){cat='الكل';const q=el('q');if(q)q.value='';chips();draw();return true}
-}catch(e){}return false}
+document.addEventListener('click',()=>{[0,250,900].forEach(t=>setTimeout(check,t))},true);
+const back1=()=>{fwd=true;history.forward()};
+addEventListener('popstate',()=>{if(fwd){fwd=false;return}if(busy)return;try{
+if(!inner()){hc=0;NAV=[];return}
+const d=el('dlg');if(d&&d.classList.contains('on')){d.classList.remove('on');back1();return}
+if(live){askExit();back1();return}
+if(NAV.length){hc=Math.max(1,hc-1);const u=NAV.pop();rest=true;try{u()}catch(e){}setTimeout(()=>{snap=read();rest=false},60);return}
+hc=0;busy=true;home();setTimeout(()=>{busy=false},250)}catch(e){}});
 })();
 function askExit(){if(!live){home();return}dlgm('لو خرجت دلوقتي هيتم إلغاء الـ Quiz وتاخد 0 في الدرجة.',true)}
 function stop(){live=false;clearInterval(tm);sc=0;cx=true;el('dlg').classList.remove('on');el('quizv').innerHTML='<div class="qz"><div class="sc">0 / '+qs.length+'</div><p>تم إلغاء الـ Quiz لأنك خرجت منه، ودرجتك 0.</p>'+snd()+'<div id="acts" style="display:none;text-align:center"><button class="nx" id="re">ابدأ Quiz جديد</button> <button class="qx" id="rh">الرئيسية</button></div></div>';el('re').onclick=quiz;el('rh').onclick=home;lk()}
