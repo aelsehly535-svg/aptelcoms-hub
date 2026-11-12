@@ -2462,7 +2462,7 @@ const f=SOCF==='all'?all:all.filter(x=>(SOC_T[x.type]?x.type:'o')===SOCF);
 const ds=new Date().setHours(0,0,0,0),td=f.filter(x=>x.t>=ds),wk=f.filter(x=>x.t<ds&&x.t>=ds-6*864e5),ol=f.filter(x=>x.t<ds-6*864e5);
 const st=all.slice(0,12).map(p=>{const k=SOC_T[p.type]?p.type:'o';return '<div class="xst'+(socSeen(p.id)?' seen':'')+'" data-o="'+esc(p.id)+'"><div class="xrg xrg-'+k+'"><i>'+SOC_T[k][0]+'</i></div><b>'+esc(String(p.title).split(' ').slice(-1)[0]).slice(0,10)+'</b><em>'+(p.t>=ds?'النهارده':nwTime(p.t).split('،')[0])+'</em></div>'}).join('');
 const fl=[['all','الكل'],['b','🎂 ميلاد'],['w','💍 أفراح'],['c','🕊️ عزاء'],['o','🎉 أخرى']].map(x=>'<span data-f="'+x[0]+'" class="'+(SOCF===x[0]?'on':'')+'">'+x[1]+'</span>').join('');
-return '<div class="xstrs">'+st+'</div><div class="xfch">'+fl+'</div>'+
+return ''+
 (td.length?'<div class="xdh">النهارده <b>'+td.length+(td.length>10?' مناسبة':td.length>2?' مناسبات':' مناسبة')+'</b></div><div class="xcar">'+td.map(p=>socHero(p)).join('')+'</div>':'')+
 (wk.length?'<div class="xdh">الأسبوع ده</div><div class="xminis">'+wk.map(socMini).join('')+'</div>':'')+
 (ol.length?'<div class="xfold" id="socold">⌄ مناسبات أقدم ('+ol.length+')</div><div id="socolb" style="display:none" class="xminis">'+ol.map(socMini).join('')+'</div>':'')+
