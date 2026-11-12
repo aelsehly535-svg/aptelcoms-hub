@@ -592,6 +592,7 @@ html.unlocked #lock{display:none}
 #pfv .pfrev{display:flex;gap:10px;padding:10px 14px;align-items:flex-end}#pfv .pfrev>div{flex:1;text-align:center}#pfv .pfrev b{display:block;font-size:16px;color:#2b1a10}#pfv .pfrev small{color:#8a6f5e;font-size:11.5px}#pfv .pfrev .bar{background:#ffd6b8;border-radius:6px 6px 0 0;margin:0 auto 4px;width:60%}#pfv .pfrev .bar.dn{background:#f7b4b4}#pfv .pfrev .bar.up{background:#b9e6c4}#pfv .pfrev .df{flex:1.5;display:flex;flex-direction:column;align-items:center;gap:3px}
 #pfv .fb{padding:10px 14px;border-bottom:1px dashed #f1d9c8}#pfv .fb .m{display:flex;justify-content:space-between;font-size:12px;color:#8a6f5e;margin-bottom:3px;gap:6px}#pfv .fb p{margin:0;font-size:14px;line-height:1.7;color:#2b1a10}#pfv .tag.old{background:#eee;color:#777;border-radius:8px;padding:1px 8px;font-size:11.5px;font-weight:800;white-space:nowrap}
 #pfv .add{padding:12px 14px;background:#fffaf6}#pfv .add textarea{resize:vertical}#pfv .row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}#pfv .add b{font-size:13px}
+#pfv .pfdr{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:8px 14px;border-bottom:1px solid #f6e6da;cursor:pointer;font-size:13px;color:#2b1a10}#pfv .pfdr b{flex:1;min-width:110px;font-size:14px}#pfv .pfdr span{color:#8a6f5e}#pfv .pfb2.sm{padding:3px 10px;font-size:12px}
 #pfv .pfpvb{background:#fff1e6;border-radius:12px;padding:10px 12px;margin:8px 0;font-size:14px;line-height:1.9;color:#2b1a10}
 </style>
 <style id="qastyle">
@@ -2953,7 +2954,7 @@ try{if(screen.orientation&&screen.orientation.unlock)screen.orientation.unlock()
 /* ===== Portfolio (login + customer follow-up) ===== */
 (function(){
 const E=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const PF=window.PF={t:'',n:'',role:'',br:'',v:'login',q:'',fbr:'',id:'',cur:null,idle:0,rows:[],total:0};
+const PF=window.PF={t:'',n:'',role:'',br:'',v:'login',q:'',fbr:'',id:'',cur:null,idle:0,rows:[],total:0,f:{s:'',t:''}};
 const FBL=['وعد بالدفع','unreachable','satisfied & no need','تحديث بيانات','مهتم بإضافة خطوط','طلب فاتورة','رقم غلط','أخرى'];
 const SEC=[
 ['الهوية',[['group','Group'],['rt','نوع الصف'],['month','شهر الملف'],['am','Account Manager'],['ch','Channel'],['seg','Segment'],['sseg','Sub Segment']]],
@@ -2994,20 +2995,20 @@ async function list(first){PF.v='list';reset();
 root().innerHTML=bar()+'<div class="pfw"><div id="pfst" class="pfm">...</div>'+
 '<div class="pfsb"><input class="pfi" id="pfq" placeholder="🔎 رقم تليفون / رقم حساب / اسم الشركة" dir="auto" value="'+E(PF.q&&PF.q!=='#due'?PF.q:'')+'"><button class="pfb" id="pfs" type="button">بحث</button></div>'+
 '<div class="pfch"><span id="pfdue" class="'+(PF.q==='#due'?'on':'')+'">📅 متابعات النهارده</span><span id="pfall" class="'+(PF.q===''?'on':'')+'">كل العملاء</span>'+(PF.br.length>1?'<span data-b="" class="pfbr '+(PF.fbr===''?'on':'')+'">الكل</span><span data-b="C" class="pfbr '+(PF.fbr==='C'?'on':'')+'">القاهرة</span><span data-b="D" class="pfbr '+(PF.fbr==='D'?'on':'')+'">الدلتا</span>':'')+'</div>'+
-'<div class="pftb">'+(PF.role==='PM'?'<button class="pfb2" id="pfup" type="button">⬆️ رفع إكسيل شهري</button><button class="pfb2" id="pfnw" type="button">➕ عميل جديد</button>':'')+'<button class="pfb2" id="pfdl" type="button">⬇️ تحميل إكسيل</button></div>'+
-'<div id="pfres"></div></div>';barBind();
+'<div class="pftb">'+(PF.role==='PM'?'<button class="pfb2" id="pfup" type="button">⬆️ رفع إكسيل شهري</button><button class="pfb2" id="pfnw" type="button">➕ عميل جديد</button><button class="pfb2" id="pfds" type="button">👥 توزيع العملاء</button>':'')+'<button class="pfb2" id="pfdl" type="button">⬇️ تحميل إكسيل</button></div>'+
+(PF.f.s||PF.f.t?'<div class="pfch"><span class="on" id="pffx">👤 '+(PF.f.s?'سيلز: '+E(PF.f.s==='__NA'?'بدون':PF.f.s):'')+(PF.f.t?' تيم ليدر: '+E(PF.f.t==='__NA'?'بدون':PF.f.t):'')+' ✕</span></div>':'')+'<div id="pfres"></div></div>';barBind();if(el('pffx'))el('pffx').onclick=()=>{PF.f={s:'',t:''};list()};
 el('pfs').onclick=()=>{PF.q=el('pfq').value.trim();run()};el('pfq').onkeydown=e=>{if(e.key==='Enter'){PF.q=el('pfq').value.trim();run()}};
 el('pfdue').onclick=()=>{PF.q='#due';list()};el('pfall').onclick=()=>{PF.q='';list()};
 document.querySelectorAll('#pfv .pfbr').forEach(b=>b.onclick=()=>{PF.fbr=b.dataset.b;PF.q=el('pfq').value.trim();list()});
-if(PF.role==='PM'){el('pfup').onclick=upView;el('pfnw').onclick=newView}el('pfdl').onclick=dl;
+if(PF.role==='PM'){el('pfup').onclick=upView;el('pfnw').onclick=newView;el('pfds').onclick=dist}el('pfdl').onclick=dl;
 stats();run()}
 async function stats(){try{const d=await api({action:'pf_stats'});if(d&&d.ok&&el('pfst')){const p=[];if(d.c!=null)p.push('القاهرة '+fmt(d.c));if(d.d!=null)p.push('الدلتا '+fmt(d.d));let up='';['C','D'].forEach(b=>{if(d.up&&d.up[b]&&d.up[b].t)up+=' · آخر رفع '+brN(b)+': '+d.up[b].t.slice(0,10)});el('pfst').textContent='👥 '+p.join(' · ')+up}}catch(e){}}
 async function run(){const bx=el('pfres');if(!bx)return;bx.innerHTML='<div class="pfm">جاري البحث...</div>';
-let d;try{d=await api({action:'pf_search',q:PF.q,br:PF.fbr})}catch(e){return}
+let d;try{d=await api({action:'pf_search',q:PF.q,br:PF.fbr,fs:PF.f.s,ft:PF.f.t})}catch(e){return}
 if(!d||!d.ok){bx.innerHTML='<div class="pfe">حصلت مشكلة ('+E(d&&d.error)+')</div>';return}
 PF.rows=d.rows;PF.total=d.total;
 if(!d.rows.length){bx.innerHTML='<div class="pfm">'+(PF.q==='#due'?'مفيش متابعات مستحقة النهارده 🎉':'مفيش نتايج. جرب رقم تاني أو ضيف عميل جديد.')+'</div>';return}
-bx.innerHTML='<div class="pfm">'+fmt(d.total)+' عميل'+(d.total>d.rows.length?' · معروض أول '+d.rows.length+' (حدّد البحث)':'')+'</div>'+d.rows.map(r=>{const s=r.s||{};return '<div class="pfr" data-id="'+E(r.id)+'"><div class="t"><b>'+E(s.n)+'</b>'+(s.g?'<span class="bg '+(s.g<0?'r':'g')+'">'+(s.g<0?'🔻':'🔺')+' '+Math.abs(s.gp)+'%</span>':'')+'</div><div class="m"><span dir="ltr">'+E(s.sb)+'</span><span class="bg o">'+brN(r.b)+'</span>'+(s.ln!==''?'<span>📶 '+E(s.ln)+'</span>':'')+(s.sr?'<span class="bg g">SR '+E(s.sr)+'</span>':'')+(s.nx?'<span class="bg y">📅 '+E(s.nx)+'</span>':'')+'</div>'+(s.lf?'<div class="l">آخر متابعة: '+E(s.lf.d)+' · '+E(s.lf.s)+'</div>':'')+'</div>'}).join('');
+bx.innerHTML='<div class="pfm">'+fmt(d.total)+' عميل'+(d.total>d.rows.length?' · معروض أول '+d.rows.length+' (حدّد البحث)':'')+'</div>'+d.rows.map(r=>{const s=r.s||{};return '<div class="pfr" data-id="'+E(r.id)+'"><div class="t"><b>'+E(s.n)+'</b>'+(s.g?'<span class="bg '+(s.g<0?'r':'g')+'">'+(s.g<0?'🔻':'🔺')+' '+Math.abs(s.gp)+'%</span>':'')+'</div><div class="m"><span dir="ltr">'+E(s.sb)+'</span><span class="bg o">'+brN(r.b)+'</span>'+(s.ln!==''?'<span>📶 '+E(s.ln)+'</span>':'')+(s.sl?'<span>👤 '+E(s.sl)+'</span>':'')+(s.tl?'<span>🧭 '+E(s.tl)+'</span>':'')+(s.sr?'<span class="bg g">SR '+E(s.sr)+'</span>':'')+(s.nx?'<span class="bg y">📅 '+E(s.nx)+'</span>':'')+'</div>'+(s.lf?'<div class="l">آخر متابعة: '+E(s.lf.d)+' · '+E(s.lf.s)+'</div>':'')+'</div>'}).join('');
 bx.querySelectorAll('.pfr').forEach(r=>r.onclick=()=>card(r.dataset.id))}
 const lbl=Object.assign({},...SEC.map(s=>Object.fromEntries(s[1])));
 function valHtml(k,v){if(isNA(v))return '<span class="na">NA</span>';if(PHK[k]){const ph=phones(v);if(ph.length)return ph.map(p=>'<div class="ph"><span dir="ltr">'+E(p)+'</span><span><a href="tel:'+p+'">📞</a> <a target="_blank" rel="noopener" href="https://wa.me/2'+p.replace(/^0/,'')+'">💬</a></span></div>').join('')+(String(v).replace(/[0-9\s\/\\,;|+\-]/g,'').length>2?'<div class="pfs">'+E(v)+'</div>':'')}return E(v)}
@@ -3120,7 +3121,34 @@ const lf=(d.fb||[])[0];if(lf){ln();txt('آخر متابعة · '+(lf.d||String(l
 y+=20;txt(new Date().toISOString().slice(0,10)+' · '+PF.n,'600 24px '+F,'#b9a89b','left');y+=60;
 const o=document.createElement('canvas');o.width=W;o.height=y;o.getContext('2d').drawImage(cv,0,0);
 o.toBlob(b=>{const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='Card_'+String(e.sub||'customer').replace(/[^A-Za-z0-9._-]+/g,'_')+'.png';document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1500)},'image/png')}
-window.pfGo=function(p){if(!B().classList.contains('pfx'))return;const a=String(p||'').split('|');if(!PF.t){login('');return}if(a[0]==='card'&&a[1])card(a[1]);else list()};
+
+/* ---------- distribution (PM only) ---------- */
+const nmL=n=>n==='__NA'?'بدون (NA)':n;
+async function dist(){PF.v='dist';reset();root().innerHTML=bar()+'<div class="pfw"><div class="pftb"><button class="pfb2" id="pfbk" type="button">↩️ رجوع</button></div><div class="pfm">جاري التحميل...</div></div>';barBind();el('pfbk').onclick=()=>list();
+let d;try{d=await api({action:'pf_dist_sum'})}catch(e){return}
+if(!d||!d.ok){root().innerHTML=bar()+'<div class="pfw"><div class="pfe">'+E(d&&d.error)+'</div></div>';barBind();return}
+const tbl=(t,arr,k)=>'<div class="pfc"><div class="sec" style="border-top:0">'+t+'</div>'+arr.map(o=>'<div class="pfdr" data-k="'+k+'" data-n="'+E(o.n)+'"><b>'+E(nmL(o.n))+'</b><span>'+fmt(o.c)+' عميل</span><span>📶 '+fmt(o.l)+'</span><span>💰 '+fmt(o.r)+'</span><button class="pfb2 sm" data-v="1" type="button">عرض</button></div>').join('')+'</div>';
+const opt=(arr,first)=>'<option value="">'+first+'</option>'+arr.map(o=>'<option value="'+E(o.n)+'">'+E(nmL(o.n))+'</option>').join('');
+root().innerHTML=bar()+'<div class="pfw"><div class="pftb"><button class="pfb2" id="pfbk" type="button">↩️ رجوع</button><button class="pfb2" id="pfun" type="button">↩️ تراجع عن آخر توزيع</button></div><div class="pfm">👥 '+fmt(d.count)+' عميل — '+brN(PF.br)+'</div>'+
+'<div class="pfc" style="padding:12px"><b>🔀 نقل عملاء</b><div class="pfs" style="margin:4px 0 8px">اختار العملاء (من)، وبعدين حدّد السيلز / التيم ليدر الجديد (إلى). الاسم الجديد بتكتبه أو تختاره من القائمة.</div>'+
+'<div class="pfs">من:</div><div class="row2"><select class="pfi sm" id="dfs">'+opt(d.sales,'كل السيلز')+'</select><select class="pfi sm" id="dft">'+opt(d.tl,'كل التيم ليدرز')+'</select></div><div class="row2"><select class="pfi sm" id="dfg"><option value="">كل المحافظات</option>'+d.gov.map(g=>'<option>'+E(g)+'</option>').join('')+'</select><input class="pfi sm" id="dfq" placeholder="بحث (اسم/كود/تليفون)"></div>'+
+'<div class="pfs" style="margin-top:6px">إلى:</div><div class="row2"><input class="pfi sm" id="dts" list="dls" placeholder="السيلز الجديد"><input class="pfi sm" id="dtt" list="dlt" placeholder="التيم ليدر الجديد"></div><datalist id="dls">'+d.sales.filter(o=>o.n!=='__NA').map(o=>'<option value="'+E(o.n)+'">').join('')+'</datalist><datalist id="dlt">'+d.tl.filter(o=>o.n!=='__NA').map(o=>'<option value="'+E(o.n)+'">').join('')+'</datalist>'+
+'<input class="pfi sm" id="dln" type="number" min="1" inputmode="numeric" placeholder="عدد معين من العملاء (اختياري — الأول بس)"><div class="row2"><button class="pfb2" id="dpv" type="button">👁️ معاينة</button><button class="pfb" id="dgo" type="button" style="display:none">✅ تنفيذ</button></div><div id="dms" class="pfm"></div></div>'+
+tbl('🧭 التيم ليدر',d.tl,'t')+tbl('👤 السيلز',d.sales,'s')+'</div>';barBind();
+el('pfbk').onclick=()=>list();
+const dr=()=>({from:{sales:el('dfs').value,tl:el('dft').value,gov:el('dfg').value,q:el('dfq').value.trim()},to:{sales:el('dts').value.trim(),tl:el('dtt').value.trim()},limit:el('dln').value});
+let cnt=0;['dfs','dft','dfg','dfq','dts','dtt','dln'].forEach(i=>{el(i).oninput=el(i).onchange=()=>{el('dgo').style.display='none';el('dms').textContent=''}});
+document.querySelectorAll('#pfv .pfdr').forEach(r=>{r.onclick=e=>{const k=r.dataset.k,n=r.dataset.n;if(e.target.dataset.v){PF.f={s:k==='s'?n:'',t:k==='t'?n:''};PF.q='';list();return}el(k==='s'?'dfs':'dft').value=n;el('dpv').scrollIntoView({behavior:'smooth',block:'center'})}});
+el('dpv').onclick=async()=>{const o=dr();if(!o.to.sales&&!o.to.tl){el('dms').innerHTML='<span class="pfe">اكتب السيلز أو التيم ليدر الجديد.</span>';return}
+let r;try{r=await api(Object.assign({action:'pf_dist_apply',preview:true},o))}catch(e){return}
+if(!r||!r.ok){el('dms').innerHTML='<span class="pfe">'+E(r&&r.error)+'</span>';return}cnt=r.count;
+el('dms').innerHTML=r.count?'هينتقل <b>'+fmt(r.count)+'</b> عميل'+(r.of>r.count?' (من '+fmt(r.of)+')':'')+'<br><small>مثال: '+r.sample.map(E).join(' · ')+'</small>':'مفيش عملاء مطابقين (أو كلهم عند الاسم ده أصلاً).';el('dgo').style.display=r.count?'':'none';el('dgo').textContent='✅ تنفيذ نقل '+fmt(r.count)+' عميل'};
+el('dgo').onclick=async()=>{const o=dr();const b=el('dgo');b.disabled=true;let r;try{r=await api(Object.assign({action:'pf_dist_apply'},o))}catch(e){return}b.disabled=false;
+if(r&&r.ok){dist().then(()=>{if(el('dms'))el('dms').innerHTML='✅ اتنقل '+fmt(r.count)+' عميل. تقدر تتراجع من الزر فوق.'})}else el('dms').innerHTML='<span class="pfe">فشل: '+E(r&&r.error)+'</span>'};
+el('pfun').onclick=async()=>{if(!confirm('تتراجع عن آخر عملية توزيع؟'))return;let r;try{r=await api({action:'pf_dist_undo'})}catch(e){return}
+if(r&&r.ok)dist().then(()=>{if(el('dms'))el('dms').innerHTML='↩️ اتراجع عن '+fmt(r.count)+' عميل.'});else alert(r&&r.error==='nothing_to_undo'?'مفيش توزيع تتراجع عنه.':'فشل: '+(r&&r.error))}}
+
+window.pfGo=function(p){if(!B().classList.contains('pfx'))return;const a=String(p||'').split('|');if(!PF.t){login('');return}if(a[0]==='card'&&a[1])card(a[1]);else if(a[0]==='dist')dist();else list()};
 document.addEventListener('click',e=>{if(PF.t&&e.target.closest&&e.target.closest('#pfv'))reset()},true);
 })();
 
