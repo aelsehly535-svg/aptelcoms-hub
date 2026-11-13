@@ -2512,10 +2512,13 @@ el('memagain').onclick=memStart;el('memlist').onclick=()=>{MEM.v='list';memDraw(
 let GM={k:'',i:0,ok:0,st:0,sec:0,tm:0,cd:0,lock:false,off:0,got:false,q:null};
 const GM_N=10;
 function gmClock(){const p=new Intl.DateTimeFormat('en-US',{timeZone:'Africa/Cairo',hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23'}).formatToParts(new Date(Date.now()+GM.off)),g=t=>Number(p.find(x=>x.type===t).value);return g('hour')*3600+g('minute')*60+g('second')}
-function gmOpen(){if(typeof isTest==='function'&&isTest())return true;if(!GM.got)return false;const s=gmClock();return s>=63000||s<30600}
+function gmDow(){const w=new Intl.DateTimeFormat('en-US',{timeZone:'Africa/Cairo',weekday:'short'}).format(new Date(Date.now()+GM.off));return ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].indexOf(w)}
+function gmOpenAt(d,s){if(d===5)return true;if(d===6)return s<30600||s>=54000;return s>=63000||s<30600}
+function gmOpen(){if(typeof isTest==='function'&&isTest())return true;if(!GM.got)return false;return gmOpenAt(gmDow(),gmClock())}
+function gmFlip(){const d0=gmDow(),s0=gmClock(),o=gmOpenAt(d0,s0);let t=60-(s0%60);for(let k=0;k<5000;k++,t+=60){const s=s0+t,d=(d0+Math.floor(s/86400))%7;if(gmOpenAt(d,s%86400)!==o)return t}return 0}
 function gmHMS(x){x=Math.max(0,x);return String(Math.floor(x/3600)).padStart(2,'0')+':'+String(Math.floor(x/60)%60).padStart(2,'0')+':'+String(x%60).padStart(2,'0')}
-function gmCdHtml(op){if(op){const s=gmClock(),l=s>=63000?(86400-s+30600):(30600-s);return '<small>مفتوحة دلوقتي</small><b>🟢 يلا العب</b>'+(GM.got&&!(typeof isTest==='function'&&isTest())?'<small>بتقفل بعد '+gmHMS(l)+' (8:30 ص)</small>':'')}
-if(!GM.got)return '<small>جاري ضبط الوقت من السيرفر...</small><b>⏳</b>';return '<small>الألعاب بتفتح كل يوم الساعة 5:30 م</small><b>'+gmHMS(63000-gmClock())+'</b><small>فاضل على الفتح</small>'}
+function gmCdHtml(op){if(op){const l=gmFlip();return '<small>مفتوحة دلوقتي</small><b>🟢 يلا العب</b>'+(GM.got&&!(typeof isTest==='function'&&isTest())?'<small>بتقفل بعد '+gmHMS(l)+'</small>':'')}
+if(!GM.got)return '<small>جاري ضبط الوقت من السيرفر...</small><b>⏳</b>';return '<small>'+(gmDow()===6?'الألعاب بتفتح النهارده الساعة 3:00 م':'الألعاب بتفتح كل يوم 5:30 م · والجمعة طول اليوم')+'</small><b>'+gmHMS(gmFlip())+'</b><small>فاضل على الفتح</small>'}
 async function gmSync(){const d=await socPost({action:'soc_now'});if(d&&d.ok&&d.now){GM.off=d.now-Date.now();GM.got=true;if(MEM.v==='list'&&SOCTAB==='g'&&el('memv'))memDraw()}}
 function gmR(a,b){return a+Math.floor(Math.random()*(b-a+1))}
 function gmOpts(c,fn){const s=new Set([c]);let n=0;while(s.size<4&&n++<80){const v=fn();if(v!==c&&v>=0)s.add(v)}let k=1;while(s.size<4)s.add(c+k++);return Array.from(s).sort(()=>Math.random()-.5)}
