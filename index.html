@@ -2828,10 +2828,10 @@ if(G.boss){const b=G.boss,fr=Math.max(0,b.hp/b.mhp);x.fillStyle='rgba(0,0,0,.6)'
 BT.forEach((b,i)=>{const cd=i===0?(P.bm<=0?1:0):(P.wcd>0?P.wcd/14:0);x.fillStyle='rgba(20,50,30,.75)';x.beginPath();x.arc(b[0],b[1],23,0,T2);x.fill();x.strokeStyle=cd?'#78909c':'#c0ca33';x.lineWidth=2.5;x.stroke();if(i===1&&cd){x.strokeStyle='#aeea00';x.beginPath();x.arc(b[0],b[1],23,-1.57,-1.57+T2*(1-cd));x.stroke()}x.globalAlpha=cd?.45:1;x.font='20px sans-serif';x.textAlign='center';x.fillText(b[2],b[0],b[1]+7);x.globalAlpha=1;if(i===0){x.fillStyle='#fff';x.font='800 11px sans-serif';x.fillText('×'+P.bm,b[0]+20,b[1]+22)}});
 for(let i=0;i<P.pow;i++){x.fillStyle='#ff7043';x.fillRect(10+i*9,H-14,7,5)}x.fillStyle='rgba(255,255,255,.7)';x.font='700 9px Cairo,sans-serif';x.textAlign='left';x.fillText('POWER',10,H-18);
 if(G.clr>0&&G.clr<4.4){const k=Math.min(1,(4.4-G.clr)*2.2,G.clr*2),lg=document.querySelector('.lg');x.save();x.globalAlpha=k;x.fillStyle='rgba(8,12,30,.78)';x.fillRect(0,0,W,H);x.translate(W/2,H/2-10);const sc=.85+.15*Math.min(1,(4.4-G.clr)*3);x.scale(sc,sc);
-x.fillStyle='#fffdf7';gxRR(x,-140,-118,280,236,18);x.fill();x.strokeStyle='#ff6600';x.lineWidth=4;x.stroke();
+x.fillStyle='#fffdf7';gxRR(x,-140,-118,280,196,18);x.fill();x.strokeStyle='#ff6600';x.lineWidth=4;x.stroke();
 try{x.drawImage(lg,-52,-108,104,80)}catch(_){}
 x.textAlign='center';x.fillStyle='#8a1c1c';x.font='900 19px Cairo,Tahoma,sans-serif';x.fillText('Aptelecom training team',0,-14);x.fillStyle='#444';x.font='800 15px Cairo,Tahoma,sans-serif';x.fillText('بيقولك',0,12);
-x.fillStyle='#ff6600';x.font='900 32px Cairo,Tahoma,sans-serif';x.fillText('انجووووووي 🎉',0,56);x.fillStyle='#777';x.font='700 12px Cairo,Tahoma,sans-serif';x.fillText(G.stage+1<STG?'المرحلة '+(G.stage+1)+' خلصت · الجاية أصعب 🔥':'خلصت كل المراحل! 🏆',0,86);x.restore();
+x.fillStyle='#ff6600';x.font='900 17px Cairo,Tahoma,sans-serif';x.fillText(G.stage+1<STG?'المرحلة '+(G.stage+1)+' خلصت · الجاية أصعب 🔥':'خلصت كل المراحل! 🏆',0,56);x.restore();
 for(let q=0;q<14;q++){const a=G.t*2+q*1.7;x.globalAlpha=k*.9;x.fillStyle=['#ff6600','#ffd54f','#e53935','#4fc3f7','#66bb6a'][q%5];x.fillRect((q*53+G.t*60)%W,((q*97+G.t*90)%H),5,8)}x.globalAlpha=1}
 if(G.banner>0){x.globalAlpha=Math.min(1,G.banner);x.direction='rtl';x.font='900 20px Cairo,Tahoma,sans-serif';x.textAlign='center';x.lineWidth=4;x.strokeStyle='rgba(0,0,0,.65)';x.strokeText(G.btxt,W/2,H/2-40);x.fillStyle='#ffd24d';x.fillText(G.btxt,W/2,H/2-40);x.globalAlpha=1}x.restore()};
 c.onpointerdown=e=>{e.preventDefault();const q=pt(e);for(let i=0;i<2;i++){if((q.x-BT[i][0])**2+(q.y-BT[i][1])**2<32*32){i?strike():bomb();return}}
@@ -2849,10 +2849,10 @@ function erT(fn,ms){const id=ER.id,r=ER.i,t=setTimeout(()=>{if(ER.id!==id||ER.i!
 const ER_T={code:'🔐 القفل الرقمي',seq:'🔢 لوحة الأرقام',simon:'🎹 الأضواء السحرية',odd:'🔍 اللي مش شبه الباقي',slide:'🧩 اللوحة المتحركة',lights:'💡 مصابيح الدائرة',cipher:'🕵️ الشيفرة السرية',riddle:'🗿 لغز التمثال',eq:'➕ المعادلة الناقصة',pat:'🧠 ذاكرة الأرضية',scr:'🔤 الحروف المبعثرة',path:'🧭 البوصلة',bin:'🔌 شفرة الأضواء',sort:'📶 ترتيب الأوزان'};
 const ER_RM=[['📚','المكتبة القديمة'],['🧪','المعمل السري'],['🕰️','غرفة الساعات'],['🗺️','غرفة الخرائط'],['⚓','مخزن السفينة'],['🏰','برج القلعة'],['🪞','قاعة المرايا'],['🌋','كهف البركان'],['🚀','كابينة الصاروخ'],['🧙','غرفة الساحر'],['🏴‍☠️','مخبأ القراصنة'],['🕳️','السرداب'],['🎭','المسرح المهجور'],['❄️','الكهف المتجمد']];
 const ER_SH=a=>a.map(v=>[Math.random(),v]).sort((p,q)=>p[0]-q[0]).map(p=>p[1]);
-function erSetup(){memStop();MEM.v='glv';const b=el('memv'),O=[['🔓','سهل','5 غرف · لغز بسيط'],['🔒','متوسط','7 غرف · ألغاز أصعب'],['🔥','صعب','10 غرف · أصعب ألغاز ووقت ضيق']];
+function erSetup(){memStop();MEM.v='glv';const b=el('memv'),O=[['🔓','سهل','5 غرف · لغز بسيط'],['🔒','متوسط','7 غرف · ألغاز أصعب'],['🔥','صعب','10 غرف · أصعب ألغاز ووقت ضيق'],['👑','مفيش حاجه مستحيله','8 غرف · ألغاز خرافية · لو خلصتها إنت أسطورة']];
 b.innerHTML='<div class="mst"><span>🗝️ Escape Room</span></div><p class="cm" style="margin:0 0 6px">كل مرة بتدخل: غرف وألغاز ومعطيات جديدة ومش بتتكرر. اهرب من كل الغرف قبل ما الوقت يخلص.</p>'+O.map((o,i)=>'<div class="mg1 erlv" data-r="'+i+'" style="margin-top:9px"><i>'+o[0]+'</i><div><b>'+o[1]+'</b><small>'+o[2]+'</small></div></div>').join('')+'<div class="cm" style="text-align:center;margin-top:10px">🏆 أحسن وقت متبقي: '+(gxBest('er')?memT(gxBest('er')):'-')+'</div><button class="mbtn o" id="glb" style="margin-top:8px">رجوع</button>';
 b.querySelectorAll('.erlv').forEach(x=>x.onclick=()=>{if(gmOpen())erStart(+x.dataset.r);else{MEM.v='list';memDraw()}});el('glb').onclick=()=>{MEM.v='list';memDraw()}}
-function erStart(r){memStop();const n=[5,7,10][r],d=r+1;ER={alive:true,id:++GXID,n:n,d:d,r:r,types:ER_SH(Object.keys(ER_P)).slice(0,n),names:ER_SH(ER_RM).slice(0,n),i:0,dl:Date.now()+n*(r===2?75:80)*1000,hints:0,skips:0,tos:[],lock:false};
+function erStart(r){memStop();const n=[5,7,10,8][r],d=r+1,tt=n*[80,80,75,150][r];ER={alive:true,id:++GXID,n:n,d:d,r:r,tot:tt,types:ER_SH(Object.keys(ER_P)).slice(0,n),names:ER_SH(ER_RM).slice(0,n),i:0,dl:Date.now()+tt*1000,hints:0,skips:0,tos:[],lock:false};
 GX={alive:true,id:ER.id,k:'er'};erRoom()}
 function erTick(){if(!ER.alive)return;const l=Math.ceil((ER.dl-Date.now())/1000),t=el('ert');if(t){t.textContent='⏱ '+memT(Math.max(0,l));t.classList.toggle('lw',l<=30)}if(l<=0)erEnd(false)}
 function erPen(s){ER.dl-=s*1000;const t=el('erpn');if(t){t.textContent='-'+s+'ث';t.classList.remove('on');void t.offsetWidth;t.classList.add('on')}}
@@ -2865,94 +2865,104 @@ el('erhint').onclick=()=>{if(ER.lock)return;ER.hints++;erPen(15);const h=ER.cur.
 el('erskip').onclick=()=>{if(ER.lock)return;ER.skips++;erPen(40);erDone(true)}}
 function erDone(skip){if(ER.lock||!ER.alive)return;ER.lock=true;memSound(skip?'ok':'win');const fx=el('memfx');if(fx){const o=document.createElement('div');o.className='erdoor';o.innerHTML='<b>'+(skip?'⏭':'🔓')+'</b><span>'+(ER.i+1>=ER.n?'الباب الأخير!':'الباب اتفتح')+'</span>';fx.appendChild(o);for(let k=0;k<10;k++)memBurst(o,['✨','⭐','🔑'],1)}
 const id=ER.id,r=ER.i;setTimeout(()=>{if(ER.id!==id||ER.i!==r||!ER.alive)return;ER.i++;if(ER.i>=ER.n)erEnd(true);else erRoom()},950)}
-function erEnd(win){if(!ER.alive)return;ER.alive=false;erClear();const left=Math.max(0,Math.ceil((ER.dl-Date.now())/1000)),tot=ER.n*80,nb=win&&left>gxBest('er');if(win)gxBest('er',left);const f=left/tot,st=win?(f>=.4?3:f>=.2?2:1):0;
-gxRes({e:win?'🏆':'⌛',t:win?(nb?'هربت برقم قياسي!':'هربت من كل الغرف!'):'الوقت خلص!',s:win?[[memT(left),'الوقت المتبقي'],[ER.n,'غرف'],[ER.hints,'تلميحات']]:[[ER.i,'غرف اتفتحت من '+ER.n],[ER.hints,'تلميحات'],[ER.skips,'تخطي']],st:win?st:0,w:win,f:()=>erStart(ER.r)})}
+function erEnd(win){if(!ER.alive)return;ER.alive=false;erClear();const left=Math.max(0,Math.ceil((ER.dl-Date.now())/1000)),tot=ER.tot||ER.n*80,nb=win&&left>gxBest('er');if(win)gxBest('er',left);const f=left/tot,st=win?(f>=.4?3:f>=.2?2:1):0;
+gxRes({e:win?(ER.r===3?'👑':'🏆'):'⌛',t:win?(ER.r===3?'مفيش حاجه مستحيله فعلًا! 👑':nb?'هربت برقم قياسي!':'هربت من كل الغرف!'):'الوقت خلص!',s:win?[[memT(left),'الوقت المتبقي'],[ER.n,'غرف'],[ER.hints,'تلميحات']]:[[ER.i,'غرف اتفتحت من '+ER.n],[ER.hints,'تلميحات'],[ER.skips,'تخطي']],st:win?st:0,w:win,f:()=>erStart(ER.r)})}
 const ER_RD=[['ليه أسنان ومبيعضش؟','المشط'],['بيمشي من غير رجلين وبيبكي من غير عينين؟','السحاب'],['كل ما أخدت منه زاد؟','الحفرة'],['له عين ومبيشوفش؟','الإبرة'],['كل ما زاد نقص؟','العمر'],['بيتكلم كل اللغات من غير ما يتعلم؟','الصدى'],['بيكتب ومبيقراش؟','القلم'],['له رقبة ومالوش راس؟','الزجاجة'],['ليها عقارب ومبتلدغش؟','الساعة'],['كل ما طال قصر؟','الشمعة'],['بيطلع مع الشمس ومبيتمسكش؟','الظل'],['فيه مدن من غير بيوت وأنهار من غير مية؟','الخريطة'],['بيجري ومالوش رجلين؟','الماء'],['فيه 88 مفتاح ومبيفتحش باب؟','البيانو'],['بيتبل ولما بينشف بيتبل أكتر؟','المنشفة'],['بيقلدك من غير صوت؟','المراية'],['بينزل من السما ومبيتوجعش لما يقع؟','المطر']];
 const ER_WD=['مفتاح','خريطة','سفينة','صحراء','قلعة','جزيرة','شلال','بركان','غواصة','مغارة','فانوس','سلسلة','كنزنا','مصباح','بوصلة'].filter(w=>w!=='كنزنا');
+const ER_CW2=['DISCOVERY','LABYRINTH','TREASURES','KNOWLEDGE','ADVENTURE','MYSTERIOUS','UNBEATABLE','CHAMPIONS','IMPOSSIBLE','DETERMINED','PERSISTENCE'];
+const ER_HQ=[['أب عنده 5 بنات، وكل بنت ليها أخ واحد. كام عدد أفراد الأسرة كلها (مع الأب والأم)؟','8',['7','9','10','11','12']],['لو 5 ماكينات بتصنع 5 قطع في 5 دقايق، 100 ماكينة تصنع 100 قطعة في كام دقيقة؟','5',['100','20','50','1','25']],['ورد بيتضاعف مساحته كل يوم، وغطى البحيرة كلها في اليوم 48. في أنهي يوم كان مغطي نصها؟','47',['24','46','45','40','12']],['كورة ومضرب بـ110 جنيه، والمضرب أغلى من الكورة بـ100 جنيه. سعر الكورة كام جنيه؟','5',['10','1','15','2.5','20']],['كام مرة بيظهر الرقم 9 لما تكتب الأرقام من 1 لـ 100؟','20',['19','10','11','21','18']],['إيه الرقم اللي بعد: 1, 11, 21, 1211, 111221 ؟','312211',['122211','311221','211312','1112221','212211']],['قدام رقم لو ضربته في أي رقم يبقى الناتج هو نفسه؟','صفر',['واحد','سالب واحد','عشرة','مفيش','نص']],['إيه نصف ثلث ربع الرقم 240؟','10',['20','30','5','15','40']],['مثلث كبير مقسوم لـ4 مثلثات صغيرة متطابقة. كام مثلث في الشكل كله؟','5',['4','6','8','9','3']],['ثلاثة صناديق عليها تسميات غلط: تفاح، برتقال، خليط. سحبت فاكهة من صندوق "خليط" طلعت تفاح. الصندوق ده فيه؟','تفاح بس',['برتقال بس','خليط','مش معروف','تفاح وبرتقال','فاضي']],['عمر أحمد ضعف عمر أخوه. لما أحمد كان عمره 6 كان أخوه 3. لما أحمد يبقى 40، أخوه عمره؟','37',['20','40','43','34','25']],['كام مرة في اليوم (24 ساعة) عقرب الساعة والدقايق بيتطابقوا؟','22',['24','12','23','44','11']]];
+const ER_WD2=['التكنولوجيا','المستكشفين','الاستكشاف','الأهرامات','الاتصالات','المستخدمين'];
 const ER_CW=['ESCAPE','SECRET','GOLDEN','WINDOW','ROCKET','JUNGLE','CASTLE','PLANET','DRAGON','TUNNEL','MYSTIC','SHADOW','BRIDGE','CANDLE','HIDDEN','TREASURE'];
 const ER_P={
-code(h,ins,d,say){const R=gmR,O=['الأول','التاني','التالت'],sol=[R(0,9),R(0,9),R(0,9)],all=[];for(let n=0;n<1000;n++)all.push([n/100|0,(n/10|0)%10,n%10]);
-const mk=()=>{const t=R(0,5),i=R(0,2),j=(i+R(1,2))%3;if(t===0){const s=sol[0]+sol[1]+sol[2];return{t:'مجموع الأرقام التلاتة = '+s,f:a=>a[0]+a[1]+a[2]===s}}
+code(h,ins,d,say){const R=gmR,nd=d>=4?4:3,O=['الأول','التاني','التالت','الرابع'],sol=[];for(let i=0;i<nd;i++)sol.push(R(0,9));const all=[],tot=Math.pow(10,nd);for(let n=0;n<tot;n++){const a=[];let m=n;for(let k=nd-1;k>=0;k--){a[k]=m%10;m=(m/10)|0}all.push(a)}
+const sm=a=>a.reduce((x,y)=>x+y,0);
+const mk=()=>{const t=R(0,d>=4?8:5),i=R(0,nd-1),j=(i+R(1,nd-1))%nd;if(t===0){const s=sm(sol);return{t:'مجموع الأرقام كلها = '+s,f:a=>sm(a)===s}}
 if(t===1){const e=sol[i]%2===0;return{t:'الرقم '+O[i]+' '+(e?'زوجي':'فردي'),f:a=>(a[i]%2===0)===e}}
 if(t===2){const c=Math.sign(sol[i]-sol[j]);return{t:'الرقم '+O[i]+' '+(c>0?'أكبر من':c<0?'أصغر من':'بيساوي')+' الرقم '+O[j],f:a=>Math.sign(a[i]-a[j])===c}}
 if(t===3){const k=R(1,8),g=sol[i]>k;return{t:'الرقم '+O[i]+(g?' أكبر من ':' أصغر من أو بيساوي ')+k,f:a=>(a[i]>k)===g}}
 if(t===4){const s=sol[i]+sol[j];return{t:'مجموع الرقم '+O[i]+' والرقم '+O[j]+' = '+s,f:a=>a[i]+a[j]===s}}
-const sm=new Set(sol).size;return{t:sm===3?'كل الأرقام مختلفة':sm===2?'فيه رقمين متكررين':'الأرقام التلاتة متشابهة',f:a=>new Set(a).size===sm}};
-let rem=all,cl=[],g=0;while(rem.length>1&&g++<300){const c=mk(),nr=rem.filter(c.f);if(nr.length<rem.length&&!cl.some(x=>x.t===c.t)){cl.push(c);rem=nr}}
-for(let k=0;rem.length>1&&k<3;k++){cl.push({t:'الرقم '+O[k]+' = '+sol[k],f:a=>a[k]===sol[k]});rem=rem.filter(cl[cl.length-1].f)}
-say('القفل ليه 3 أرقام. اقرا الدلائل وافتحه:');const v=[0,0,0];
+if(t===5){const u=new Set(sol).size;return{t:'عدد الأرقام المختلفة في القفل = '+u,f:a=>new Set(a).size===u}}
+if(t===6){const x=Math.abs(sol[i]-sol[j]);return{t:'الفرق بين الرقم '+O[i]+' والرقم '+O[j]+' (من غير إشارة) = '+x,f:a=>Math.abs(a[i]-a[j])===x}}
+if(t===7){const x=sol[i]*sol[j];return{t:'حاصل ضرب الرقم '+O[i]+' في الرقم '+O[j]+' = '+x,f:a=>a[i]*a[j]===x}}
+const dv=sol[i]%3===0;return{t:'الرقم '+O[i]+(dv?' بيقبل القسمة على 3 (والصفر منهم)':' مبيقبلش القسمة على 3'),f:a=>(a[i]%3===0)===dv}};
+let rem=all,cl=[],g=0;while(rem.length>1&&g++<700){const c=mk(),nr=rem.filter(c.f);if(nr.length<rem.length&&!cl.some(x=>x.t===c.t)){cl.push(c);rem=nr}}
+for(let k=0;rem.length>1&&k<nd;k++){cl.push({t:'الرقم '+O[k]+' = '+sol[k],f:a=>a[k]===sol[k]});rem=rem.filter(cl[cl.length-1].f)}
+say('القفل ليه '+nd+' أرقام. اقرا الدلائل وافتحه:');const v=Array(nd).fill(0);
 const draw=()=>{h.innerHTML='<ul class="erclue">'+cl.map(c=>'<li>'+c.t+'</li>').join('')+'</ul><div class="erdg">'+v.map((x,i)=>'<div><button data-i="'+i+'" data-s="1">▲</button><b>'+x+'</b><button data-i="'+i+'" data-s="-1">▼</button></div>').join('')+'</div><button class="mbtn" id="ero">افتح 🔓</button>';
 h.querySelectorAll('.erdg button').forEach(b=>b.onclick=()=>{const i=+b.dataset.i;v[i]=(v[i]+ +b.dataset.s+10)%10;draw()});el('ero').onclick=chk};
-const chk=()=>{if(v[0]===sol[0]&&v[1]===sol[1]&&v[2]===sol[2])ins();else erWrong(h)};draw();
-return{solve(){for(let i=0;i<3;i++)v[i]=sol[i];draw();chk()},hint(){return 'الرقم '+O[0]+' هو '+sol[0]}}},
-seq(h,ins,d,say){const q=npQ(gmR(3+d*2,7+d*2),gmR(0,9));say('كمّل المتتالية عشان القفل يفتح:');h.innerHTML=q.h+'<div class="erops">'+q.o.map((o,j)=>'<button class="erop" data-j="'+j+'">'+o.l+'</button>').join('')+'</div>';
-h.querySelectorAll('.erop').forEach(b=>b.onclick=()=>{if(q.o[+b.dataset.j].v===q.c)ins();else erWrong(h)});
-return{solve(){h.querySelector('.erop[data-j="'+q.o.findIndex(o=>o.v===q.c)+'"]').click()},hint(){return 'بص على الفرق بين كل رقمين ورا بعض'}}},
-simon(h,ins,d,say){const R=gmR,len=3+d,seq=[];for(let i=0;i<len;i++)seq.push(R(0,3));const C=['#e53935','#1e88e5','#43a047','#fdd835'],T=[330,392,494,587];let pos=0,busy=true;
+const chk=()=>{if(v.every((x,i)=>x===sol[i]))ins();else erWrong(h)};draw();
+return{solve(){for(let i=0;i<nd;i++)v[i]=sol[i];draw();chk()},hint(){return 'الرقم '+O[0]+' هو '+sol[0]}}},
+seq(h,ins,d,say){const hard=d>=4,N=hard?3:1;let r=0,q;
+const go=()=>{q=npQ(hard?20:gmR(3+d*2,7+d*2),gmR(0,9));say(hard?'متتالية '+(r+1)+'/'+N+' (مستوى أسطوري) — كمّلها:':'كمّل المتتالية عشان القفل يفتح:');h.innerHTML=q.h+'<div class="erops">'+q.o.map((o,j)=>'<button class="erop" data-j="'+j+'">'+o.l+'</button>').join('')+'</div>';
+h.querySelectorAll('.erop').forEach(b=>b.onclick=()=>{if(q.o[+b.dataset.j].v===q.c){r++;if(r>=N)ins();else{memSound('ok',r);go()}}else erWrong(h)})};go();
+return{solve(){for(let k=r;k<N;k++){const b=h.querySelector('.erop[data-j="'+q.o.findIndex(o=>o.v===q.c)+'"]');if(b)b.click()}},hint(){return 'بص على الفرق (أو النسبة) بين كل رقمين ورا بعض'}}},
+simon(h,ins,d,say){const R=gmR,len=d>=4?11:3+d,ms=d>=4?430:650,seq=[];for(let i=0;i<len;i++)seq.push(R(0,3));const C=['#e53935','#1e88e5','#43a047','#fdd835'],T=[330,392,494,587];let pos=0,busy=true;
 say('اتفرج على الأضواء وبعدين كررها بنفس الترتيب.');h.innerHTML='<div class="ersm">'+C.map((c,i)=>'<button class="erpad" data-i="'+i+'" style="background:'+c+'"></button>').join('')+'</div>';const pads=[...h.querySelectorAll('.erpad')];
 const fl=i=>{pads[i].classList.add('on');memTone(T[i],0,.3,'triangle',.18);setTimeout(()=>pads[i].classList.remove('on'),300)};
-const show=()=>{busy=true;pos=0;seq.forEach((s,k)=>erT(()=>fl(s),600+k*650));erT(()=>{busy=false;say('دورك! كرر التسلسل.')},600+len*650)};
+const show=()=>{busy=true;pos=0;seq.forEach((s,k)=>erT(()=>fl(s),600+k*ms));erT(()=>{busy=false;say('دورك! كرر التسلسل.')},600+len*ms)};
 const press=i=>{if(busy)return;fl(i);if(i===seq[pos]){pos++;if(pos===len)ins()}else{erWrong(h);erT(()=>say('اتفرج تاني...'),0);erT(show,900)}};
 pads.forEach(p=>p.onclick=()=>press(+p.dataset.i));show();
 return{solve(){busy=false;pos=0;seq.forEach(s=>press(s))},hint(){erT(show,300);return 'هتتفرج على التسلسل تاني'}}},
-odd(h,ins,d,say){const P=ER_SH([['🕐','🕑'],['🌑','🌒'],['🐵','🙈'],['🧡','❤️'],['⭐','🌟'],['🔔','🔕'],['🍇','🫐'],['🍩','🥯'],['😀','😃'],['🦊','🐺'],['🍎','🍅'],['🌞','🌝']]),N=3,rows=5,cols=5;let r=0,oi;
-const draw=()=>{const p=P[r],ci=Math.random()<.5?0:1;oi=gmR(0,rows*cols-1);say('دور '+(r+1)+'/'+N+': دوس على الرمز المختلف.');h.innerHTML='<div class="ergr" style="grid-template-columns:repeat('+cols+',1fr)">'+Array.from({length:rows*cols},(_,i)=>'<button class="erc" data-i="'+i+'">'+(i===oi?p[1-ci]:p[ci])+'</button>').join('')+'</div>';
+odd(h,ins,d,say){const P=ER_SH([['🕐','🕑'],['🌑','🌒'],['🐵','🙈'],['🧡','❤️'],['⭐','🌟'],['🔔','🔕'],['🍇','🫐'],['🍩','🥯'],['😀','😃'],['🦊','🐺'],['🍎','🍅'],['🌞','🌝']]),N=d>=4?5:3,rows=d>=4?7:5,cols=rows;let r=0,oi;
+const draw=()=>{const p=P[r],ci=Math.random()<.5?0:1;oi=gmR(0,rows*cols-1);say('دور '+(r+1)+'/'+N+': دوس على الرمز المختلف.');h.innerHTML='<div class="ergr" style="grid-template-columns:repeat('+cols+',1fr)">'+Array.from({length:rows*cols},(_,i)=>'<button class="erc" data-i="'+i+'"'+(d>=4?' style="font-size:15px"':'')+'>'+(i===oi?p[1-ci]:p[ci])+'</button>').join('')+'</div>';
 h.querySelectorAll('.erc').forEach(b=>b.onclick=()=>{if(+b.dataset.i===oi){memSound('ok',r+1);r++;if(r>=N)ins();else draw()}else erWrong(h)})};draw();
 return{solve(){for(let k=0;k<N;k++)h.querySelector('.erc[data-i="'+oi+'"]').click()},hint(){const b=h.querySelector('.erc[data-i="'+oi+'"]');b.classList.add('hl');return 'الرمز المختلف نور شوية'}}},
-slide(h,ins,d,say){const R=gmR;let b=[1,2,3,4,5,6,7,8,0],z=8,last=-1;const nb=i=>{const r=i/3|0,c=i%3,a=[];if(r>0)a.push(i-3);if(r<2)a.push(i+3);if(c>0)a.push(i-1);if(c<2)a.push(i+1);return a};
-for(let k=0;k<[14,22,30][d-1];k++){const o=nb(z).filter(x=>x!==last),t=o[R(0,o.length-1)];b[z]=b[t];b[t]=0;last=z;z=t}
-if(b.join()==='1,2,3,4,5,6,7,8,0'){b[8]=b[7];b[7]=0;z=7}
-say('رتّب الأرقام من 1 لـ 8 والفراغ في آخر خانة.');
-const ok=()=>b.join()==='1,2,3,4,5,6,7,8,0',draw=()=>{h.innerHTML='<div class="ersl">'+b.map((v,i)=>'<button class="ert" data-i="'+i+'"'+(v?'':' style="visibility:hidden"')+'>'+v+'</button>').join('')+'</div>';
+slide(h,ins,d,say){const R=gmR,n=d>=4?4:3,N=n*n;let b=Array.from({length:N},(_,i)=>(i+1)%N),z=N-1,last=-1;const nb=i=>{const r=i/n|0,c=i%n,a=[];if(r>0)a.push(i-n);if(r<n-1)a.push(i+n);if(c>0)a.push(i-1);if(c<n-1)a.push(i+1);return a};
+const ok=()=>b.every((v,i)=>v===(i+1)%N);
+for(let k=0;k<(d>=4?110:[14,22,30][d-1]);k++){const o=nb(z).filter(x=>x!==last),t=o[R(0,o.length-1)];b[z]=b[t];b[t]=0;last=z;z=t}
+if(ok()){b[N-1]=b[N-2];b[N-2]=0;z=N-2}
+say('رتّب الأرقام من 1 لـ '+(N-1)+' والفراغ في آخر خانة.');
+const draw=()=>{h.innerHTML='<div class="ersl" style="grid-template-columns:repeat('+n+',1fr);max-width:'+(n*84)+'px">'+b.map((v,i)=>'<button class="ert" data-i="'+i+'"'+(v?'':' style="visibility:hidden"')+'>'+v+'</button>').join('')+'</div>';
 h.querySelectorAll('.ert').forEach(t=>t.onclick=()=>{const i=+t.dataset.i;if(nb(i).includes(z)){b[z]=b[i];b[i]=0;z=i;memTone(380,0,.06,'square',.08);draw();if(ok())ins()}})};draw();
-return{solve(){b=[1,2,3,4,5,6,7,8,0];draw();ins()},hint(){return 'ابدأ بالصف الأول (1 2 3) وبعدين كمّل اللي تحته'}}},
-lights(h,ins,d,say){const R=gmR,n=d===3?4:3,N=n*n;let s=Array(N).fill(0),ps=[];const tg=i=>{const r=i/n|0,c=i%n;[i,r>0?i-n:-1,r<n-1?i+n:-1,c>0?i-1:-1,c<n-1?i+1:-1].forEach(j=>{if(j>=0)s[j]^=1})};
-do{s=Array(N).fill(0);ps=ER_SH([...Array(N).keys()]).slice(0,R(3,5));ps.forEach(tg)}while(!s.some(x=>x));
+return{solve(){b=Array.from({length:N},(_,i)=>(i+1)%N);draw();ins()},hint(){return 'ابدأ بالصف الأول وبعدين العمود الأول، وكمّل الباقي'}}},
+lights(h,ins,d,say){const R=gmR,n=d>=4?5:d===3?4:3,N=n*n;let s=Array(N).fill(0),ps=[];const tg=i=>{const r=i/n|0,c=i%n;[i,r>0?i-n:-1,r<n-1?i+n:-1,c>0?i-1:-1,c<n-1?i+1:-1].forEach(j=>{if(j>=0)s[j]^=1})};
+do{s=Array(N).fill(0);ps=ER_SH([...Array(N).keys()]).slice(0,d>=4?R(10,13):R(3,5));ps.forEach(tg)}while(!s.some(x=>x));
 say('اطفي كل اللمبات. كل ضغطة بتقلب اللمبة والجيران اللي جنبها.');
-const draw=()=>{h.innerHTML='<div class="ergr" style="grid-template-columns:repeat('+n+',1fr);max-width:'+n*72+'px;margin:auto">'+s.map((v,i)=>'<button class="erc erl'+(v?' on':'')+'" data-i="'+i+'">'+(v?'💡':'⚫')+'</button>').join('')+'</div>';
+const draw=()=>{h.innerHTML='<div class="ergr" style="grid-template-columns:repeat('+n+',1fr);max-width:'+n*(d>=4?62:72)+'px;margin:auto">'+s.map((v,i)=>'<button class="erc erl'+(v?' on':'')+'" data-i="'+i+'">'+(v?'💡':'⚫')+'</button>').join('')+'</div>';
 h.querySelectorAll('.erc').forEach(b=>b.onclick=()=>{tg(+b.dataset.i);memTone(440,0,.05,'square',.07);draw();if(!s.some(x=>x))ins()})};draw();
 return{solve(){ps.forEach(i=>h.querySelector('.erc[data-i="'+i+'"]').click())},hint(){const i=ps[0];h.querySelector('.erc[data-i="'+i+'"]').classList.add('hl');return 'جرب تدوس على الخانة اللي نورت'}}},
-cipher(h,ins,d,say){const R=gmR,w=ER_CW[R(0,ER_CW.length-1)],sh=R(1,2+d*2),enc=[...w].map(c=>String.fromCharCode((c.charCodeAt(0)-65+sh)%26+65)).join('');
-say('كل حرف اتحرك '+sh+' خطوة لقدام في الأبجدية الإنجليزي (A بعد خطوة بقت B). فك الكلمة:');
+cipher(h,ins,d,say){const R=gmR,hard=d>=4,w=hard?ER_CW2[R(0,ER_CW2.length-1)]:ER_CW[R(0,ER_CW.length-1)],sh=hard?0:R(1,2+d*2),ky=hard?['SUN','SEA','OWL','FOX','ICE','ASH','KEY','MAP'][R(0,7)]:'',kv=[...ky].map(c=>c.charCodeAt(0)-65),enc=[...w].map((c,i)=>String.fromCharCode((c.charCodeAt(0)-65+(hard?kv[i%kv.length]:sh))%26+65)).join('');
+say(hard?'الكلمة اتشفرت بمفتاح "'+ky+'": الحرف الأول اتحرك لقدام '+kv[0]+' خطوة، التاني '+kv[1]+'، التالت '+kv[2]+'، وبعدين الترتيب بيتكرر (A=0 ... Z=25). فك الكلمة:':'كل حرف اتحرك '+sh+' خطوة لقدام في الأبجدية الإنجليزي (A بعد خطوة بقت B). فك الكلمة:');
 h.innerHTML='<div class="erenc" dir="ltr">'+enc+'</div><input id="eri" class="erin" dir="ltr" maxlength="'+w.length+'" autocomplete="off" placeholder="اكتب الكلمة الأصلية"><button class="mbtn" id="ero">افتح 🔓</button>';
 const chk=()=>{if(el('eri').value.trim().toUpperCase()===w)ins();else erWrong(h)};el('ero').onclick=chk;el('eri').onkeydown=e=>{if(e.key==='Enter')chk()};
 return{solve(){el('eri').value=w.toLowerCase();chk()},hint(){return 'الكلمة بتبدأ بحرف '+w[0]+' وطولها '+w.length}}},
-riddle(h,ins,d,say){const R=gmR,q=ER_RD[R(0,ER_RD.length-1)];const o=ER_SH([q[1],...ER_SH(ER_RD.filter(x=>x[1]!==q[1]).map(x=>x[1])).slice(0,3)]);
+riddle(h,ins,d,say){if(d>=4){const Q=ER_SH(ER_HQ).slice(0,3);let r=0,cur;const go=()=>{cur=Q[r];const o=ER_SH([cur[1],...ER_SH(cur[2]).slice(0,4)]);say('لغز '+(r+1)+'/3 (تفكير مش حفظ!) — جاوب صح:');h.innerHTML='<div class="erriddle">'+cur[0]+'</div><div class="erops">'+o.map(x=>'<button class="erop">'+x+'</button>').join('')+'</div>';h.querySelectorAll('.erop').forEach(b=>b.onclick=()=>{if(b.textContent===cur[1]){r++;if(r>=3)ins();else{memSound('ok',r);go()}}else erWrong(h)})};go();return{solve(){for(let k=r;k<3;k++){const b=[...h.querySelectorAll('.erop')].find(b=>b.textContent===cur[1]);if(b)b.click()}},hint(){return 'فكر في الحل بالورقة والقلم، مش أول إجابة بتيجي في بالك'}}}
+const R=gmR,q=ER_RD[R(0,ER_RD.length-1)];const o=ER_SH([q[1],...ER_SH(ER_RD.filter(x=>x[1]!==q[1]).map(x=>x[1])).slice(0,3)]);
 say('التمثال بيسألك سؤال. جاوب صح عشان الباب يفتح.');h.innerHTML='<div class="erriddle">'+q[0]+'</div><div class="erops">'+o.map(x=>'<button class="erop">'+x+'</button>').join('')+'</div>';
 h.querySelectorAll('.erop').forEach(b=>b.onclick=()=>{if(b.textContent===q[1])ins();else erWrong(h)});
 return{solve(){[...h.querySelectorAll('.erop')].find(b=>b.textContent===q[1]).click()},hint(){return 'الإجابة بتبدأ بحرف '+q[1][0]}}},
-eq(h,ins,d,say){const R=gmR,k=d===3?4:3,nums=[],ops=[];for(let i=0;i<k;i++)nums.push(R(2,9));const OP=['+','-','×'];let tg;
-do{ops.length=0;for(let i=0;i<k-1;i++)ops.push(R(0,2));tg=ev(nums,ops)}while(!(tg>0&&tg<150));
-function ev(n,o){const e=n.map((v,i)=>i<o.length?v+(o[i]===0?'+':o[i]===1?'-':'*'):v).join('');return Function('return '+e)()}
+eq(h,ins,d,say){const R=gmR,k=d>=4?7:d===3?4:3,nums=[],ops=[];for(let i=0;i<k;i++)nums.push(R(2,9));const OP=['+','-','×'];let tg;
+if(d>=4){for(let tr=0;tr<600;tr++){nums.length=0;for(let i=0;i<k;i++)nums.push(R(2,9));ops.length=0;for(let i=0;i<k-1;i++)ops.push(R(0,2));tg=ev(nums,ops);let c=0;const tt=Math.pow(3,k-1);for(let m=0;m<tt;m++){const o=[];let x=m;for(let q=0;q<k-1;q++){o.push(x%3);x=(x/3)|0}if(ev(nums,o)===tg)c++;if(c>1)break}if(c===1)break}}else do{ops.length=0;for(let i=0;i<k-1;i++)ops.push(R(0,2));tg=ev(nums,ops)}while(!(tg>0&&tg<150));
+function ev(n,o){let tot=0,cur=n[0];for(let i=0;i<o.length;i++){if(o[i]===2)cur*=n[i+1];else{tot+=cur;cur=o[i]===0?n[i+1]:-n[i+1]}}return tot+cur}
 const cur=Array(k-1).fill(0);say('اختار العلامات (+ - ×) عشان المعادلة تتحقق. الضرب بيتنفذ الأول.');
 const draw=()=>{let t='';for(let i=0;i<k;i++){t+='<b class="ern">'+nums[i]+'</b>';if(i<k-1)t+='<button class="ero" data-i="'+i+'">'+OP[cur[i]]+'</button>'}h.innerHTML='<div class="ereq" dir="ltr">'+t+'<b class="ern">=</b><b class="ern">'+tg+'</b></div><button class="mbtn" id="erk">افتح 🔓</button>';
 h.querySelectorAll('.ero').forEach(b=>b.onclick=()=>{const i=+b.dataset.i;cur[i]=(cur[i]+1)%3;draw()});el('erk').onclick=chk};
 const chk=()=>{if(ev(nums,cur)===tg)ins();else erWrong(h)};draw();
 return{solve(){ops.forEach((o,i)=>cur[i]=o);draw();chk()},hint(){return 'العلامة الأولى هي '+OP[ops[0]]}}},
-pat(h,ins,d,say){const R=gmR,K=[0,4,5,7][d],t=new Set(ER_SH([...Array(16).keys()]).slice(0,K));let sel=new Set(),show=true;
-const draw=()=>{h.innerHTML='<div class="ergr" style="grid-template-columns:repeat(4,1fr);max-width:280px;margin:auto">'+Array.from({length:16},(_,i)=>'<button class="erc erp2'+((show&&t.has(i))?' on':sel.has(i)?' sl':'')+'" data-i="'+i+'"></button>').join('')+'</div>'+(show?'':'<button class="mbtn" id="erk">تأكيد ✔</button>');
+pat(h,ins,d,say){const R=gmR,m=d>=4?5:4,K=d>=4?12:[0,4,5,7][d],t=new Set(ER_SH([...Array(m*m).keys()]).slice(0,K));let sel=new Set(),show=true;
+const draw=()=>{h.innerHTML='<div class="ergr" style="grid-template-columns:repeat('+m+',1fr);max-width:'+(m*66)+'px;margin:auto">'+Array.from({length:m*m},(_,i)=>'<button class="erc erp2'+((show&&t.has(i))?' on':sel.has(i)?' sl':'')+'" data-i="'+i+'"></button>').join('')+'</div>'+(show?'':'<button class="mbtn" id="erk">تأكيد ✔</button>');
 if(!show){h.querySelectorAll('.erc').forEach(b=>b.onclick=()=>{const i=+b.dataset.i;sel.has(i)?sel.delete(i):sel.add(i);draw()});el('erk').onclick=chk}};
-const reveal=()=>{show=true;sel=new Set();say('احفظ الخانات المنورة... ');draw();erT(()=>{show=false;say('دوس على الخانات اللي كانت منورة ('+K+' خانات) وأكد.');draw()},2200)};
+const reveal=()=>{show=true;sel=new Set();say('احفظ الخانات المنورة... ');draw();erT(()=>{show=false;say('دوس على الخانات اللي كانت منورة ('+K+' خانات) وأكد.');draw()},d>=4?1700:2200)};
 const chk=()=>{if(sel.size===K&&[...sel].every(i=>t.has(i)))ins();else{erWrong(h);erT(reveal,700)}};reveal();
 return{solve(){show=false;sel=new Set(t);draw();chk()},hint(){erT(reveal,200);return 'هتشوف النمط تاني'}}},
-scr(h,ins,d,say){const R=gmR,w=ER_WD[R(0,ER_WD.length-1)],L=[...w];let t,g=0;do{t=ER_SH(L.map((c,i)=>i));g++}while(g<20&&t.every((v,i)=>v===i));let used=[];
+scr(h,ins,d,say){const R=gmR,WL=d>=4?ER_WD2:ER_WD,w=WL[R(0,WL.length-1)],L=[...w];let t,g=0;do{t=ER_SH(L.map((c,i)=>i));g++}while(g<20&&t.every((v,i)=>v===i));let used=[];
 say('رتب الحروف بالترتيب الصح عشان تكوّن الكلمة.');
 const draw=()=>{h.innerHTML='<div class="erw">'+L.map((c,i)=>'<span class="erwl'+(used[i]!==undefined?' f':'')+'">'+(used[i]!==undefined?L[used[i]]:'')+'</span>').join('')+'</div><div class="ertl">'+t.map(i=>'<button class="erc" data-i="'+i+'"'+(used.includes(i)?' disabled style="opacity:.25"':'')+'>'+L[i]+'</button>').join('')+'</div><button class="mbtn o" id="erc">مسح</button>';
 h.querySelectorAll('.ertl .erc').forEach(b=>b.onclick=()=>{used.push(+b.dataset.i);memTone(480,0,.05,'triangle',.08);draw();if(used.length===L.length)chk()});el('erc').onclick=()=>{used=[];draw()}};
 const chk=()=>{if(used.map(i=>L[i]).join('')===w)ins();else{erWrong(h);used=[];draw()}};draw();
 return{solve(){used=[];const u=new Set();L.forEach((c,p)=>{const i=t.find(j=>!u.has(j)&&L[j]===c);u.add(i);used.push(i)});draw();chk()},hint(){return 'الكلمة بتبدأ بحرف '+w[0]}}},
-path(h,ins,d,say){const R=gmR,n=5,D=[['شمال','↑',-1,0],['جنوب','↓',1,0],['شرق','→',0,1],['غرب','←',0,-1]];let r0,c0,r,c,st;
-do{r0=R(0,n-1);c0=R(0,n-1);r=r0;c=c0;st=[];const k=3+d+R(0,1);for(let i=0;i<k;i++){const o=ER_SH(D).find(q=>{const a=r+q[2],b=c+q[3];return a>=0&&b>=0&&a<n&&b<n&&!(st.length&&st[st.length-1][0]===q&&false)});const m=R(1,3);let s=0;for(let j=0;j<m;j++){const a=r+o[2],b=c+o[3];if(a>=0&&b>=0&&a<n&&b<n){r=a;c=b;s++}}if(s)st.push([o,s])}}while(st.length<3||(r===r0&&c===c0));
+path(h,ins,d,say){const R=gmR,n=d>=4?7:5,D=[['شمال','↑',-1,0],['جنوب','↓',1,0],['شرق','→',0,1],['غرب','←',0,-1]];let r0,c0,r,c,st;
+do{r0=R(0,n-1);c0=R(0,n-1);r=r0;c=c0;st=[];const k=d>=4?11+R(0,2):3+d+R(0,1);for(let i=0;i<k;i++){const o=ER_SH(D).find(q=>{const a=r+q[2],b=c+q[3];return a>=0&&b>=0&&a<n&&b<n&&!(st.length&&st[st.length-1][0]===q&&false)});const m=R(1,3);let s=0;for(let j=0;j<m;j++){const a=r+o[2],b=c+o[3];if(a>=0&&b>=0&&a<n&&b<n){r=a;c=b;s++}}if(s)st.push([o,s])}}while(st.length<3||(r===r0&&c===c0));
 say('إنت واقف على 🧍. اتحرك بالخطوات دي ودوس على الخانة اللي هتوصلها:');
-h.innerHTML='<div class="erstp">'+st.map(s=>'<span>'+s[0][1]+' '+s[0][0]+' '+s[1]+'</span>').join('')+'</div><div class="ergr" dir="ltr" style="grid-template-columns:repeat(5,1fr);max-width:300px;margin:auto">'+Array.from({length:25},(_,i)=>'<button class="erc" data-r="'+(i/5|0)+'" data-c="'+i%5+'">'+((i/5|0)===r0&&i%5===c0?'🧍':'')+'</button>').join('')+'</div>';
+h.innerHTML='<div class="erstp">'+st.map(s=>'<span>'+s[0][1]+' '+s[0][0]+' '+s[1]+'</span>').join('')+'</div><div class="ergr" dir="ltr" style="grid-template-columns:repeat('+n+',1fr);max-width:'+(n*(d>=4?46:60))+'px;margin:auto">'+Array.from({length:n*n},(_,i)=>'<button class="erc" data-r="'+(i/n|0)+'" data-c="'+i%n+'" style="font-size:'+(d>=4?16:22)+'px">'+((i/n|0)===r0&&i%n===c0?'🧍':'')+'</button>').join('')+'</div>';
 h.querySelectorAll('.erc').forEach(b=>b.onclick=()=>{if(+b.dataset.r===r&&+b.dataset.c===c)ins();else erWrong(h)});
 return{solve(){h.querySelector('.erc[data-r="'+r+'"][data-c="'+c+'"]').click()},hint(){return 'الخانة النهائية في الصف رقم '+(r+1)+' من فوق'}}},
-bin(h,ins,d,say){const R=gmR,bits=d===3?5:4,W=[16,8,4,2,1].slice(5-bits),N=R(3,(1<<bits)-1),on=W.map(()=>0);
-say('الأضواء ليها قيم (16 8 4 2 1). شغّل الأضواء اللي مجموعها = الرقم المطلوب:');
-const draw=()=>{h.innerHTML='<div class="erbn">'+N+'</div><div class="erlp" dir="ltr">'+W.map((w,i)=>'<div><button class="erc erl'+(on[i]?' on':'')+'" data-i="'+i+'">'+(on[i]?'💡':'⚫')+'</button><small>'+w+'</small></div>').join('')+'</div>';
+bin(h,ins,d,say){const R=gmR,bits=d>=4?8:d===3?5:4,W=Array.from({length:bits},(_,i)=>1<<(bits-1-i)),N=d>=4?R(40,255):R(3,(1<<bits)-1),on=W.map(()=>0);
+say(d>=4?'الرقم المطلوب مكتوب بالنظام السداسي عشر (Hex: A=10 ... F=15). حوّله وشغّل الأضواء اللي مجموعها يساويه:':'الأضواء ليها قيم (16 8 4 2 1). شغّل الأضواء اللي مجموعها = الرقم المطلوب:');
+const draw=()=>{h.innerHTML='<div class="erbn">'+(d>=4?'0x'+N.toString(16).toUpperCase():N)+'</div><div class="erlp" dir="ltr"'+(d>=4?' style="gap:3px"':'')+'>'+W.map((w,i)=>'<div><button class="erc erl'+(on[i]?' on':'')+'" data-i="'+i+'"'+(d>=4?' style="width:38px;height:38px;font-size:16px"':'')+'>'+(on[i]?'💡':'⚫')+'</button><small>'+w+'</small></div>').join('')+'</div>';
 h.querySelectorAll('.erc').forEach(b=>b.onclick=()=>{const i=+b.dataset.i;on[i]^=1;memTone(420+on[i]*100,0,.05,'square',.07);draw();if(W.reduce((s,w,j)=>s+w*on[j],0)===N)ins()})};draw();
 return{solve(){W.forEach((w,i)=>{if(on[i]!==(N&w?1:0))h.querySelector('.erc[data-i="'+i+'"]').click()})},hint(){const w=W.find(x=>x<=N);return 'ابدأ بالضوء اللي قيمته '+w}}},
-sort(h,ins,d,say){const R=gmR,k=d===3?6:5;let it;do{it=[];for(let i=0;i<k;i++){const t=R(0,2);let a=R(2,9),b=R(2,9),v,s;if(t===0){v=a*b;s=a+'×'+b}else if(t===1){v=a+b+R(0,9);s=(v-b)+'+'+b}else{v=R(6,60);s=v+''}it.push({s:s,v:v})}}while(new Set(it.map(x=>x.v)).size<k);
+sort(h,ins,d,say){const R=gmR,k=d>=4?8:d===3?6:5;let it;do{it=[];for(let i=0;i<k;i++){const t=R(0,d>=4?4:2);let a=R(2,9),b=R(2,9),c=R(2,9),v,s;if(t===0){v=a*b;s=a+'×'+b}else if(t===1){v=a+b+R(0,9);s=(v-b)+'+'+b}else if(t===2){v=R(6,60);s=v+''}else if(t===3){v=a*b+c;s=a+'×'+b+'+'+c}else{v=(a+b)*c;s='('+a+'+'+b+')×'+c}it.push({s:s,v:v})}}while(new Set(it.map(x=>x.v)).size<k);
 const ord=[...it].sort((a,b)=>a.v-b.v);let p=0;say('دوس على المسائل من الأصغر قيمة للأكبر.');
 h.innerHTML='<div class="erso" dir="ltr">'+ER_SH(it).map(x=>'<button class="erc ers" data-v="'+x.v+'">'+x.s+'</button>').join('')+'</div>';
 h.querySelectorAll('.ers').forEach(b=>b.onclick=()=>{if(b.disabled)return;if(+b.dataset.v===ord[p].v){b.disabled=true;b.classList.add('sl');p++;memSound('ok',p);if(p>=k)ins()}else erWrong(h)});
